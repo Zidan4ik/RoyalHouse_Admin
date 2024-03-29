@@ -3,6 +3,9 @@ package com.example.royalhouse.controler;
 
 import com.example.royalhouse.entity.Object;
 import com.example.royalhouse.enums.Building;
+import com.example.royalhouse.mapper.TransferObject;
+import com.example.royalhouse.model.ObjectDTOAdd;
+import com.example.royalhouse.model.ObjectDTOView;
 import com.example.royalhouse.repo.ObjectRepository;
 import com.example.royalhouse.util.Image;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,8 @@ import java.util.List;
 public class ControllerObjects {
     @Autowired
     private ObjectRepository objectRepository;
-
+    @Autowired
+    private TransferObject transferObject;
     @GetMapping("")
     public ModelAndView viewObjects(){
         ModelAndView model = new ModelAndView("objects/objects-view");
@@ -32,7 +36,7 @@ public class ControllerObjects {
         return model;
     }
     @GetMapping("/add")
-    public ModelAndView addObjectGM(@ModelAttribute("object")Object object){
+    public ModelAndView addObjectGM(@ModelAttribute("object") ObjectDTOAdd objectDTOAdd){
         ModelAndView model = new ModelAndView("objects/objects-add");
 
         List<String> buildings = new ArrayList<>();
@@ -45,24 +49,42 @@ public class ControllerObjects {
         return model;
     }
     @PostMapping()
-    public String addObjectPM(@ModelAttribute("object")Object object,
+    public String addObjectPM(@ModelAttribute("object")ObjectDTOAdd objectDTOAdd,
                               @RequestParam("building") String building,
-                              @RequestParam("fileImage")MultipartFile multipartFile) throws IOException {
+                              @RequestParam("extraImage")MultipartFile[] multipartFiles) throws IOException {
+        Object objectEntity = transferObject.toTransferEntityAdd(objectDTOAdd);
         if(building.equals(Building.house)){
-            object.setBuilding(Building.house);
+            objectEntity.setBuilding(Building.house);
         }else if(building.equals(Building.plot)){
-            object.setBuilding(Building.plot);
+            objectEntity.setBuilding(Building.plot);
         }else if(building.equals(Building.apartment)){
-            object.setBuilding(Building.apartment);
+            objectEntity.setBuilding(Building.apartment);
         }else if(building.equals(Building.commercial)){
-            object.setBuilding(Building.commercial);
+            objectEntity.setBuilding(Building.commercial);
+        }
+
+        int counter = 0;
+        for (MultipartFile file: multipartFiles){
+            String imageName = StringUtils.cleanPath(file.getOriginalFilename());
+
+            if(counter==0)objectEntity.setImageFirst(imageName);
+            if(counter==1)objectEntity.setImageSecond(imageName);
+            if(counter==2)objectEntity.setImageThird(imageName);
+
+            counter++;
         }
 
 
-        object.setImageFirst(Image.getPathToFileImage(multipartFile));
+        objectEntity.setDateOfAddition(LocalDateTime.now());
+        Object saveObject = objectRepository.save(objectEntity);
 
-        object.setDateOfAddition(LocalDateTime.now());
-        objectRepository.save(object);
+        String uploadDir = "./uploads/" + saveObject.getId();
+
+        for (MultipartFile multipartFile:multipartFiles){
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+            Image.saveFile(uploadDir,multipartFile,fileName);
+        }
         return "redirect:/objects";
     }
 }
