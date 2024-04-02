@@ -3,6 +3,9 @@ package com.example.royalhouse.entity;
 
 import com.example.royalhouse.enums.Building;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,19 +21,27 @@ public class Object {
     private Long id;
 
     private Building building;
+
     @Column(nullable = true)
     private double area;
+
     @Column(nullable = true)
     private double price;
+
     @Column(nullable = true)
     private double priceSquareMeter;
+
     @Column(nullable = true)
     private int rooms;
+
     @Column(nullable = true)
     private int storey;
+
     @Column(nullable = true)
     private int countStoreys;
+
     private LocalDateTime dateOfAddition;
+
     @Column(nullable = true)
     private String imageFirst;
     @Column(nullable = true)

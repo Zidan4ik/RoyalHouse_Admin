@@ -41,14 +41,14 @@
     <div class="layout-container">
 
         <!-- Menu -->
-        <div th:insert="block/sidebar::sidebar"></div>
+        <div th:insert="~{block/sidebar::sidebar}"></div>
         <!--/ Menu -->
 
         <!-- Layout page -->
         <div class="layout-page">
 
             <!-- Navbar -->
-            <div th:insert="block/navbar::navbar"></div>
+            <div th:insert="~{block/navbar::navbar}"></div>
             <!--/ Navbar -->
 
             <!-- Content wrapper -->
@@ -65,44 +65,67 @@
                                   enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label class="form-label">Типи об'єктів</label>
-                                    <select th:field="*{building}" class="form-select">
-                                        <option th:value="0" th:text="Вибрати"></option>
-                                        <option th:value="'house'" th:text="Будинок"></option>
-                                        <option th:value="'plot'" th:text="Ділянка"></option>
-                                        <option th:value="'apartment'" th:text="Квартира"></option>
-                                        <option th:value="'commercial'" th:text="Комерційний"></option>
+                                    <select class="form-select" th:field="*{building}">
+                                        <option th:value="null" th:text="Select"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).house}"
+                                                th:text="house"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
+                                                th:text="apartment"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
+                                                th:text="plot"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
+                                                th:text="commercial"></option>
                                     </select>
+                                    <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
+                                          style="color: red"></div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Ціна($)</label>
-                                        <input th:field="*{price}" type="text" class="form-control" placeholder="0">
+                                        <input th:field="*{price}" th:id="*{price}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                              style="color: red"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Ціна за м. кв.($)</label>
                                         <input th:field="*{priceSquareMeter}" type="text"
                                                class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('priceSquareMeter')}" th:errors="*{priceSquareMeter}"
+                                              style="color: red"></div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Площа(м. кв.)</label>
                                         <input th:field="*{area}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('area')}" th:errors="*{area}"
+                                              style="color: red"></div>
+
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">К-сть кімнат</label>
                                         <input th:field="*{rooms}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('rooms')}" th:errors="*{rooms}"
+                                        style="color: red"></div>
+
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Поверх</label>
                                         <input th:field="*{storey}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"
+                                              style="color: red"></div>
+
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Поверхність</label>
                                         <input th:field="*{countStoreys}" type="text" class="form-control"
                                                placeholder="0">
+                                        <div th:if="${#fields.hasErrors('countStoreys')}" th:errors="*{countStoreys}"
+                                              style="color: red"></div>
+
                                     </div>
                                 </div>
 
