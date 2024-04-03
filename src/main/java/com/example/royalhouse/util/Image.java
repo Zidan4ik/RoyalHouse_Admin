@@ -43,7 +43,7 @@ public class Image {
 
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            throw new IOException("Could not save uploaded file: " + fileName);
+            e.printStackTrace();
         }
     }
 }

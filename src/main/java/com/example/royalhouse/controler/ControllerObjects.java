@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -71,13 +72,13 @@ public class ControllerObjects {
         Object saveObject = objectRepository.save(objectEntity);
 
         String uploadDir = "./uploads/" + saveObject.getId();
-
         for (MultipartFile multipartFile : multipartFiles) {
-            if(multipartFile!=null){
-                String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            if (!multipartFile.getOriginalFilename().isEmpty()) {
+                String fileName = UUID.randomUUID() + StringUtils.cleanPath(multipartFile.getOriginalFilename());
                 Image.saveFile(uploadDir, multipartFile, fileName);
             }
         }
+
         return "redirect:/objects";
 
     }
