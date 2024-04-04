@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String phone;
     private String viber;
     private String telegram;

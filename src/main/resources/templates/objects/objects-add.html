@@ -41,7 +41,7 @@
     <div class="layout-container">
 
         <!-- Menu -->
-        <div th:insert="~{block/sidebar::sidebar}"></div>
+        <div th:insert="~{block/sidebar :: sidebar}"></div>
         <!--/ Menu -->
 
         <!-- Layout page -->
@@ -66,15 +66,15 @@
                                 <div class="mb-3">
                                     <label class="form-label">Типи об'єктів</label>
                                     <select class="form-select" th:field="*{building}">
-                                        <option th:value="null" th:text="Select"></option>
+                                        <option th:value="null" th:text="'Тип будівлі'"></option>
                                         <option th:value="${T(com.example.royalhouse.enums.Building).house}"
-                                                th:text="house"></option>
+                                                th:text="'Будинок'"></option>
                                         <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
-                                                th:text="apartment"></option>
+                                                th:text="'Квартира'"></option>
                                         <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
-                                                th:text="plot"></option>
+                                                th:text="'Земельна ділянка'"></option>
                                         <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
-                                                th:text="commercial"></option>
+                                                th:text="'Комерційний'"></option>
                                     </select>
                                     <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
                                           style="color: red"></div>
@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Добавити</button>
                             </form>
                         </div>
                     </div>

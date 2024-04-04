@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class TextProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(unique = true)
     private TextType type;
     private String description;

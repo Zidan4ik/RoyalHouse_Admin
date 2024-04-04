@@ -1,5 +1,6 @@
 package com.example.royalhouse.util;
 
+import com.example.royalhouse.entity.Object;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,27 +10,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Image {
-    public static String getPathToFileImage(MultipartFile file) throws IOException {
-        String nameFile = StringUtils.cleanPath(file.getOriginalFilename());
-        String uuidFile = UUID.randomUUID().toString();
-
-        String uploadDir = "./uploads/";
-
-        Path uploadPath = Paths.get(uploadDir);
-
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+    public static void saveFiles(Long id, HashMap<String,MultipartFile> map) {
+        String uploadDir = "./uploads/" + id;
+        try {
+            for (Map.Entry<String, MultipartFile> m:map.entrySet()){
+                if (!m.getValue().getOriginalFilename().isEmpty()) {
+                    Image.saveFile(uploadDir, m.getValue(), m.getKey());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        InputStream inputStream = file.getInputStream();
-        Path filePath = uploadPath.resolve(uuidFile + "." + nameFile);
-        Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        return uuidFile + "." + nameFile;
     }
 
     public static void saveFile(String uploadDir, MultipartFile multipartFile, String fileName) throws IOException {

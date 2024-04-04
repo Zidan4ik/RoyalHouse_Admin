@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +18,5 @@ public class ObjectDTOView {
     private int rooms;
     private int storey;
     private int countStoreys;
-    private LocalDateTime dateOfAddition;
+    private String dateOfAddition;
 }

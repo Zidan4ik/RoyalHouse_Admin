@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class InfographicsProjects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(unique = true)
     private InfographicsType type;
     private String path;

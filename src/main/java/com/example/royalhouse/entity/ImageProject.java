@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ImageProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private ImageType type;

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class EmailRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String email;
     @ManyToOne
     private Contact contact;

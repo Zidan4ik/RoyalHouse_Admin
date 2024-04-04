@@ -4,7 +4,6 @@ import com.example.royalhouse.enums.Building;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
@@ -14,7 +13,7 @@ public class ObjectDTOAdd {
     @NotNull(message = "виберіть тип будівлі для об'єкту")
     private Building building;
 
-    @DecimalMin(value = "0.0", inclusive = false,message = "Значення не повинно бути нульовим/негативним")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Значення не повинно бути нульовим/негативним")
     private double area;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Значення не повинно бути нульовим/негативним")
@@ -26,13 +25,17 @@ public class ObjectDTOAdd {
     @Min(value = 1, message = "Значення не повинно бути нульовим/негативним")
     private int rooms;
 
-    @Min(value = 1,message = "Значення не повинно бути нульовим/негативним")
+    @Min(value = 1, message = "Значення не повинно бути нульовим/негативним")
     private int storey;
 
-    @Min(value = 1,message = "Значення не повинно бути нульовим/негативним")
+    @Min(value = 1, message = "Значення не повинно бути нульовим/негативним")
     private int countStoreys;
 
     private String imageFirst;
     private String imageSecond;
     private String imageThird;
+
+    public String getLinkToFirstImage() {
+        return "/uploads/"+id+"/" + imageFirst;
+    }
 }

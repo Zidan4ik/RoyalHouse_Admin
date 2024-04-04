@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SpecificationTextProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String miniText;
     @ManyToOne
     private Project project;
