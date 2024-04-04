@@ -1,0 +1,199 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/core.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/theme-default.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/fonts/tabler-icons.css">
+    <script src="/vuexy/assets/vendor/js/helpers.js"></script>
+    <script src="/vuexy/assets/js/config.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("input[name='extraImage']").each(function (index) {
+                $(this).change(function () {
+                    showExtraImageThumbnail(this, index);
+                });
+            });
+
+            function showExtraImageThumbnail(fileInput, index) {
+                file = fileInput.files[0];
+                reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#thumbnail' + index).attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            };
+        });
+    </script>
+
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+
+    <!-- Layout container -->
+    <div class="layout-container">
+
+        <!-- Menu -->
+        <div th:insert="~{block/sidebar :: sidebar}"></div>
+        <!--/ Menu -->
+
+        <!-- Layout page -->
+        <div class="layout-page">
+
+            <!-- Navbar -->
+            <div th:insert="~{block/navbar::navbar}"></div>
+            <!--/ Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper d-flex justify-content-center align-items-center"
+                 style="background-color:#ffffff">
+
+                <div class="col-xl">
+                    <div class="card mb-4 mt-5">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Object</h5>
+                        </div>
+                        <div class="card-body" style="width: 1000px;height: auto;">
+                            <form th:method="post" th:action="@{/objects/{id}/update (id=${object.getId()})}"
+                                  th:object="${object}"
+                                  enctype="multipart/form-data">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Типи об'єктів</label>
+                                    <select class="form-select" th:field="*{building}">
+                                        <option th:value="null" th:text="'Тип будівлі'"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).house}"
+                                                th:text="'Будинок'"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
+                                                th:text="'Квартира'"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
+                                                th:text="'Земельна ділянка'"></option>
+                                        <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
+                                                th:text="'Комерційний'"></option>
+                                    </select>
+                                    <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
+                                         style="color: red"></div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Ціна($)</label>
+                                        <input th:field="*{price}" th:id="*{price}" type="text" class="form-control"
+                                               placeholder="0">
+                                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                             style="color: red"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Ціна за м. кв.($)</label>
+                                        <input th:field="*{priceSquareMeter}" type="text"
+                                               class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('priceSquareMeter')}"
+                                             th:errors="*{priceSquareMeter}"
+                                             style="color: red"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Площа(м. кв.)</label>
+                                        <input th:field="*{area}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('area')}" th:errors="*{area}"
+                                             style="color: red"></div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">К-сть кімнат</label>
+                                        <input th:field="*{rooms}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('rooms')}" th:errors="*{rooms}"
+                                             style="color: red"></div>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Поверх</label>
+                                        <input th:field="*{storey}" type="text" class="form-control" placeholder="0">
+                                        <div th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"
+                                             style="color: red"></div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Поверхність</label>
+                                        <input th:field="*{countStoreys}" type="text" class="form-control"
+                                               placeholder="0">
+                                        <div th:if="${#fields.hasErrors('countStoreys')}" th:errors="*{countStoreys}"
+                                             style="color: red"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+                                    <div>
+
+                                        <img
+                                                th:if="${object.getImageFirst()!=null}"
+                                                th:src="${object.getLinkToFirstImage()}"
+                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                id="thumbnail0">
+                                        <img>
+                                        <img    th:unless="${object.getImageFirst()!=null}"
+                                                src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                id="thumbnail0">
+                                        <img>
+                                        <input class="form-control" type="file" name="extraImage"
+                                               accept="image/png, image/jpg" style="width: auto;">
+                                    </div>
+                                    <div>
+                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                             class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                             id="thumbnail1">
+
+                                        <input class="form-control" type="file" name="extraImage"
+                                               accept="image/png, image/jpg" style="width: auto;"
+                                               th:value="${object.getImageSecond()}">
+                                    </div>
+                                    <div>
+                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                             class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                             id="thumbnail2">
+
+                                        <input class="form-control" type="file" name="extraImage"
+                                               accept="image/png, image/jpg" style="width: auto;"
+                                               th:value="${object.getImageThird()}">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Оновити</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Content wrapper -->
+        </div>
+        <!--/ Layout page -->
+    </div>
+    <!--/ Layout container -->
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+</div>
+<!--/ Layout wrapper -->
+
+<script src="/vuexy/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/vuexy/assets/vendor/js/menu.js"></script>
+<script src="/vuexy/assets/js/main.js"></script>
+
+</body>
+
+</html>

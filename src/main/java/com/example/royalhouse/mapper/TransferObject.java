@@ -5,6 +5,7 @@ import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.model.ObjectDTOView;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,9 @@ public class TransferObject {
         objectDTOView.setRooms(object.getRooms());
         objectDTOView.setStorey(object.getStorey());
         objectDTOView.setCountStoreys(object.getCountStoreys());
-        objectDTOView.setDateOfAddition(object.getDateOfAddition());
+
+
+        objectDTOView.setDateOfAddition(object.getDateOfAddition().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         return objectDTOView;
     }
@@ -70,7 +73,7 @@ public class TransferObject {
                         object.getRooms(),
                         object.getStorey(),
                         object.getCountStoreys(),
-                        object.getDateOfAddition()
+                        object.getDateOfAddition().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 ))
                 .collect(Collectors.toList());
     }
