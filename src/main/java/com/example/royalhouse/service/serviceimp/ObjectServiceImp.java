@@ -68,7 +68,7 @@ public class ObjectServiceImp implements ObjectService {
 
             int counter = 0;
             for (MultipartFile file : multipartFiles) {
-                if(file!=null){
+                if(!file.getOriginalFilename().equals("")){
                     String imageName = UUID.randomUUID() + "." + StringUtils.cleanPath(file.getOriginalFilename());
                     map.put(imageName, file);
                     if (counter==0 && objectFromDB.getImageFirst()==null)
@@ -77,9 +77,8 @@ public class ObjectServiceImp implements ObjectService {
                         object.setImageSecond(imageName);
                     if (counter==2 && objectFromDB.getImageThird()==null)
                         object.setImageThird(imageName);
-
-                    counter++;
                 }
+                counter++;
             }
         }
         object.setDateOfAddition(LocalDateTime.now());

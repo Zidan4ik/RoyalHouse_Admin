@@ -38,4 +38,10 @@ public class ObjectDTOAdd {
     public String getLinkToFirstImage() {
         return "/uploads/"+id+"/" + imageFirst;
     }
+    public String getLinkToSecondImage() {
+        return "/uploads/"+id+"/" + imageSecond;
+    }
+    public String getLinkToThirdImage() {
+        return "/uploads/"+id+"/" + imageThird;
+    }
 }

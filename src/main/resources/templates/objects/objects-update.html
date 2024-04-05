@@ -58,7 +58,7 @@
                 <div class="col-xl">
                     <div class="card mb-4 mt-5">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Object</h5>
+                            <h5 class="mb-0">Редагування об'єкта</h5>
                         </div>
                         <div class="card-body" style="width: 1000px;height: auto;">
                             <form th:method="post" th:action="@{/objects/{id}/update (id=${object.getId()})}"
@@ -135,38 +135,51 @@
 
                                 <div class="mb-5">
                                     <div>
-
                                         <img
                                                 th:if="${object.getImageFirst()!=null}"
                                                 th:src="${object.getLinkToFirstImage()}"
                                                 class="border mb-2" style="width: 550px;height: 200px;" alt="error"
                                                 id="thumbnail0">
                                         <img>
-                                        <img    th:unless="${object.getImageFirst()!=null}"
+                                        <img
+                                                th:unless="${object.getImageFirst()!=null}"
                                                 src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                 class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                id="thumbnail0">
+                                                th:id="${object.getImageFirst() != null} ? '' : 'thumbnail0'">
                                         <img>
                                         <input class="form-control" type="file" name="extraImage"
                                                accept="image/png, image/jpg" style="width: auto;">
                                     </div>
                                     <div>
-                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                        <img
+                                                th:if="${object.getImageSecond()!=null}"
+                                                th:src="${object.getLinkToSecondImage()}"
+                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                id="thumbnail1">
+                                        <img>
+                                        <img th:unless="${object.getImageSecond()!=null}"
+                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                              class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                             id="thumbnail1">
-
+                                             th:id="${object.getImageSecond()!=null} ? '':'thumbnail1'">
+                                        <img>
                                         <input class="form-control" type="file" name="extraImage"
-                                               accept="image/png, image/jpg" style="width: auto;"
-                                               th:value="${object.getImageSecond()}">
+                                               accept="image/png, image/jpg" style="width: auto;">
                                     </div>
                                     <div>
-                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                             class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                             id="thumbnail2">
-
+                                        <img
+                                                th:if="${object.getImageThird()!=null}"
+                                                th:src="${object.getLinkToThirdImage()}"
+                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                id="thumbnail2">
+                                        <img>
+                                        <img
+                                                th:unless="${object.getImageThird()!=null}"
+                                                src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                th:id="${object.getImageThird()!=null} ? '':'thumbnail2'">
+                                        <img>
                                         <input class="form-control" type="file" name="extraImage"
-                                               accept="image/png, image/jpg" style="width: auto;"
-                                               th:value="${object.getImageThird()}">
+                                               accept="image/png, image/jpg" style="width: auto;">
                                     </div>
                                 </div>
 
