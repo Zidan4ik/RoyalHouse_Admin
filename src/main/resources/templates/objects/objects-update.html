@@ -55,136 +55,166 @@
             <div class="content-wrapper d-flex justify-content-center align-items-center"
                  style="background-color:#ffffff">
 
-                <div class="col-xl">
-                    <div class="card mb-4 mt-5">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Редагування об'єкта</h5>
-                        </div>
-                        <div class="card-body" style="width: 1000px;height: auto;">
-                            <form th:method="post" th:action="@{/objects/{id}/update (id=${object.getId()})}"
-                                  th:object="${object}"
-                                  enctype="multipart/form-data">
-
-                                <div class="mb-3">
-                                    <label class="form-label">Типи об'єктів</label>
-                                    <select class="form-select" th:field="*{building}">
-                                        <option th:value="null" th:text="'Тип будівлі'"></option>
-                                        <option th:value="${T(com.example.royalhouse.enums.Building).house}"
-                                                th:text="'Будинок'"></option>
-                                        <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
-                                                th:text="'Квартира'"></option>
-                                        <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
-                                                th:text="'Земельна ділянка'"></option>
-                                        <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
-                                                th:text="'Комерційний'"></option>
-                                    </select>
-                                    <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
-                                         style="color: red"></div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Ціна($)</label>
-                                        <input th:field="*{price}" th:id="*{price}" type="text" class="form-control"
-                                               placeholder="0">
-                                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
-                                             style="color: red"></div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Ціна за м. кв.($)</label>
-                                        <input th:field="*{priceSquareMeter}" type="text"
-                                               class="form-control" placeholder="0">
-                                        <div th:if="${#fields.hasErrors('priceSquareMeter')}"
-                                             th:errors="*{priceSquareMeter}"
-                                             style="color: red"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Площа(м. кв.)</label>
-                                        <input th:field="*{area}" type="text" class="form-control" placeholder="0">
-                                        <div th:if="${#fields.hasErrors('area')}" th:errors="*{area}"
-                                             style="color: red"></div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">К-сть кімнат</label>
-                                        <input th:field="*{rooms}" type="text" class="form-control" placeholder="0">
-                                        <div th:if="${#fields.hasErrors('rooms')}" th:errors="*{rooms}"
-                                             style="color: red"></div>
-
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Поверх</label>
-                                        <input th:field="*{storey}" type="text" class="form-control" placeholder="0">
-                                        <div th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"
-                                             style="color: red"></div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Поверхність</label>
-                                        <input th:field="*{countStoreys}" type="text" class="form-control"
-                                               placeholder="0">
-                                        <div th:if="${#fields.hasErrors('countStoreys')}" th:errors="*{countStoreys}"
-                                             style="color: red"></div>
-
-                                    </div>
-                                </div>
-
-                                <div class="mb-5">
-                                    <div>
-                                        <img
-                                                th:if="${object.getImageFirst()!=null}"
-                                                th:src="${object.getLinkToFirstImage()}"
-                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                id="thumbnail0">
-                                        <img>
-                                        <img
-                                                th:unless="${object.getImageFirst()!=null}"
-                                                src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                th:id="${object.getImageFirst() != null} ? '' : 'thumbnail0'">
-                                        <img>
-                                        <input class="form-control" type="file" name="extraImage"
-                                               accept="image/png, image/jpg" style="width: auto;">
+                <div class="container-xxl d-flex align-items-stretch flex-grow-1 p-0">
+                    <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
+                        <!-- Navbar -->
+                        <nav class="navbar navbar-expand-xl bg-navbar-theme">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse">
+                                    <div class="navbar-nav me-auto">
+                                        <span style="font-size: 20px">Редагування об'єкта</span>
                                     </div>
                                     <div>
-                                        <img
-                                                th:if="${object.getImageSecond()!=null}"
-                                                th:src="${object.getLinkToSecondImage()}"
-                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                id="thumbnail1">
-                                        <img>
-                                        <img th:unless="${object.getImageSecond()!=null}"
-                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                             class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                             th:id="${object.getImageSecond()!=null} ? '':'thumbnail1'">
-                                        <img>
-                                        <input class="form-control" type="file" name="extraImage"
-                                               accept="image/png, image/jpg" style="width: auto;">
-                                    </div>
-                                    <div>
-                                        <img
-                                                th:if="${object.getImageThird()!=null}"
-                                                th:src="${object.getLinkToThirdImage()}"
-                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                id="thumbnail2">
-                                        <img>
-                                        <img
-                                                th:unless="${object.getImageThird()!=null}"
-                                                src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                                class="border mb-2" style="width: 550px;height: 200px;" alt="error"
-                                                th:id="${object.getImageThird()!=null} ? '':'thumbnail2'">
-                                        <img>
-                                        <input class="form-control" type="file" name="extraImage"
-                                               accept="image/png, image/jpg" style="width: auto;">
+                                        <span style="font-weight: bold;">Головна</span>
+                                        <span>|</span>
+                                        <span style="font-weight: bold;">Об'єкти</span>
+                                        <span>|</span>
+                                        <span style="color: gray; pointer-events: none">Редагування об'єкта</span>
                                     </div>
                                 </div>
+                            </div>
+                        </nav>
+                        <!--/ Navbar -->
 
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Оновити</button>
-                            </form>
+                        <div class="col-xl" style="display: flex;justify-content: center;align-items: center;">
+                            <div class="card mb-4 mt-5" style="width: 1000px;">
+                                <div class="card-body" style="width: 1000px;height: auto;">
+                                    <form th:method="post" th:action="@{/objects/{id}/update (id=${object.getId()})}"
+                                          th:object="${object}"
+                                          enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label class="form-label">Типи об'єктів</label>
+                                            <select class="form-select" th:field="*{building}">
+                                                <option th:value="null" th:text="'Тип будівлі'"></option>
+                                                <option th:value="${T(com.example.royalhouse.enums.Building).house}"
+                                                        th:text="'Будинок'"></option>
+                                                <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
+                                                        th:text="'Квартира'"></option>
+                                                <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
+                                                        th:text="'Земельна ділянка'"></option>
+                                                <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
+                                                        th:text="'Комерційний'"></option>
+                                            </select>
+                                            <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
+                                                 style="color: red"></div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Ціна($)</label>
+                                                <input th:field="*{price}" th:id="*{price}" type="text"
+                                                       class="form-control"
+                                                       placeholder="0">
+                                                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                                     style="color: red"></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Ціна за м. кв.($)</label>
+                                                <input th:field="*{priceSquareMeter}" type="text"
+                                                       class="form-control" placeholder="0">
+                                                <div th:if="${#fields.hasErrors('priceSquareMeter')}"
+                                                     th:errors="*{priceSquareMeter}"
+                                                     style="color: red"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Площа(м. кв.)</label>
+                                                <input th:field="*{area}" type="text" class="form-control"
+                                                       placeholder="0">
+                                                <div th:if="${#fields.hasErrors('area')}" th:errors="*{area}"
+                                                     style="color: red"></div>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">К-сть кімнат</label>
+                                                <input th:field="*{rooms}" type="text" class="form-control"
+                                                       placeholder="0">
+                                                <div th:if="${#fields.hasErrors('rooms')}" th:errors="*{rooms}"
+                                                     style="color: red"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Поверх</label>
+                                                <input th:field="*{storey}" type="text" class="form-control"
+                                                       placeholder="0">
+                                                <div th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"
+                                                     style="color: red"></div>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Поверхність</label>
+                                                <input th:field="*{countStoreys}" type="text" class="form-control"
+                                                       placeholder="0">
+                                                <div th:if="${#fields.hasErrors('countStoreys')}"
+                                                     th:errors="*{countStoreys}"
+                                                     style="color: red"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-5">
+                                            <div>
+                                                <img
+                                                        th:if="${object.getImageFirst()!=null}"
+                                                        th:src="${object.getLinkToFirstImage()}"
+                                                        class="border mb-2" style="width: 550px;height: 200px;"
+                                                        alt="error"
+                                                        id="thumbnail0">
+                                                <img>
+                                                <img
+                                                        th:unless="${object.getImageFirst()!=null}"
+                                                        src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        class="border mb-2" style="width: 550px;height: 200px;"
+                                                        alt="error"
+                                                        th:id="${object.getImageFirst() != null} ? '' : 'thumbnail0'">
+                                                <img>
+                                                <input class="form-control" type="file" name="extraImage"
+                                                       accept="image/png, image/jpg" style="width: auto;">
+                                            </div>
+                                            <div>
+                                                <img
+                                                        th:if="${object.getImageSecond()!=null}"
+                                                        th:src="${object.getLinkToSecondImage()}"
+                                                        class="border mb-2" style="width: 550px;height: 200px;"
+                                                        alt="error"
+                                                        id="thumbnail1">
+                                                <img>
+                                                <img th:unless="${object.getImageSecond()!=null}"
+                                                     src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                     class="border mb-2" style="width: 550px;height: 200px;" alt="error"
+                                                     th:id="${object.getImageSecond()!=null} ? '':'thumbnail1'">
+                                                <img>
+                                                <input class="form-control" type="file" name="extraImage"
+                                                       accept="image/png, image/jpg" style="width: auto;">
+                                            </div>
+                                            <div>
+                                                <img
+                                                        th:if="${object.getImageThird()!=null}"
+                                                        th:src="${object.getLinkToThirdImage()}"
+                                                        class="border mb-2" style="width: 550px;height: 200px;"
+                                                        alt="error"
+                                                        id="thumbnail2">
+                                                <img>
+                                                <img
+                                                        th:unless="${object.getImageThird()!=null}"
+                                                        src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        class="border mb-2" style="width: 550px;height: 200px;"
+                                                        alt="error"
+                                                        th:id="${object.getImageThird()!=null} ? '':'thumbnail2'">
+                                                <img>
+                                                <input class="form-control" type="file" name="extraImage"
+                                                       accept="image/png, image/jpg" style="width: auto;">
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Оновити
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
