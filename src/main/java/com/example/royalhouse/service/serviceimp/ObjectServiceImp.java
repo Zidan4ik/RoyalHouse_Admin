@@ -6,12 +6,16 @@ import com.example.royalhouse.service.ObjectService;
 import com.example.royalhouse.util.Image;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,10 +44,14 @@ public class ObjectServiceImp implements ObjectService {
         objectRepository.save(object);
         Image.saveFiles(object.getId(), map);
     }
-
     @Override
     public List<Object> getAll() {
         return objectRepository.findAll();
+    }
+
+    @Override
+    public Page<Object> getAllPagination(Pageable pageable) {
+        return objectRepository.findAll(pageable);
     }
 
     @Override

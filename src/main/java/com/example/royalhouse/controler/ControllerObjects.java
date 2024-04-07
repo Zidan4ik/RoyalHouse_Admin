@@ -7,11 +7,18 @@ import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -24,13 +31,26 @@ public class ControllerObjects {
 
 
     @GetMapping("")
-    public ModelAndView viewObjects() {
-        ModelAndView model = new ModelAndView();
+    public ModelAndView viewObjects(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        ModelAndView model = new ModelAndView("objects/objects-view");
+        Page<Object> objects = objectService.getAllPagination(PageRequest.of(page, size));
 
-        model.addObject("objects", transferObject.toTransferDTOViewList(objectService.getAll()));
-
-        model.setViewName("objects/objects-view");
+        model.addObject("objects", objects);
+        model.addObject("currentPage", page);
         return model;
+    }
+
+    @GetMapping("/p")
+    public String findPaginated(Model model,
+                                @RequestParam(defaultValue = "1") int page,
+                                @RequestParam(defaultValue = "5") int size) {
+        Page<Object> objects = objectService.getAllPagination(PageRequest.of(page, size));
+        model.addAttribute("objects", objects);
+        model.addAttribute("currentPage", page);
+
+        return "objects/test-objects";
     }
 
     @GetMapping("/add")
