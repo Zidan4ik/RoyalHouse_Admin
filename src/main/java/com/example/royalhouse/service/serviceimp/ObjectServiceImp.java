@@ -7,7 +7,6 @@ import com.example.royalhouse.util.Image;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -44,15 +43,17 @@ public class ObjectServiceImp implements ObjectService {
         objectRepository.save(object);
         Image.saveFiles(object.getId(), map);
     }
+
     @Override
-    public List<Object> getAll() {
-        return objectRepository.findAll();
+    public Page<Object> getAll(Pageable pageable) {
+        return objectRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Object> getAllPagination(Pageable pageable) {
-        return objectRepository.findAll(pageable);
+    public Page<Object> getAllById(Integer id, Pageable pageable) {
+        return objectRepository.findById(id, pageable);
     }
+
 
     @Override
     public Optional<Object> getById(Long id) {
@@ -76,14 +77,14 @@ public class ObjectServiceImp implements ObjectService {
 
             int counter = 0;
             for (MultipartFile file : multipartFiles) {
-                if(!file.getOriginalFilename().equals("")){
+                if (!file.getOriginalFilename().equals("")) {
                     String imageName = UUID.randomUUID() + "." + StringUtils.cleanPath(file.getOriginalFilename());
                     map.put(imageName, file);
-                    if (counter==0 && objectFromDB.getImageFirst()==null)
+                    if (counter == 0 && objectFromDB.getImageFirst() == null)
                         object.setImageFirst(imageName);
-                    if (counter==1 && objectFromDB.getImageSecond()==null)
+                    if (counter == 1 && objectFromDB.getImageSecond() == null)
                         object.setImageSecond(imageName);
-                    if (counter==2 && objectFromDB.getImageThird()==null)
+                    if (counter == 2 && objectFromDB.getImageThird() == null)
                         object.setImageThird(imageName);
                 }
                 counter++;
@@ -92,5 +93,9 @@ public class ObjectServiceImp implements ObjectService {
         object.setDateOfAddition(LocalDateTime.now());
         objectRepository.save(object);
         Image.saveFiles(object.getId(), map);
+    }
+
+    public int getCountObjects() {
+        return objectRepository.findAll().size();
     }
 }

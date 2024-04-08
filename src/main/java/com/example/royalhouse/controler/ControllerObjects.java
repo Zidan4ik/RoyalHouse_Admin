@@ -33,11 +33,22 @@ public class ControllerObjects {
     @GetMapping("")
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(name = "id", required = false) Integer id) {
         ModelAndView model = new ModelAndView("objects/objects-view");
-        Page<Object> objects = objectService.getAllPagination(PageRequest.of(page, size));
 
-        model.addObject("objects", objects);
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Object> pageObjects = objectService.getAll(paging);
+
+        if (id != null) {
+            pageObjects = objectService.getAllById(id, paging);
+        } else {
+            pageObjects = objectService.getAll(paging);
+        }
+
+
+        model.addObject("objects", pageObjects);
         model.addObject("currentPage", page);
         return model;
     }
@@ -46,7 +57,7 @@ public class ControllerObjects {
     public String findPaginated(Model model,
                                 @RequestParam(defaultValue = "1") int page,
                                 @RequestParam(defaultValue = "5") int size) {
-        Page<Object> objects = objectService.getAllPagination(PageRequest.of(page, size));
+        Page<Object> objects = objectService.getAll(PageRequest.of(page, size));
         model.addAttribute("objects", objects);
         model.addAttribute("currentPage", page);
 
@@ -114,6 +125,6 @@ public class ControllerObjects {
 
     @ModelAttribute("count")
     public int showCountObjects() {
-        return objectService.getAll().size();
+        return objectService.getCountObjects();
     }
 }
