@@ -30,7 +30,6 @@ public class ControllerObjects {
     private final ObjectServiceImp objectService;
     private final TransferObject transferObject;
 
-
     @GetMapping("")
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
@@ -51,17 +50,6 @@ public class ControllerObjects {
         model.addObject("typeOfBuilding",typeOfBuilding);
         model.addObject("rooms",rooms);
         return model;
-    }
-
-    @GetMapping("/p")
-    public String findPaginated(Model model,
-                                @RequestParam(defaultValue = "1") int page,
-                                @RequestParam(defaultValue = "5") int size) {
-        Page<Object> objects = objectService.getAll(PageRequest.of(page, size));
-        model.addAttribute("objects", objects);
-        model.addAttribute("currentPage", page);
-
-        return "objects/test-objects";
     }
 
     @GetMapping("/add")

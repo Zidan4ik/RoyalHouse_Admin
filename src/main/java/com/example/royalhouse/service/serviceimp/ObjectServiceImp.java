@@ -96,7 +96,7 @@ public class ObjectServiceImp implements ObjectService {
 
     public Page<Object> getFilteredObjects(Integer id, Building typeOfBuilding, Integer rooms, Pageable pageable) {
         Page<Object> pageObjects = objectRepository.findAll(pageable);
-        List<Object> content = pageObjects.getContent();
+
         if (id != null && typeOfBuilding == null && rooms == null) {
             pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, null, null, pageable);
         } else if (id == null && typeOfBuilding != null && rooms == null) {
@@ -104,13 +104,13 @@ public class ObjectServiceImp implements ObjectService {
         } else if (id == null && typeOfBuilding == null && rooms != null) {
             pageObjects = objectRepository.findByIdOrBuildingOrRooms(null, null, rooms, pageable);
         } else if (id != null && typeOfBuilding != null && rooms == null) {
-            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, typeOfBuilding, null, pageable);
+            pageObjects = objectRepository.findByIdAndBuilding(id, typeOfBuilding, pageable);
         } else if (id == null && typeOfBuilding != null && rooms != null) {
-            pageObjects = objectRepository.findByIdOrBuildingOrRooms(null, typeOfBuilding, rooms, pageable);
+            pageObjects = objectRepository.findByBuildingAndRooms(typeOfBuilding, rooms, pageable);
         } else if (id != null && typeOfBuilding == null && rooms != null) {
-            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, null, rooms, pageable);
+            pageObjects = objectRepository.findByIdAndRooms(id, rooms, pageable);
         } else if (id != null && typeOfBuilding != null && rooms != null) {
-            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, typeOfBuilding, rooms, pageable);
+            pageObjects = objectRepository.findByIdAndBuildingAndRooms(id, typeOfBuilding, rooms, pageable);
         }
 
         return pageObjects;

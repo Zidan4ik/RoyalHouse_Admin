@@ -14,5 +14,14 @@ import java.util.List;
 
 @Repository
 public interface ObjectRepository extends JpaRepository<Object, Long> {
-    Page<Object> findByIdOrBuildingOrRooms(Integer id, Building type,Integer rooms, Pageable pageable);
+    Page<Object> findByIdOrBuildingOrRooms(Integer id, Building type, Integer rooms, Pageable pageable);
+    Page<Object> findByIdAndBuildingAndRooms(Integer id, Building type, Integer rooms, Pageable pageable);
+
+    Page<Object> findByIdAndRooms(Integer id, Integer rooms, Pageable pageable);
+
+    Page<Object> findByBuildingAndRooms(Building type, Integer rooms, Pageable pageable);
+
+    Page<Object> findByIdAndBuilding(Integer id, Building type, Pageable pageable);
+
+
 }
