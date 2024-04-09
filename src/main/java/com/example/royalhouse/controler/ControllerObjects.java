@@ -2,6 +2,7 @@ package com.example.royalhouse.controler;
 
 
 import com.example.royalhouse.entity.Object;
+import com.example.royalhouse.enums.Building;
 import com.example.royalhouse.mapper.TransferObject;
 import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
@@ -34,22 +35,21 @@ public class ControllerObjects {
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(name = "id", required = false) Integer id) {
+            @RequestParam(name = "id", required = false) Integer id,
+            @RequestParam(name="building", required = false) Building typeOfBuilding,
+            @RequestParam(name="rooms",required = false) Integer rooms) {
         ModelAndView model = new ModelAndView("objects/objects-view");
 
-
         Pageable paging = PageRequest.of(page, size);
-        Page<Object> pageObjects = objectService.getAll(paging);
+        Page<Object> pageObjects = objectService.getFilteredObjects(id,typeOfBuilding,rooms,paging);
 
-        if (id != null) {
-            pageObjects = objectService.getAllById(id, paging);
-        } else {
-            pageObjects = objectService.getAll(paging);
-        }
-
-
+        model.addObject("objectsDB", transferObject.toTransferDTOViewList(pageObjects.getContent()));
         model.addObject("objects", pageObjects);
         model.addObject("currentPage", page);
+
+        model.addObject("id",id);
+        model.addObject("typeOfBuilding",typeOfBuilding);
+        model.addObject("rooms",rooms);
         return model;
     }
 

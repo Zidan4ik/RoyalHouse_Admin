@@ -1,6 +1,7 @@
 package com.example.royalhouse.repo;
 
 import com.example.royalhouse.entity.Object;
+import com.example.royalhouse.enums.Building;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,5 @@ import java.util.List;
 
 @Repository
 public interface ObjectRepository extends JpaRepository<Object, Long> {
-    Page<Object> findById(int id, Pageable pageable);
+    Page<Object> findByIdOrBuildingOrRooms(Integer id, Building type,Integer rooms, Pageable pageable);
 }

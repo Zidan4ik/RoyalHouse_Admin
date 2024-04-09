@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface ObjectService {
     void save(Object object, MultipartFile[] multipartFiles);
     Page<Object> getAll(Pageable pageable);
-    Page<Object> getAllById(Integer id,Pageable pageable);
     Optional<Object> getById(Long id);
     void deleteById(Long id);
     void update(Object object,MultipartFile[] multipartFiles);

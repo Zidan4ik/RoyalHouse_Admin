@@ -1,6 +1,7 @@
 package com.example.royalhouse.service.serviceimp;
 
 import com.example.royalhouse.entity.Object;
+import com.example.royalhouse.enums.Building;
 import com.example.royalhouse.repo.ObjectRepository;
 import com.example.royalhouse.service.ObjectService;
 import com.example.royalhouse.util.Image;
@@ -50,12 +51,6 @@ public class ObjectServiceImp implements ObjectService {
     }
 
     @Override
-    public Page<Object> getAllById(Integer id, Pageable pageable) {
-        return objectRepository.findById(id, pageable);
-    }
-
-
-    @Override
     public Optional<Object> getById(Long id) {
         return objectRepository.findById(id);
     }
@@ -97,5 +92,27 @@ public class ObjectServiceImp implements ObjectService {
 
     public int getCountObjects() {
         return objectRepository.findAll().size();
+    }
+
+    public Page<Object> getFilteredObjects(Integer id, Building typeOfBuilding, Integer rooms, Pageable pageable) {
+        Page<Object> pageObjects = objectRepository.findAll(pageable);
+        List<Object> content = pageObjects.getContent();
+        if (id != null && typeOfBuilding == null && rooms == null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, null, null, pageable);
+        } else if (id == null && typeOfBuilding != null && rooms == null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(null, typeOfBuilding, null, pageable);
+        } else if (id == null && typeOfBuilding == null && rooms != null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(null, null, rooms, pageable);
+        } else if (id != null && typeOfBuilding != null && rooms == null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, typeOfBuilding, null, pageable);
+        } else if (id == null && typeOfBuilding != null && rooms != null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(null, typeOfBuilding, rooms, pageable);
+        } else if (id != null && typeOfBuilding == null && rooms != null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, null, rooms, pageable);
+        } else if (id != null && typeOfBuilding != null && rooms != null) {
+            pageObjects = objectRepository.findByIdOrBuildingOrRooms(id, typeOfBuilding, rooms, pageable);
+        }
+
+        return pageObjects;
     }
 }
