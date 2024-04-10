@@ -1,6 +1,7 @@
 package com.example.royalhouse.mapper;
 
 import com.example.royalhouse.entity.Object;
+import com.example.royalhouse.enums.Building;
 import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.model.ObjectDTOView;
 import org.springframework.stereotype.Service;
@@ -45,11 +46,19 @@ public class TransferObject {
         return objectDTOAdd;
     }
 
-    public ObjectDTOView toTransferDTOView(Object object) {
+    public static ObjectDTOView toTransferDTOView(Object object) {
         ObjectDTOView objectDTOView = new ObjectDTOView();
 
         objectDTOView.setId(object.getId());
-        objectDTOView.setBuilding(object.getBuilding());
+        if (object.getBuilding().equals(Building.house)) {
+            objectDTOView.setBuilding("Будинок");
+        } else if (object.getBuilding().equals(Building.apartment)) {
+            objectDTOView.setBuilding("Квартира");
+        } else if (object.getBuilding().equals(Building.plot)) {
+            objectDTOView.setBuilding("Ділянка");
+        } else if (object.getBuilding().equals(Building.commercial)) {
+            objectDTOView.setBuilding("Комерційний");
+        }
         objectDTOView.setArea(object.getArea());
         objectDTOView.setPrice(object.getPrice());
         objectDTOView.setPriceSquareMeter(object.getPriceSquareMeter());
@@ -62,19 +71,10 @@ public class TransferObject {
 
         return objectDTOView;
     }
-    public List<ObjectDTOView> toTransferDTOViewList(List<Object> objectsEntity){
+
+    public List<ObjectDTOView> toTransferDTOViewList(List<Object> objectsEntity) {
         return objectsEntity.stream()
-                .map(object->new ObjectDTOView(
-                        object.getId(),
-                        object.getBuilding(),
-                        object.getArea(),
-                        object.getPrice(),
-                        object.getPriceSquareMeter(),
-                        object.getRooms(),
-                        object.getStorey(),
-                        object.getCountStoreys(),
-                        object.getDateOfAddition().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                ))
+                .map(TransferObject::toTransferDTOView)
                 .collect(Collectors.toList());
     }
 }

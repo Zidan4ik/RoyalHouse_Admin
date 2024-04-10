@@ -8,17 +8,19 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "applications")
+@Table(name = "requests")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Application {
+public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String fullName;
     private String phone;
     private String email;
+    @Column(nullable = true,length = 200)
     private String comment;
     private LocalDateTime date;
     private boolean isReported;

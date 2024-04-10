@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ObjectDTOView {
     private Long id;
-    private Building building;
+    private String building;
     private double area;
     private double price;
     private double priceSquareMeter;
