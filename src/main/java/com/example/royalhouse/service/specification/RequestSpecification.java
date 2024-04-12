@@ -9,11 +9,11 @@ public class RequestSpecification {
     }
 
     public static Specification<Request> hasPhone(String phone) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("phone"), "%" + phone + "%"));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("phone"), phone + "%"));
     }
 
     public static Specification<Request> hasEmail(String email) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"), "%" + email + "%"));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"), email + "%"));
     }
 
     public static Specification<Request> isReported(boolean isReported) {

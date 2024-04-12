@@ -26,8 +26,8 @@ public class RequestServiceImp implements RequestService {
         requestRepository.save(request);
     }
 
-    public long getCountRequests() {
-        return requestRepository.count();
+    public List<Request> getRequestsByReportedFalse() {
+        return requestRepository.findAllByIsReportedFalse();
     }
 
     @Override

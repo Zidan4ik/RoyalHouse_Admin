@@ -79,10 +79,6 @@
                                             </thead>
                                             <tbody th:data-href="@{/requests}">
                                             <tr>
-                                                <th>id:</th>
-                                                <td th:text="${request.getId()}"></td>
-                                            </tr>
-                                            <tr>
                                                 <th>Повне ім'я:</th>
                                                 <td th:text="${request.getFullName()}"></td>
                                             </tr>
@@ -102,6 +98,15 @@
                                             <tr>
                                                 <th>Дата добавлення:</th>
                                                 <td th:text="${request.getDate()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Статус:</th>
+                                                <td th:if="${request.isReported()==false}">
+                                                    <span class="badge bg-warning">Новий</span>
+                                                </td>
+                                                <td th:if="${request.isReported()==true}">
+                                                    <span class="badge bg-success" id="statusSpan">Прочитано</span>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>

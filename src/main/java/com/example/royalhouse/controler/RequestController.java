@@ -1,6 +1,8 @@
 package com.example.royalhouse.controler;
 
 import com.example.royalhouse.entity.Request;
+import com.example.royalhouse.mapper.TransferRequest;
+import com.example.royalhouse.model.RequestDTOView;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
 import com.example.royalhouse.service.serviceimp.RequestServiceImp;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/requests")
@@ -31,8 +35,9 @@ public class RequestController {
         ModelAndView model = new ModelAndView("requests/requests-view");
         Pageable paging = PageRequest.of(page, size);
 
-        Page<Request> pageRequests = requestService.getAll(fullName, phone, email, null, paging);
-        List<Request> requests = pageRequests.getContent();
+        Page<Request> pageRequests = requestService.getAll(fullName, phone, email, isReported, paging);
+        List<RequestDTOView> requests = TransferRequest.toListDTOView(pageRequests.getContent());
+
 
         model.addObject("requests", requests);
         model.addObject("currentPage", page);
@@ -49,7 +54,7 @@ public class RequestController {
     public ModelAndView viewRequest(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("requests/request-view");
 
-        model.addObject("request", requestService.getById(id).get());
+        model.addObject("request", TransferRequest.toDTOView(requestService.getById(id).get()));
         return model;
     }
 
@@ -60,13 +65,25 @@ public class RequestController {
         return model;
     }
 
+    @GetMapping("/{id}/change-status")
+    public ModelAndView changeStatus(@PathVariable(name = "id")long id){
+        ModelAndView model = new ModelAndView("redirect:/requests");
+        Optional<Request> requestDB = requestService.getById(id);
+        if(!requestDB.get().isReported()){
+            requestDB.get().setReported(true);
+        }else{
+            requestDB.get().setReported(false);
+        }
+        requestService.save(requestDB.get());
+        return model;
+    }
     @ModelAttribute("countObjects")
     public int showCountObjects() {
         return objectService.getCountObjects();
     }
 
     @ModelAttribute("countRequests")
-    public long showCountRequest() {
-        return requestService.getCountRequests();
+    public int showCountRequest() {
+        return requestService.getRequestsByReportedFalse().size();
     }
 }
