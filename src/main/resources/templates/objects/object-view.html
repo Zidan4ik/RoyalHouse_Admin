@@ -66,48 +66,48 @@
                             </div>
                         </nav>
                         <div class="col-md">
-                            <div class="card mb-4">
+                            <div class="card mb-4 mt-2">
                                 <div class="card-body">
                                     <div class="responsive-table">
-                                        <table class="table table-striped table-hover table-vertical"
+                                        <table class="table table-striped table-hover table-bordered"
                                                style="width: 100%; margin: 10px auto;"
                                                id="datatable">
                                             <thead>
-                                            <th>Параметр</th>
-                                            <th>Значення</th>
+                                            <th style="display: none"></th>
+                                            <th style="display: none"></th>
                                             </thead>
                                             <tbody th:data-href="@{/objects}">
                                             <tr>
-                                                <th>id:</th>
+                                                <th style="width: 200px;">id</th>
                                                 <td th:text="${object.getId()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Тип нерухомості:</th>
+                                                <th style="width: 200px;">Тип нерухомості</th>
                                                 <td th:text="${object.getBuilding()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Ціна($):</th>
+                                                <th style="width: 200px;">Ціна($)</th>
                                                 <td th:text="${object.getPrice()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Ціна за кв. м:</th>
+                                                <th style="width: 200px;">Ціна за кв. м</th>
                                                 <td th:text="${object.getPriceSquareMeter()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Кімнат:</th>
+                                                <th style="width: 200px;">Кімнат</th>
                                                 <td th:text="${object.getRooms()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Поверх:</th>
+                                                <th style="width: 200px;">Поверх</th>
                                                 <td th:text="${object.getStorey()}"></td>
                                             </tr>
 
                                             <tr>
-                                                <th>Поверхневість:</th>
+                                                <th style="width: 200px;">Поверхневість</th>
                                                 <td th:text="${object.getCountStoreys()}"></td>
                                             </tr>
                                             <tr>
-                                                <th>Дата добавлення:</th>
+                                                <th style="width: 200px;">Дата добавлення</th>
                                                 <td th:text="${object.getDateOfAddition()}"></td>
                                             </tr>
                                             </tbody>

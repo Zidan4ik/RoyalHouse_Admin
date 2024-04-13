@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ObjectDTOView {
     private Long id;
     private String building;

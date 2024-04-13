@@ -6,6 +6,7 @@ import com.example.royalhouse.enums.Building;
 import com.example.royalhouse.mapper.TransferObject;
 import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
+import com.example.royalhouse.service.serviceimp.RequestServiceImp;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerObjects {
 
     private final ObjectServiceImp objectService;
+    private final RequestServiceImp requestService;
     private final TransferObject transferObject;
-
     @GetMapping("")
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
@@ -105,12 +106,16 @@ public class ControllerObjects {
     public ModelAndView deleteObject(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("redirect:/objects");
         objectService.deleteById(id);
-
         return model;
     }
 
-    @ModelAttribute("count")
+    @ModelAttribute("countObjects")
     public int showCountObjects() {
         return objectService.getCountObjects();
+    }
+
+    @ModelAttribute("countRequests")
+    public int showCountRequest() {
+        return requestService.getRequestsByReportedFalse().size();
     }
 }
