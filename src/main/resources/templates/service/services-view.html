@@ -1,0 +1,227 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/core.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/theme-default.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/fonts/tabler-icons.css">
+    <link rel="stylesheet" href="/styles/objects.css">
+    <link rel="stylesheet" href="/styles/requests.css">
+
+    <!-- Core CSS -->
+    <script src="/vuexy/assets/vendor/js/helpers.js"></script>
+
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/vuexy/assets/js/config.js"></script>
+    <script src="/vuexy/assets/vendor/js/template-customizer.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <!-- Layout container -->
+    <div class="layout-container">
+        <!-- Menu -->
+        <div th:insert="~{block/sidebar :: sidebar}"></div>
+        <!--/ Menu -->
+
+        <!-- Layout page -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <div th:insert="~{block/navbar::navbar}"></div>
+            <!--/ Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper" style="background-color: white">
+                <!-- Content -->
+                <div class="container-xxl d-flex align-items-stretch flex-grow-1 p-0">
+                    <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
+                        <!-- Navbar -->
+                        <nav class="navbar navbar-expand-xl bg-navbar-theme">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse">
+                                    <div class="navbar-nav me-auto">
+                                        <span style="font-size: 20px">Сервіс</span>
+                                    </div>
+
+                                    <div>
+                                        <span style="font-weight: bold;">Головна</span>
+                                        <span>|</span>
+                                        <span style="color: gray; pointer-events: none">Сервіс</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div style="margin-right: 25px;text-align: end">
+                            <a th:href="@{/service/add}" class="btn btn-success btn-lg " role="button">Добавити</a>
+                        </div>
+                        <!--/ Navbar -->
+                        <div class="col-md">
+                            <div class="card mb-4 mt-2">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <form id="serviceForm" action="/service" method="get">
+                                            <table class="table table-striped table-bordered table-hover"
+                                                   style="width: 100%; margin: 10px auto;">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Назва</th>
+                                                    <th style="width: 300px;">Опис</th>
+                                                    <th style="width: 150px;">Дата добавлення</th>
+                                                    <th style="width: 100px;">Відображення</th>
+                                                    <th style="width: 100px;"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <th>
+                                                        <input type="text" class="form-control"
+                                                               name="name" th:value="${name}"
+                                                               id="nameInput"/>
+                                                    </th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>
+                                                        <select class="form-select" name="isReflection"
+                                                                id="isReflectionInput">
+                                                            <option selected disabled></option>
+                                                            <option th:value="null"
+                                                                    th:selected="${isReflection == null}"
+                                                                    th:text="'-'"></option>
+                                                            <option th:value="true"
+                                                                    th:selected="${isReflection == true}"
+                                                                    th:text="'Так'">
+                                                            </option>
+                                                            <option th:value="false"
+                                                                    th:selected="${isReflection == false}"
+                                                                    th:text="'Ні'"></option>
+                                                        </select>
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+
+                                                <tr th:unless="${services.size()==0}"
+                                                    th:each="service : ${services}">
+                                                    <td class="comment" th:text="${service.getName()}"></td>
+                                                    <td class="comment" th:text="${service.getDescription()}"></td>
+                                                    <td class="comment" th:text="${service.getDate()}"></td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center">
+                                                            <a th:href="@{/service/{id}/change-status (id=${service.getId()})}">
+                                                            <span class="badge bg-danger" style="width: 70px"
+                                                                  th:if="${service.isReflection()==false}">Ні</span>
+                                                                <span class="badge bg-success" style="width: 70px"
+                                                                      th:if="${service.isReflection()==true}">Так</span>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center">
+                                                            <div class="btn-group">
+                                                                <a th:href="@{/service/{id}/view (id=${service.getId()})}"
+                                                                   class="btn btn-label-dark trash-icon">
+                                                                    <i class="ti ti-pencil  "></i>
+                                                                </a>
+                                                                <a th:href="@{/service/{id}/delete (id=${service.getId()})}"
+                                                                   class="btn btn-label-dark trash-icon">
+                                                                    <i class="ti ti-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr th:if="${services.size()==0}">
+                                                    <td colspan="5">No tutorials found!</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <nav aria-label="Page navigation"
+                             th:if="${pageService != null and pageService.totalPages > 0}">
+                            <ul class="pagination pagination-round justify-content-center">
+                                <li class="page-item first" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                                    <a class="page-link"
+                                       th:href="@{/service (name=${name},isReflection=${isReflection}, page=${0})}"><i
+                                            class="ti ti-chevrons-left ti-xs"></i></a>
+                                </li>
+                                <li class="page-item prev" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                                    <a class="page-link"
+                                       th:href="@{/service (name=${name},isReflection=${isReflection}, page=${currentPage - 1})}"><i
+                                            class="ti ti-chevron-left ti-xs"></i></a>
+                                </li>
+
+                                <li class="page-item"
+                                    th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 0, currentPage + 2 < pageService.totalPages ? currentPage + 2 : pageService.totalPages - 1)}">
+                                    <a class="page-link"
+                                       th:href="@{/service (name=${name},isReflection=${isReflection}, page=${i})}"
+                                       th:text="${i+1}"
+                                       th:classappend="${currentPage == i ? 'active' : ''}"></a>
+                                </li>
+
+                                <li class="page-item next"
+                                    th:classappend="${currentPage == pageService.totalPages - 1 ? 'disabled' : ''}">
+                                    <a class="page-link"
+                                       th:href="@{/service (name=${name},isReflection=${isReflection},page=${currentPage + 1})}"><i
+                                            class="ti ti-chevron-right ti-xs"></i></a>
+                                </li>
+
+                                <li class="page-item last"
+                                    th:classappend="${currentPage == pageService.totalPages - 1 ? 'disabled' : ''}">
+                                    <a class="page-link"
+                                       th:href="@{/service (name=${name},isReflection=${isReflection}, page=${pageService.totalPages - 1}) }"><i
+                                            class="ti ti-chevrons-right ti-xs"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+
+                <!--/ Content -->
+                <!-- Footer -->
+                <footer class="content-footer footer bg-footer-theme">
+                    Footer
+                </footer>
+                <!--/ Footer -->
+                <!-- Content area backdrop -->
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!--/ Content wrapper -->
+
+        </div>
+        <!--/ Layout page -->
+
+    </div>
+    <!--/ Layout container -->
+</div>
+<!--/ Layout wrapper -->
+
+<script src="/vuexy/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/vuexy/assets/vendor/js/menu.js"></script>
+<script src="/vuexy/assets/js/main.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#nameInput').on('keypress', function (e) {
+            if (e.which === 13) {
+                $('#serviceForm').submit();
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#isReflectionInput').on('input', function () {
+            $('#serviceForm').submit();
+        });
+    });
+</script>
+
+
+</body>
+</html>
