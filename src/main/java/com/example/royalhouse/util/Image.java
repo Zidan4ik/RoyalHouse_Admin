@@ -16,10 +16,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Image {
-    public static void saveFiles(Long id, HashMap<String,MultipartFile> map) {
+    public static void saveFiles(Long id, HashMap<String, MultipartFile> map) {
         String uploadDir = "./uploads/" + id;
         try {
-            for (Map.Entry<String, MultipartFile> m:map.entrySet()){
+            for (Map.Entry<String, MultipartFile> m : map.entrySet()) {
                 if (!m.getValue().getOriginalFilename().isEmpty()) {
                     Image.saveFile(uploadDir, m.getValue(), m.getKey());
                 }
@@ -36,9 +36,8 @@ public class Image {
             Files.createDirectories(uploadPath);
         }
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
-
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();
         }

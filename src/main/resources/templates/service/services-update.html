@@ -1,6 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/core.css"/>
     <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/theme-default.css"/>
     <link rel="stylesheet" href="/vuexy/assets/vendor/fonts/tabler-icons.css">
@@ -12,18 +11,30 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $("input[name='extraImage']").each(function (index) {
-                $(this).change(function () {
-                    showExtraImageThumbnail(this, index);
-                });
+            $('#image').change(function () {
+                showImageThumbnail(this);
+            });
+            $('#banner').change(function () {
+                showBannerThumbnail(this);
             });
 
-            function showExtraImageThumbnail(fileInput, index) {
+            function showImageThumbnail(fileInput) {
                 file = fileInput.files[0];
                 reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#thumbnail' + index).attr('src', e.target.result);
+                    $('#imageThumbnail').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            };
+
+            function showBannerThumbnail(fileInput) {
+                file = fileInput.files[0];
+                reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#bannerThumbnail').attr('src', e.target.result);
                 };
 
                 reader.readAsDataURL(file);
@@ -65,22 +76,33 @@
                                   enctype="multipart/form-data">
                                 <div class="row mb-5">
                                     <div class="col-4">
-                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                        <img th:if="${service.getImage()!=null}"
+                                             th:src="${service.getLinkToImage()}"
                                              class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             id="thumbnail0">
+                                             id="imageThumbnail">
+                                        <img th:unless="${service.getImage()}!=null"
+                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                             th:id="${service.getImage()!=null}?'':'imageThumbnail'">
                                         <label class="form-label" style="font-size: 16px"><b>Рекомендований розмір:
                                             (1920x800) </b></label>
-                                        <input class="form-control" type="file" name="image"
-                                               accept="image/png, image/jpg" style="width: auto;">
+                                        <input class="form-control" type="file" name="image2" id="image"
+                                               style="width: auto;">
                                     </div>
                                     <div class="col-4">
-                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                        <img th:if="${service.getBanner()}!=null"
+                                             th:src="${service.getLinkToBanner()}"
                                              class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             id="thumbnail1">
+                                             id="bannerThumbnail">
+
+                                        <img th:unless="${service.getBanner()}!=null"
+                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                             th:id="${service.getBanner()!=null}?'':'bannerThumbnail'">
                                         <label class="form-label" style="font-size: 16px"><b>Рекомендований розмір:
                                             (500x350)</b></label>
-                                        <input class="form-control" type="file" name="banner"
-                                               accept="image/png, image/jpg" style="width: auto;">
+                                        <input class="form-control" type="file" name="banner2" id="banner"
+                                               style="width: auto;">
                                     </div>
                                 </div>
 
@@ -89,13 +111,13 @@
                                     <div class="col-10">
                                         <label class="form-label"></label>
                                         <input th:field="*{name}" type="text" class="form-control" placeholder="Назва">
-                                        <!--                                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"-->
-                                        <!--                                             style="color: red"></div>-->
+                                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                             style="color: red"></div>
                                     </div>
                                     <div class="col-2">
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="checkbox"
-                                                  th:field="*{reflection}"/>
+                                                   th:field="*{reflection}"/>
                                             <label class="form-check-label">Відображати</label>
                                         </div>
                                     </div>
