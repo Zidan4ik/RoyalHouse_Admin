@@ -1,7 +1,6 @@
 package com.example.royalhouse.util;
 
-import com.example.royalhouse.entity.Object;
-import org.springframework.util.StringUtils;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,13 +10,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class Image {
-    public static void saveFiles(Long id, HashMap<String, MultipartFile> map) {
-        String uploadDir = "./uploads/" + id;
+    public static void saveFiles(String uploadDir, HashMap<String, MultipartFile> map) {
         try {
             for (Map.Entry<String, MultipartFile> m : map.entrySet()) {
                 if (!m.getValue().getOriginalFilename().isEmpty()) {

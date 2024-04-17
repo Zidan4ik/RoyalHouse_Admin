@@ -42,7 +42,8 @@ public class ObjectServiceImp implements ObjectService {
 
         object.setDateOfAddition(LocalDateTime.now());
         objectRepository.save(object);
-        Image.saveFiles(object.getId(), map);
+        String uploadDir = "./uploads/objects/" + object.getId();
+        Image.saveFiles(uploadDir, map);
     }
 
     @Override
@@ -87,7 +88,8 @@ public class ObjectServiceImp implements ObjectService {
         }
         object.setDateOfAddition(LocalDateTime.now());
         objectRepository.save(object);
-        Image.saveFiles(object.getId(), map);
+        String uploadDir = "./uploads/objects/" + object.getId();
+        Image.saveFiles(uploadDir, map);
     }
 
     public int getCountObjects() {

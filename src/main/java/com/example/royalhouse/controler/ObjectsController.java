@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/objects")
 @RequiredArgsConstructor
-public class ControllerObjects {
+public class ObjectsController {
 
     private final ObjectServiceImp objectService;
     private final RequestServiceImp requestService;

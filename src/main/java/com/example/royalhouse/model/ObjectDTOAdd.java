@@ -36,12 +36,12 @@ public class ObjectDTOAdd {
     private String imageThird;
 
     public String getLinkToFirstImage() {
-        return "/uploads/"+id+"/" + imageFirst;
+        return "/uploads/objects/"+id+"/" + imageFirst;
     }
     public String getLinkToSecondImage() {
-        return "/uploads/"+id+"/" + imageSecond;
+        return "/uploads/objects/"+id+"/" + imageSecond;
     }
     public String getLinkToThirdImage() {
-        return "/uploads/"+id+"/" + imageThird;
+        return "/uploads/objects/"+id+"/" + imageThird;
     }
 }

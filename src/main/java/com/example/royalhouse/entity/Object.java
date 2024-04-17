@@ -3,9 +3,6 @@ package com.example.royalhouse.entity;
 
 import com.example.royalhouse.enums.Building;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -60,12 +57,5 @@ public class Object {
         this.rooms = rooms;
         this.storey = storey;
         this.countStoreys = countStoreys;
-    }
-
-    public String getImagePath() {
-        if (imageFirst == null) {
-            return null;
-        }
-        return "/uploads/" + imageFirst;
     }
 }
