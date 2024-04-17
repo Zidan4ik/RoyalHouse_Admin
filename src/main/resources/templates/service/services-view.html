@@ -106,12 +106,10 @@
                                                     <td class="comment" th:text="${service.getDate()}"></td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">
-                                                            <a th:href="@{/service/{id}/change-status (id=${service.getId()})}">
                                                             <span class="badge bg-danger" style="width: 70px"
                                                                   th:if="${service.isReflection()==false}">Ні</span>
                                                                 <span class="badge bg-success" style="width: 70px"
                                                                       th:if="${service.isReflection()==true}">Так</span>
-                                                            </a>
                                                         </div>
                                                     </td>
                                                     <td>
