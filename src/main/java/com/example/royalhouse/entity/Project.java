@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Table(name = "projects")
 @NoArgsConstructor
@@ -18,7 +19,12 @@ public class Project {
     private String address;
     private boolean isActive;
     private String banner;
-    private int length;
-    private int width;
+    @Column(nullable = true)
+    private Integer length;
+    @Column(nullable = true)
+    private Integer width;
+    @Column(nullable = true)
+    private Integer indexNum;
+
 }
 

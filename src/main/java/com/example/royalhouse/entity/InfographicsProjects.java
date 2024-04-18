@@ -19,6 +19,7 @@ public class InfographicsProjects {
     @Column(unique = true)
     private InfographicsType type;
     private String path;
+    private String description;
     @ManyToOne
-    private Project infographics;
+    private Project project;
 }
