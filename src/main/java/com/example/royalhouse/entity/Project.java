@@ -15,16 +15,16 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 40)
     private String name;
+    @Column(length = 40)
     private String address;
     private boolean isActive;
+    @Column(length = 215)
     private String banner;
-    @Column(nullable = true)
-    private Integer length;
-    @Column(nullable = true)
-    private Integer width;
-    @Column(nullable = true)
+    private String imagePanorama;
     private Integer indexNum;
-
+    private Double length;
+    private Double width;
 }
 

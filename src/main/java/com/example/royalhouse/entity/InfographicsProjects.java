@@ -16,7 +16,6 @@ public class InfographicsProjects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private InfographicsType type;
     private String path;
     private String description;
