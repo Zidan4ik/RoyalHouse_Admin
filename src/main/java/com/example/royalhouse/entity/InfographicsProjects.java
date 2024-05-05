@@ -17,7 +17,7 @@ public class InfographicsProjects {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private InfographicsType type;
-    private String path;
+    private String image;
     private String description;
     @ManyToOne
     private Project project;

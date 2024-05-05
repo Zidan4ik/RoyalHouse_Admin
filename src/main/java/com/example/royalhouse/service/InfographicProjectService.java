@@ -8,6 +8,5 @@ import java.util.List;
 public interface InfographicProjectService {
     List<InfographicsProjects> getAll();
     void save(List<InfographicsProjects> infographicsProjects, List<InfographicsDTO> infoMain, List<InfographicsDTO> infoInfrastructure, List<InfographicsDTO> infoApartment);
-    void update(List<InfographicsProjects> infographicsProjects);
     void deleteById(Long id);
 }

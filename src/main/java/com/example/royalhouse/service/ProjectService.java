@@ -17,5 +17,4 @@ public interface ProjectService {
 
     void deleteById(Long id);
 
-    void update(Project object, MultipartFile banner, MultipartFile panorama);
 }

@@ -76,17 +76,17 @@
                                                     <th></th>
                                                     <th>
                                                         <input type="text" class="form-control"
-                                                               name="fullName" th:value="${name}"
-                                                               id="fullNameInput" style="width: 200px"/>
+                                                               name="name" th:value="${name}"
+                                                               id="nameInput" style="width: 200px"/>
                                                     </th>
                                                     <th>
                                                         <input type="text" class="form-control"
-                                                               name="phone" th:value="${address}"
-                                                               id="phoneInput" style="width: 200px"/>
+                                                               name="address" th:value="${address}"
+                                                               id="addressInput" style="width: 200px"/>
                                                     </th>
                                                     <th>
                                                         <select class="form-select" name="isActive"
-                                                                id="isStatusInput">
+                                                                id="statusInput">
                                                             <option selected disabled></option>
                                                             <option th:value="null"
                                                                     th:selected="${isActive == null}"
@@ -119,9 +119,9 @@
                                                     <td>
                                                         <div class="d-flex justify-content-center">
                                                             <div class="btn-group">
-                                                                <a th:href="@{/projects/{id}/view (id=${project.getId()})}"
+                                                                <a th:href="@{/projects/{id}/update (id=${project.getId()})}"
                                                                    class="btn btn-label-dark trash-icon">
-                                                                    <i class="ti ti-eye"></i>
+                                                                    <i class="ti ti-edit"></i>
                                                                 </a>
                                                                 <a th:href="@{/projects/{id}/delete (id=${project.getId()})}"
                                                                    class="btn btn-label-dark trash-icon">
@@ -218,7 +218,7 @@
     });
 
     $(document).ready(function () {
-        $('#isStatusInput').on('input', function () {
+        $('#statusInput').on('input', function () {
             $('#projectForm').submit();
         });
     });

@@ -25,11 +25,10 @@ public class MapperProject {
         return projectDTOView;
     }
 
-    public static ProjectDTOAdd toDTOAdd(Project project, List<InfographicsProjects> infographics, List<ImagesProject> images,
-                                         List<SpecificationTextProject> specificationTexts, List<TextProject> texts) {
-        ProjectDTOAdd projectDTOAdd = getProjectDTOAdd(project);
+    public static ProjectDTOAdd toDTOAdd(ProjectUnifier unifier) {
+        ProjectDTOAdd projectDTOAdd = getProjectDTOAdd(unifier.getProject());
 
-        for (TextProject tp : texts) {
+        for (TextProject tp : unifier.getTextProjectList()) {
             if (tp.getType().equals(TextType.aboutProject))
                 projectDTOAdd.setDescriptionAbout(new TextDTO(tp.getId(), tp.getDescription()));
             if (tp.getType().equals(TextType.destination))
@@ -40,7 +39,7 @@ public class MapperProject {
                 projectDTOAdd.setDescriptionApartment(new TextDTO(tp.getId(), tp.getDescription()));
         }
 
-        for (ImagesProject i : images) {
+        for (ImagesProject i : unifier.getImagesProjectList()) {
             if (i.getType().equals(ImageType.aboutProject)) {
                 projectDTOAdd.setImagesAboutDTO(new ImagesDTO(i.getId(), i.getImageFirst(), i.getImageSecond(), i.getImageThird()));
             }
@@ -54,7 +53,7 @@ public class MapperProject {
 
         List<SpecificationTextDTO> specificTextNew = new ArrayList<>();
 
-        for (SpecificationTextProject st : specificationTexts) {
+        for (SpecificationTextProject st : unifier.getSpecificationTextsList()) {
             specificTextNew.add(new SpecificationTextDTO(st.getId(), st.getMiniText()));
         }
 
@@ -64,15 +63,15 @@ public class MapperProject {
         List<InfographicsDTO> infographicsInfrastructure = new ArrayList<>();
         List<InfographicsDTO> infographicsApartments = new ArrayList<>();
 
-        for (InfographicsProjects ip : infographics) {
+        for (InfographicsProjects ip : unifier.getInfographicsProjectsList()) {
             if (ip.getType().equals(InfographicsType.main)) {
-                infographicsMain.add(new InfographicsDTO(ip.getId(), ip.getPath(), ip.getDescription()));
+                infographicsMain.add(new InfographicsDTO(ip.getId(), ip.getImage(), ip.getDescription()));
             }
             if (ip.getType().equals(InfographicsType.infrastructure)) {
-                infographicsInfrastructure.add(new InfographicsDTO(ip.getId(), ip.getPath(), ip.getDescription()));
+                infographicsInfrastructure.add(new InfographicsDTO(ip.getId(), ip.getImage(), ip.getDescription()));
             }
             if (ip.getType().equals(InfographicsType.apartment)) {
-                infographicsApartments.add(new InfographicsDTO(ip.getId(), ip.getPath(), ip.getDescription()));
+                infographicsApartments.add(new InfographicsDTO(ip.getId(), ip.getImage(), ip.getDescription()));
             }
         }
         projectDTOAdd.setInfographicsMain(infographicsMain);
@@ -182,10 +181,20 @@ public class MapperProject {
         project.setAddress(projectDTOAdd.getAddress());
         project.setActive(projectDTOAdd.isActive());
         project.setBanner(projectDTOAdd.getBanner());
-        project.setImagePanorama(projectDTOAdd.getImagePanorama());
+        project.setImagePanorama(projectDTOAdd.getPanorama());
         project.setIndexNum(projectDTOAdd.getIndexNum());
-        project.setLength(projectDTOAdd.getLength());
-        project.setWidth(projectDTOAdd.getWidth());
+
+        if (projectDTOAdd.getLength().isEmpty()) {
+            project.setLength(26.23764131587207);
+        } else {
+            project.setLength(Double.parseDouble(projectDTOAdd.getLength()));
+        }
+
+        if(projectDTOAdd.getWidth().isEmpty()){
+            project.setWidth(50.62131098497328);
+        }else{
+            project.setWidth(Double.parseDouble(projectDTOAdd.getWidth()));
+        }
         return project;
     }
 
@@ -197,9 +206,9 @@ public class MapperProject {
         projectDTOAdd.setIndexNum(project.getIndexNum());
         projectDTOAdd.setActive(project.isActive());
         projectDTOAdd.setBanner(project.getBanner());
-        projectDTOAdd.setLength(project.getLength());
-        projectDTOAdd.setWidth(project.getWidth());
-        projectDTOAdd.setImagePanorama(project.getImagePanorama());
+        projectDTOAdd.setLength(String.valueOf(project.getLength()));
+        projectDTOAdd.setWidth(String.valueOf(project.getWidth()));
+        projectDTOAdd.setPanorama(project.getImagePanorama());
         return projectDTOAdd;
     }
 }

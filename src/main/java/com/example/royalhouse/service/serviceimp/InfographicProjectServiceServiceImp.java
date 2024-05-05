@@ -1,7 +1,7 @@
 package com.example.royalhouse.service.serviceimp;
 
-import com.example.royalhouse.entity.ImagesProject;
 import com.example.royalhouse.entity.InfographicsProjects;
+import com.example.royalhouse.entity.Project;
 import com.example.royalhouse.enums.InfographicsType;
 import com.example.royalhouse.model.InfographicsDTO;
 import com.example.royalhouse.repo.project.InfographicProjectRepository;
@@ -10,7 +10,6 @@ import com.example.royalhouse.util.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,40 +28,75 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
     @Override
     public void save(List<InfographicsProjects> infographicsProjects, List<InfographicsDTO> infoMain, List<InfographicsDTO> infoInfrastructure, List<InfographicsDTO> infoApartment) {
         String path;
+        int counter1 = 0;
+        int counter2 = 0;
+        int counter3 = 0;
+
+        for (int i = 0; i < infographicsProjects.size(); i++) {
+            List<InfographicsProjects> infographicsProjectsBD = infographicProjectRepository.getAllByProject(infographicsProjects.get(i).getProject());
+            if(!infographicsProjectsBD.isEmpty()){
+                infographicsProjects.get(i).setId(infographicsProjectsBD.get(i).getId());
+                infographicsProjects.get(i).setImage(infographicsProjectsBD.get(i).getImage());
+            }
+        }
+
         try {
-            for (InfographicsProjects infographics : infographicsProjects) {
-                if (infographics.getType() == InfographicsType.main) {
-                    for (InfographicsDTO infographicsDTO : infoMain) {
-                        if (infographicsDTO.getId().equals(infographics.getId())) {
-                            String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
-                            path = "./uploads/projects/infographics/main/" + infographics.getId();
-                            infographics.setPath(nameFile);
-                            infographicProjectRepository.save(infographics);
-                            Image.saveFile(path, infographicsDTO.getMultipartFile(), nameFile);
-                        }
+            for (InfographicsProjects i : infographicsProjects) {
+                if (i.getType() == InfographicsType.main) {
+                    InfographicsDTO infographicsDTO = infoMain.get(counter1);
+                    if (!infoMain.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
+                        i.setImage(nameFile);
                     }
+                    counter1++;
                 }
-                if (infographics.getType() == InfographicsType.infrastructure) {
-                    for (InfographicsDTO infographicsDTO : infoInfrastructure) {
-                        if (infographicsDTO.getId().equals(infographics.getId())) {
-                            String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
-                            path = "./uploads/projects/infographics/infrastructure/" + infographics.getId();
-                            infographics.setPath(nameFile);
-                            infographicProjectRepository.save(infographics);
-                            Image.saveFile(path, infographicsDTO.getMultipartFile(), nameFile);
-                        }
+                if (i.getType() == InfographicsType.infrastructure) {
+                    InfographicsDTO infographicsDTO = infoInfrastructure.get(counter2);
+                    if (!infoInfrastructure.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
+                        i.setImage(nameFile);
                     }
+                    counter2++;
                 }
-                if (infographics.getType() == InfographicsType.apartment) {
-                    for (InfographicsDTO infographicsDTO : infoApartment) {
-                        if (infographicsDTO.getId().equals(infographics.getId())) {
-                            String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
-                            path = "./uploads/projects/infographics/apartment/" + infographics.getId();
-                            infographics.setPath(nameFile);
-                            infographicProjectRepository.save(infographics);
-                            Image.saveFile(path, infographicsDTO.getMultipartFile(), nameFile);
-                        }
+                if (i.getType() == InfographicsType.apartment) {
+                    InfographicsDTO infographicsDTO = infoApartment.get(counter3);
+                    if (!infoApartment.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
+                        i.setImage(nameFile);
                     }
+                    counter3++;
+                }
+            }
+            for (InfographicsProjects i : infographicsProjects) {
+                infographicProjectRepository.save(i);
+            }
+            counter1 = 0;
+            counter2 = 0;
+            counter3 = 0;
+            for (InfographicsProjects i : infographicsProjects) {
+                if (i.getType() == InfographicsType.main) {
+                    InfographicsDTO infographicsDTO = infoMain.get(counter1);
+                    if (!infographicsDTO.getMultipartFile().isEmpty()) {
+                        path = "./uploads/project/infographics/main/" + i.getId();
+                        Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
+                    }
+                    counter1++;
+                }
+                if (i.getType() == InfographicsType.infrastructure) {
+                    InfographicsDTO infographicsDTO = infoInfrastructure.get(counter2);
+                    if (!infographicsDTO.getMultipartFile().isEmpty()) {
+                        path = "./uploads/project/infographics/infrastructure/" + i.getId();
+                        Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
+                    }
+                    counter2++;
+                }
+                if (i.getType() == InfographicsType.apartment) {
+                    InfographicsDTO infographicsDTO = infoApartment.get(counter3);
+                    if (!infographicsDTO.getMultipartFile().isEmpty()) {
+                        path = "./uploads/project/infographics/apartment/" + i.getId();
+                        Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
+                    }
+                    counter3++;
                 }
             }
         } catch (IOException e) {
@@ -71,29 +105,11 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
     }
 
     @Override
-    public void update(List<InfographicsProjects> infographicsProjects) {
-        for (InfographicsProjects infographics : infographicsProjects) {
-            infographicProjectRepository.save(infographics);
-        }
-    }
-
-    @Override
     public void deleteById(Long id) {
         infographicProjectRepository.deleteById(id);
     }
-//    private void divideImages(InfographicsProjects infographicsProjects, String[] nameOfSection, MultipartFile[] multipartFiles) {
-//        if (!multipartFiles[0].isEmpty()) {
-//            nameOfSection[0] = UUID.randomUUID() + "." + StringUtils.cleanPath(multipartFiles[0].getOriginalFilename());
-//        }
-//        if (!multipartFiles[1].isEmpty()) {
-//            nameOfSection[1] = UUID.randomUUID() + "." + StringUtils.cleanPath(multipartFiles[1].getOriginalFilename());
-//        }
-//        if (!multipartFiles[2].isEmpty()) {
-//            nameOfSection[2] = UUID.randomUUID() + "." + StringUtils.cleanPath(multipartFiles[2].getOriginalFilename());
-//        }
-//
-//        imagesProject.setImageFirst(nameOfSection[0]);
-//        imagesProject.setImageSecond(nameOfSection[1]);
-//        imagesProject.setImageThird(nameOfSection[2]);
-//    }
+
+    public List<InfographicsProjects> getAllByProject(Project project) {
+        return infographicProjectRepository.getAllByProject(project);
+    }
 }

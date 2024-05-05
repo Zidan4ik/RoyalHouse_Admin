@@ -9,7 +9,5 @@ public interface TextProjectService {
 
     void save(List<TextProject> textProject);
 
-    void update(List<TextProject> textProject);
-
     void deleteById(Long id);
 }

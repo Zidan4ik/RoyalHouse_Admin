@@ -1,5 +1,6 @@
 package com.example.royalhouse.service.serviceimp;
 
+import com.example.royalhouse.entity.Project;
 import com.example.royalhouse.entity.SpecificationTextProject;
 import com.example.royalhouse.repo.project.SpecificationTextProjectRepository;
 import com.example.royalhouse.service.SpecificationTextService;
@@ -20,13 +21,14 @@ public class SpecificationTextProjectServiceImp implements SpecificationTextServ
 
     @Override
     public void save(List<SpecificationTextProject> specificationTextProject) {
-        for (SpecificationTextProject text : specificationTextProject) {
-            specificationTextProjectRepository.save(text);
+        for (int i = 0; i < specificationTextProject.size(); i++) {
+            if(specificationTextProject.get(i).getProject()!=null){
+                List<SpecificationTextProject> specificationText = specificationTextProjectRepository.getAllByProject(specificationTextProject.get(i).getProject());
+                if(!specificationText.isEmpty()) {
+                    specificationTextProject.get(i).setId(specificationText.get(i).getId());
+                }
+            }
         }
-    }
-
-    @Override
-    public void update(List<SpecificationTextProject> specificationTextProject) {
         for (SpecificationTextProject text : specificationTextProject) {
             specificationTextProjectRepository.save(text);
         }
@@ -35,5 +37,8 @@ public class SpecificationTextProjectServiceImp implements SpecificationTextServ
     @Override
     public void deleteById(Long id) {
         specificationTextProjectRepository.deleteById(id);
+    }
+    public List<SpecificationTextProject> getAllByProject(Project project){
+        return specificationTextProjectRepository.getAllByProject(project);
     }
 }

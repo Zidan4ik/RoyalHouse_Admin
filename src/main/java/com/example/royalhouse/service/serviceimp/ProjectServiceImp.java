@@ -8,6 +8,7 @@ import com.example.royalhouse.util.Image;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,25 +32,29 @@ public class ProjectServiceImp implements ProjectService {
         String uploadDir;
         String bannerName = null;
         String panoramaName = null;
-
-        if(!banner.isEmpty()){
-            bannerName = UUID.randomUUID()+"."+ StringUtils.cleanPath(banner.getOriginalFilename());
+        if (project.getId() != null) {
+            Optional<Project> projectById = projectRepository.findById(project.getId());
+            project.setBanner(projectById.get().getBanner());
+            project.setImagePanorama(projectById.get().getImagePanorama());
+        }
+        if (!banner.isEmpty()) {
+            bannerName = UUID.randomUUID() + "." + StringUtils.cleanPath(banner.getOriginalFilename());
             project.setBanner(bannerName);
         }
-        if(!panorama.isEmpty()){
-            panoramaName = UUID.randomUUID()+"."+ StringUtils.cleanPath(panorama.getOriginalFilename());
-            project.setBanner(panoramaName);
+        if (!panorama.isEmpty()) {
+            panoramaName = UUID.randomUUID() + "." + StringUtils.cleanPath(panorama.getOriginalFilename());
+            project.setImagePanorama(panoramaName);
         }
         projectRepository.save(project);
 
         try {
-            if(!banner.getOriginalFilename().isEmpty()){
-                uploadDir = "./uploads/project/banner/"+project.getId();
-                Image.saveFile(uploadDir,banner,bannerName);
+            if (!banner.getOriginalFilename().isEmpty()) {
+                uploadDir = "./uploads/project/banner/" + project.getId();
+                Image.saveFile(uploadDir, banner, bannerName);
             }
-            if(!panorama.getOriginalFilename().isEmpty()){
-                uploadDir = "./uploads/project/panorama/"+project.getId();
-                Image.saveFile(uploadDir,panorama,panoramaName);
+            if (!panorama.getOriginalFilename().isEmpty()) {
+                uploadDir = "./uploads/project/panorama/" + project.getId();
+                Image.saveFile(uploadDir, panorama, panoramaName);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,16 +65,15 @@ public class ProjectServiceImp implements ProjectService {
     public Page<Project> getAll(String name, String address, Boolean isActive, Pageable pageable) {
 
         Specification<Project> filter = Specification.where(
-                io.micrometer.common.util.StringUtils.isBlank(name) ? null : ProjectSpecification.hasName(name)
-                        .and(io.micrometer.common.util.StringUtils.isBlank(address) ? null : ProjectSpecification.hasName(address))
-                        .and(isActive == null ? null : ProjectSpecification.isActive(isActive))
-        );
+                        io.micrometer.common.util.StringUtils.isBlank(name) ? null : ProjectSpecification.hasName(name))
+                .and(io.micrometer.common.util.StringUtils.isBlank(address) ? null : ProjectSpecification.hasAddress(address))
+                .and(isActive == null ? null : ProjectSpecification.isActive(isActive));
         return projectRepository.findAll(filter, pageable);
     }
 
     @Override
     public Optional<Project> getById(Long id) {
-        return Optional.empty();
+        return projectRepository.findById(id);
     }
 
     @Override
@@ -75,12 +81,16 @@ public class ProjectServiceImp implements ProjectService {
         projectRepository.deleteById(id);
     }
 
-    @Override
-    public void update(Project project, MultipartFile banner, MultipartFile panorama) {
-        projectRepository.save(project);
-    }
-
     public List<Project> getAllByIndexNum(Integer index) {
         return projectRepository.getAllByIndexNum(index);
+    }
+
+    public List<Project> getAllFilterIndexNum(Page<Project> page) {
+        List<Project> list = new ArrayList<>();
+        List<Project> list1 = page.getContent().stream().filter(s -> s.getIndexNum() != null).collect(Collectors.toList());
+        List<Project> list2 = page.getContent().stream().filter(s -> s.getIndexNum() == null).collect(Collectors.toList());
+        list.addAll(list1);
+        list.addAll(list2);
+       return list;
     }
 }

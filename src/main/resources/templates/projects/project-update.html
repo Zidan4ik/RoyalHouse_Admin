@@ -110,7 +110,13 @@
                                                     <label class="form-label" style="font-size: 18px">Головний
                                                         банер</label>
                                                     <div class="col-6">
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.banner!=null}"
+                                                             th:src="${project.linkBanner()}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailMain">
+                                                        <img th:unless="${project.banner!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailMain">
@@ -135,7 +141,8 @@
                                                                 <input th:field="*{indexNum}" type="text"
                                                                        class="form-control"
                                                                        placeholder="Порядок сортування">
-                                                                <div th:if="${errorIndexNum}" style="color: red" th:text="${errorIndexNum}"></div>
+                                                                <div th:if="${errorIndexNum}" style="color: red"
+                                                                     th:text="${errorIndexNum}"></div>
                                                                 <!--                                                <div th:if="${#fields.hasErrors('priceSquareMeter')}"-->
                                                                 <!--                                                     th:errors="*{priceSquareMeter}"-->
                                                                 <!--                                                     style="color: red"></div>-->
@@ -162,20 +169,22 @@
 
                                                 <div th:each="i : ${#numbers.sequence(0,3)}" class="row mt-3">
                                                     <div class="input-group col-6" style="width: 389px;">
-                                                        <input th:field="${project.infographicsMain[__${i}__].multipartFile}" type="file" class="form-control">
+                                                        <input th:field="${project.infographicsMain[__${i}__].multipartFile}"
+                                                               type="file" class="form-control">
                                                         <label class="input-group-text">
                                                             <i class="ti ti-file-upload"></i>
                                                         </label>
                                                     </div>
 
                                                     <div class="col-4" style="width: 300px;">
-                                                        <input th:field="${project.infographicsMain[__${i}__].description}" type="text" class="form-control">
+                                                        <input th:field="${project.infographicsMain[__${i}__].description}"
+                                                               type="text" class="form-control">
                                                     </div>
                                                 </div>
 
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit" class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -189,7 +198,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 1</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesAboutDTO().getLinkImage1()!=null}"
+                                                             th:src="${project.linkImagesAbout(0)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailAbout0">
+                                                        <img th:unless="${project.getImagesAboutDTO().getLinkImage1()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailAbout0">
@@ -204,7 +219,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 2</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesAboutDTO().getLinkImage2()!=null}"
+                                                             th:src="${project.linkImagesAbout(1)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailAbout1">
+                                                        <img th:unless="${project.getImagesAboutDTO().getLinkImage2()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailAbout1">
@@ -219,7 +240,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 3</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesAboutDTO().getLinkImage3()!=null}"
+                                                             th:src="${project.linkImagesAbout(2)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailAbout2">
+                                                        <img th:unless="${project.getImagesAboutDTO().getLinkImage3()}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailAbout2">
@@ -240,7 +267,7 @@
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -271,14 +298,14 @@
                                                         placeholder="Опис" style="height:250px;">
                                                 </textarea>
                                                 </div>
-                                                <iframe th:src="@{'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d43825.86886054671!2d' + 30.493056 + '!3d' + 50.442861 + '!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTDCsDI2JzM0LjMiTiAzMMKwMjknMzUuMCJF!5e0!3m2!1suk!2sua!4v1679604811208!5m2!1suk!2sua&'}"
+                                                <iframe th:src="@{'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d43825.86886054671!2d' + ${project.getLength()} + '!3d' + ${project.getWidth()} + '!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTDCsDI2JzM0LjMiTiAzMMKwMjknMzUuMCJF!5e0!3m2!1suk!2sua!4v1679604811208!5m2!1suk!2sua&'}"
                                                         width="100%" height="350px" style="border:0;" allowfullscreen=""
                                                         loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                                 </iframe>
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -292,7 +319,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 1</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesInfrastructureDTO().getLinkImage1()!=null}"
+                                                             th:src="${project.linkImagesInfrastructure(0)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailInfrastructure0">
+                                                        <img th:unless="${project.getImagesInfrastructureDTO().getLinkImage1()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailInfrastructure0">
@@ -308,7 +341,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 2</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesInfrastructureDTO().getLinkImage2()!=null}"
+                                                             th:src="${project.linkImagesInfrastructure(1)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailInfrastructure1">
+                                                        <img th:unless="${project.getImagesInfrastructureDTO().getLinkImage2()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailInfrastructure1">
@@ -324,7 +363,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 3</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesInfrastructureDTO().getLinkImage3()!=null}"
+                                                             th:src="${project.linkImagesInfrastructure(2)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailInfrastructure2">
+                                                        <img th:unless="${project.getImagesInfrastructureDTO().getLinkImage3()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailInfrastructure2">
@@ -345,20 +390,22 @@
                                                 </div>
                                                 <div th:each="i : ${#numbers.sequence(0,3)}" class="row mt-3">
                                                     <div class="input-group col-6" style="width: 389px;">
-                                                        <input th:field="${project.infographicsInfrastructure[__${i}__].multipartFile}" type="file" class="form-control">
+                                                        <input th:field="${project.infographicsInfrastructure[__${i}__].multipartFile}"
+                                                               type="file" class="form-control">
                                                         <label class="input-group-text">
                                                             <i class="ti ti-file-upload"></i>
                                                         </label>
                                                     </div>
 
                                                     <div class="col-4" style="width: 300px;">
-                                                        <input th:field="${project.infographicsInfrastructure[__${i}__].description}" type="text" class="form-control">
+                                                        <input th:field="${project.infographicsInfrastructure[__${i}__].description}"
+                                                               type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -372,7 +419,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 1</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesApartmentDTO().getLinkImage1()!=null}"
+                                                             th:src="${project.linkImagesApartment(0)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailApartment0">
+                                                        <img th:unless="${project.getImagesApartmentDTO().getLinkImage1()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailApartment0">
@@ -388,7 +441,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 2</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesApartmentDTO().getLinkImage2()!=null}"
+                                                             th:src="${project.linkImagesApartment(1)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailApartment1">
+                                                        <img th:unless="${project.getImagesApartmentDTO().getLinkImage2()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailApartment1">
@@ -404,7 +463,13 @@
                                                             <label class="form-label" style="font-size: 18px">Слайд
                                                                 3</label>
                                                         </div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getImagesApartmentDTO().getLinkImage3()!=null}"
+                                                             th:src="${project.linkImagesApartment(2)}"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="thumbnailApartment2">
+                                                        <img th:unless="${project.getImagesApartmentDTO().getLinkImage3()!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 300px;height: 150px;" alt="error"
                                                              id="thumbnailApartment2">
@@ -418,26 +483,29 @@
                                                 </div>
 
                                                 <div class="mt-2 mb-2" style="position: relative;">
-                                                    <textarea th:field="*{descriptionApartment.text}" class="form-control"
+                                                    <textarea th:field="*{descriptionApartment.text}"
+                                                              class="form-control"
                                                               placeholder="Опис" style="height:250px;">
                                                     </textarea>
                                                 </div>
                                                 <div th:each="i : ${#numbers.sequence(0,3)}" class="row mt-3">
                                                     <div class="input-group col-6" style="width: 389px;">
-                                                        <input th:field="${project.infographicsApartment[__${i}__].multipartFile}" type="file" class="form-control">
+                                                        <input th:field="${project.infographicsApartment[__${i}__].multipartFile}"
+                                                               type="file" class="form-control">
                                                         <label class="input-group-text">
                                                             <i class="ti ti-file-upload"></i>
                                                         </label>
                                                     </div>
 
                                                     <div class="col-4" style="width: 300px;">
-                                                        <input th:field="${project.infographicsApartment[__${i}__].description}" type="text" class="form-control">
+                                                        <input th:field="${project.infographicsApartment[__${i}__].description}"
+                                                               type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -451,10 +519,17 @@
                                                 </div>
                                                 <div>
                                                     <div>
-                                                        <img src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                        <img th:if="${project.getPanorama!=null}"
+                                                             th:src="${project.linkPanorama()}"
+                                                             class="border mb-2"
+                                                             style="width: 1100px;height: 300px;" alt="error"
+                                                             th:id="thumbnailPanorama">
+                                                        <img th:unless="${project.getPanorama!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
                                                              class="border mb-2"
                                                              style="width: 1100px;height: 300px;" alt="error"
                                                              id="thumbnailPanorama">
+
                                                     </div>
                                                     <br>
                                                     <label class="form-label" style="font-size: 16px">
@@ -466,7 +541,7 @@
                                                 <div class="d-flex justify-content-end">
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
-                                                    <button type="submit" class="btn btn-success m-2">Добавити
+                                                    <button type="submit" class="btn btn-success m-2">Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -476,11 +551,14 @@
                                             <div class="tab-pane fade" id="navs-top-specifications" role="tabpanel">
                                                 <div th:each="i:${#numbers.sequence(0,3)}" class="row">
                                                     <div class="col-10" style="width: 600px;margin-bottom: 80px;">
-                                                        <label class="form-label" style="font-size: 18px;" th:text="'Cлайд '+__${i+1}__"><b></b></label>
+                                                        <label class="form-label" style="font-size: 18px;"
+                                                               th:text="'Cлайд '+__${i+1}__"><b></b></label>
                                                         <div style="height: 200px;">
                                                             <div th:id="${'edit'+__${i}__}" style="height: auto"></div>
-                                                            <textarea rows="3" class="mb-3 d-none" th:field="*{textSpecifications[__${i}__].miniText}"
-                                                                      th:id="'quill-editor-area-'+__${i}__"></textarea>
+                                                            <textarea rows="3" class="mb-3 d-none"
+                                                                      th:field="*{textSpecifications[__${i}__].miniText}"
+                                                                      th:id="'quill-editor-area-'+__${i}__"
+                                                            th:attr="data-initial-text=*{textSpecifications[__${i}__].miniText}"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -489,7 +567,7 @@
                                                     <a th:href="@{/projects}" type="submit"
                                                        class="btn btn-github m-2">Відміна</a>
                                                     <button type="submit" class="btn btn-success m-2" id="submitForm">
-                                                        Добавити
+                                                        Оновити
                                                     </button>
                                                 </div>
                                             </div>
@@ -526,6 +604,7 @@
         crossorigin="anonymous"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
     const toolbarOptions = [
         [{'font': []}],
@@ -542,7 +621,10 @@
 
     function createEditor(index) {
         document.addEventListener('DOMContentLoaded', function () {
-            if (document.getElementById('quill-editor-area-' + index)) {
+            const quillEditorArea = document.getElementById('quill-editor-area-'+index);
+            const initialText = quillEditorArea.getAttribute('data-initial-text');
+
+            if (quillEditorArea) {
                 const editor = new Quill('#edit' + index, {
                     modules: {
                         toolbar: toolbarOptions
@@ -550,18 +632,19 @@
                     theme: 'snow'
                 });
 
-                const quillEditor = document.getElementById('quill-editor-area-' + index);
+                editor.root.innerHTML = initialText; // Встановлення початкового тексту у редактор
+
                 editor.on('text-change', function () {
-                    quillEditor.value = editor.root.innerHTML;
+                    quillEditorArea.value = editor.root.innerHTML;
                 });
-                quillEditor.addEventListener('input', function () {
-                    editor.root.innerHTML = quillEditor.value;
+
+                quillEditorArea.addEventListener('input', function () {
+                    editor.root.innerHTML = quillEditorArea.value;
                 });
             }
         });
     };
 </script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $("input[name='imagesAbout']").each(function (index) {

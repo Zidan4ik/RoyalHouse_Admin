@@ -10,7 +10,5 @@ public interface ImageProjectService {
 
     void save(List<ImagesProject> imagesProject,  MultipartFile[] multipartFilesAbout,MultipartFile[] multipartFilesInfrastructure,MultipartFile[] multipartFilesApartment);
 
-    void update(List<ImagesProject> imagesProject,  MultipartFile[] multipartFilesAbout,MultipartFile[] multipartFilesInfrastructure,MultipartFile[] multipartFilesApartment);
-
     void deleteById(Long id);
 }

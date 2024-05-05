@@ -9,7 +9,5 @@ public interface SpecificationTextService {
 
     void save(List<SpecificationTextProject> specificationTextProject);
 
-    void update(List<SpecificationTextProject> specificationTextProject);
-
     void deleteById(Long id);
 }
