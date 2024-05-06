@@ -35,9 +35,17 @@ public class SectionServiceImp implements SectionService {
         sectionRepository.save(section);
 
         try {
-            if (!banner.getOriginalFilename().isEmpty()) {
+            if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.aboutCompany)) {
                 uploadDir = "./uploads/banner/about-company/" + section.getId();
-                Image.saveFile(uploadDir, banner, bannerName);
+                Image.saveBanner(uploadDir, banner, bannerName);
+            }
+            if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.service)) {
+                uploadDir = "./uploads/banner/service/" + section.getId();
+                Image.saveBanner(uploadDir, banner, bannerName);
+            }
+            if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.secondaryMarket)) {
+                uploadDir = "./uploads/banner/secondary-market/" + section.getId();
+                Image.saveBanner(uploadDir, banner, bannerName);
             }
         } catch (IOException e) {
             e.printStackTrace();

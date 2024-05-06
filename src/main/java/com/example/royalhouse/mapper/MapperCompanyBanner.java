@@ -5,7 +5,7 @@ import com.example.royalhouse.model.AboutCompanyDTOAdd;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MapperSection {
+public class MapperCompanyBanner {
     public static AboutCompanyDTOAdd toDTOAdd(Section section){
         AboutCompanyDTOAdd sectionDTO = new AboutCompanyDTOAdd();
         sectionDTO.setId(section.getId());

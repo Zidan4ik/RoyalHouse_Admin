@@ -41,12 +41,12 @@
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse">
                                     <div class="navbar-nav me-auto">
-                                        <span style="font-size: 20px">Про Компанію</span>
+                                        <span style="font-size: 20px">Послуги</span>
                                     </div>
                                     <div>
                                         <span style="font-weight: bold;">Головна</span>
                                         <span>|</span>
-                                        <span style="color: gray; pointer-events: none">Про Компанію</span>
+                                        <span style="color: gray; pointer-events: none">Послуги</span>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                         <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
                             <div class="card mb-4 mt-2" style="width: 100%; height: 100%;">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Редагування сторінки "Про компанію"</h5>
+                                    <h5 class="mb-0">Редагування сторінки "Послуги"</h5>
                                 </div>
                                 <div class="card-body" style="width: auto;height: auto;">
                                     <form th:method="POST" th:object="${section}"
@@ -95,19 +95,6 @@
                                                                class="form-control" placeholder="Введіть заголовок"
                                                                style="width: 700px;">
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-10" style="width: 600px;margin-bottom: 80px;">
-                                                <label class="form-label" style="font-size: 18px;"
-                                                       text="Опис"><b></b></label>
-                                                <div style="height: 200px;">
-                                                    <div id="edit" style="height: auto"></div>
-                                                    <textarea rows="3" class="mb-3 d-none"
-                                                              th:field="*{description}"
-                                                              th:id="'quill-editor-area'"
-                                                              th:attr="data-initial-text=*{description}"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -157,43 +144,6 @@
     });
 </script>
 
-<script>
-    const toolbarOptions = [
-        [{'font': []}],
-        ['bold', 'italic', 'underline'],
-        [{'list': 'bullet'}, {'list': 'ordered'}],
-        [{'indent': '-1'}, {'indent': '+1'}],
-        ['clean']
-    ];
-
-    createEditor();
-
-    function createEditor() {
-        document.addEventListener('DOMContentLoaded', function () {
-            const quillEditorArea = document.getElementById('quill-editor-area');
-            const initialText = quillEditorArea.getAttribute('data-initial-text');
-
-            if (quillEditorArea) {
-                const editor = new Quill('#edit', {
-                    modules: {
-                        toolbar: toolbarOptions
-                    },
-                    theme: 'snow'
-                });
-
-                editor.root.innerHTML = initialText;
-
-                editor.on('text-change', function () {
-                    quillEditorArea.value = editor.root.innerHTML;
-                });
-
-                quillEditorArea.addEventListener('input', function () {
-                    editor.root.innerHTML = quillEditorArea.value;
-                });
-            }
-        });
-    };
-</script>
 </body>
 
 </html>
