@@ -1,0 +1,199 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/core.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/theme-default.css"/>
+    <link rel="stylesheet" href="/vuexy/assets/vendor/fonts/tabler-icons.css">
+    <script src="/vuexy/assets/vendor/js/helpers.js"></script>
+    <script src="/vuexy/assets/js/config.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+
+    <!-- Layout container -->
+    <div class="layout-container">
+
+        <!-- Menu -->
+        <div th:insert="~{block/sidebar :: sidebar}"></div>
+        <!--/ Menu -->
+
+        <!-- Layout page -->
+        <div class="layout-page">
+
+            <!-- Navbar -->
+            <div th:insert="~{block/navbar::navbar}"></div>
+            <!--/ Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper d-flex justify-content-center align-items-center"
+                 style="background-color:#ffffff">
+
+                <div class="container-xxl d-flex align-items-stretch flex-grow-1 p-0">
+                    <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
+
+                        <!-- Navbar -->
+                        <nav class="navbar navbar-expand-xl bg-navbar-theme">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse">
+                                    <div class="navbar-nav me-auto">
+                                        <span style="font-size: 20px">Про Компанію</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-weight: bold;">Головна</span>
+                                        <span>|</span>
+                                        <span style="color: gray; pointer-events: none">Про Компанію</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <!--/ Navbar -->
+
+                        <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
+                            <div class="card mb-4 mt-2" style="width: 100%; height: 100%;">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Редагування сторінки "Про компанію"</h5>
+                                </div>
+                                <div class="card-body" style="width: auto;height: auto;">
+                                    <form th:method="POST" th:object="${section}"
+                                          enctype="multipart/form-data">
+                                        <div class="row">
+                                            <label class="form-label" style="font-size: 18px">Банер</label>
+                                            <div class="col-4">
+                                                <img th:if="${section.banner!=null}"
+                                                     th:src="${section.linkToBanner()}"
+                                                     class="border mb-2"
+                                                     style="width: 300px;height: 150px;" alt="error"
+                                                     id="bannerThumbnail">
+                                                <img th:unless="${section.banner!=null}"
+                                                     src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                     class="border mb-2"
+                                                     style="width: 300px;height: 150px;" alt="error"
+                                                     id="bannerThumbnail">
+                                                <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                    розмір:
+                                                    (1920x800) </b></label>
+                                                <input class="form-control" type="file" name="bannerMF"
+                                                       id="bannerId"
+                                                       style="width: auto;">
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="mb-3">
+                                                    <div class="col-12">
+                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Текст на банері</label>
+                                                        <input th:field="*{text}" type="text"
+                                                               class="form-control" placeholder="Введіть текст"
+                                                               style="width: 350px;">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Заголовок</label>
+                                                        <input th:field="*{title}" type="text"
+                                                               class="form-control" placeholder="Введіть заголовок"
+                                                               style="width: 700px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-10" style="width: 600px;margin-bottom: 80px;">
+                                                <label class="form-label" style="font-size: 18px;"
+                                                       text="Опис"><b></b></label>
+                                                <div style="height: 200px;">
+                                                    <div id="edit" style="height: auto"></div>
+                                                    <textarea rows="3" class="mb-3 d-none"
+                                                              th:field="*{description}"
+                                                              th:id="'quill-editor-area'"
+                                                              th:attr="data-initial-text=*{description}"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end">
+                                            <a th:href="@{/requests}" type="submit"
+                                               class="btn btn-github m-2">Відміна</a>
+                                            <button type="submit" class="btn btn-success m-2">Добавити</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Content wrapper -->
+        </div>
+        <!--/ Layout page -->
+    </div>
+    <!--/ Layout container -->
+</div>
+<!--/ Layout wrapper -->
+
+<script src="/vuexy/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/vuexy/assets/vendor/js/menu.js"></script>
+<script src="/vuexy/assets/js/main.js"></script>
+
+<script src="/vuexy/assets/vendor/libs/quill/quill.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bannerId').change(function () {
+            showBannerThumbnail(this);
+        });
+
+        function showBannerThumbnail(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#bannerThumbnail').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+</script>
+
+<script>
+    const toolbarOptions = [
+        [{'font': []}],
+        ['bold', 'italic', 'underline'],
+        [{'list': 'bullet'}, {'list': 'ordered'}],
+        [{'indent': '-1'}, {'indent': '+1'}],
+        ['clean']
+    ];
+
+    createEditor();
+
+    function createEditor() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const quillEditorArea = document.getElementById('quill-editor-area');
+            const initialText = quillEditorArea.getAttribute('data-initial-text');
+
+            if (quillEditorArea) {
+                const editor = new Quill('#edit', {
+                    modules: {
+                        toolbar: toolbarOptions
+                    },
+                    theme: 'snow'
+                });
+
+                editor.root.innerHTML = initialText;
+
+                editor.on('text-change', function () {
+                    quillEditorArea.value = editor.root.innerHTML;
+                });
+
+                quillEditorArea.addEventListener('input', function () {
+                    editor.root.innerHTML = quillEditorArea.value;
+                });
+            }
+        });
+    };
+</script>
+</body>
+
+</html>

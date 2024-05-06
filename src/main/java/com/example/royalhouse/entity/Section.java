@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "sections")
 @NoArgsConstructor
@@ -17,8 +19,13 @@ public class Section {
     private Long id;
     @Column(unique = true)
     private SectionType type;
-    private String pathToFile;
+    @Column(length = 40)
     private String text;
-    private String title;
+    @Column(length = 215)
+    private String link;
+    @Column(length = 215)
     private String description;
+    private String banner;
+    private String title;
+
 }
