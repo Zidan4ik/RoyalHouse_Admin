@@ -26,5 +26,6 @@ public class Project {
     private Integer indexNum;
     private Double length;
     private Double width;
+    private Integer block;
 }
 

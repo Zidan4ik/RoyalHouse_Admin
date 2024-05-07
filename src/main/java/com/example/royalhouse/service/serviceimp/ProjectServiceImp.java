@@ -8,7 +8,6 @@ import com.example.royalhouse.util.Image;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -62,7 +61,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public Page<Project> getAll(String name, String address, Boolean isActive, Pageable pageable) {
+    public Page<Project> getAllByFilter(String name, String address, Boolean isActive, Pageable pageable) {
 
         Specification<Project> filter = Specification.where(
                         io.micrometer.common.util.StringUtils.isBlank(name) ? null : ProjectSpecification.hasName(name))
@@ -81,6 +80,11 @@ public class ProjectServiceImp implements ProjectService {
         projectRepository.deleteById(id);
     }
 
+    @Override
+    public List<Project> getAll() {
+        return projectRepository.findAll();
+    }
+
     public List<Project> getAllByIndexNum(Integer index) {
         return projectRepository.getAllByIndexNum(index);
     }
@@ -92,5 +96,22 @@ public class ProjectServiceImp implements ProjectService {
         list.addAll(list1);
         list.addAll(list2);
        return list;
+    }
+    public List<Project> getAllBlock(){
+        return projectRepository.getAllByBlockIsNotNull();
+    }
+    public List<Project> saveBinding(List<Project> project){
+        return projectRepository.saveAll(project);
+    }
+    public boolean existCopyValues(List<Project> projects){
+        boolean flag = false;
+        for (int i=0;i<projects.size();i++){
+            for (int j=i+1;j<projects.size();j++){
+                if(projects.get(i).getBlock().equals(projects.get(j).getBlock())){
+                    flag=true;
+                }
+            }
+        }
+        return flag;
     }
 }

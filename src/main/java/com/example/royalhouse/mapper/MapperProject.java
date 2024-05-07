@@ -190,9 +190,9 @@ public class MapperProject {
             project.setLength(Double.parseDouble(projectDTOAdd.getLength()));
         }
 
-        if(projectDTOAdd.getWidth().isEmpty()){
+        if (projectDTOAdd.getWidth().isEmpty()) {
             project.setWidth(50.62131098497328);
-        }else{
+        } else {
             project.setWidth(Double.parseDouble(projectDTOAdd.getWidth()));
         }
         return project;
@@ -210,5 +210,68 @@ public class MapperProject {
         projectDTOAdd.setWidth(String.valueOf(project.getWidth()));
         projectDTOAdd.setPanorama(project.getImagePanorama());
         return projectDTOAdd;
+    }
+
+    public static BindingProjectDTO toDTOFromList(List<Project> listBlocks, List<Project> listBD) {
+        BindingProjectDTO dto = new BindingProjectDTO();
+        dto.setProjects(listBD);
+        for (Project p : listBlocks) {
+            if (p.getBlock().equals(1)) {
+                dto.setProject1(p);
+            } else if (p.getBlock().equals(2)) {
+                dto.setProject2(p);
+            } else if (p.getBlock().equals(3)) {
+                dto.setProject3(p);
+            } else if (p.getBlock().equals(4)) {
+                dto.setProject4(p);
+            } else if (p.getBlock().equals(5)) {
+                dto.setProject5(p);
+            } else if (p.getBlock().equals(6)) {
+                dto.setProject6(p);
+            } else if (p.getBlock().equals(7)) {
+                dto.setProject7(p);
+            } else if (p.getBlock().equals(8)) {
+                dto.setProject8(p);
+            }
+        }
+        return dto;
+    }
+
+    public static List<Project> toEntityList(BindingProjectDTO dto) {
+        List<Project> list = new ArrayList<>();
+        if (dto.getProject1() != null) {
+            dto.getProject1().setBlock(1);
+            list.add(dto.getProject1());
+        }
+        if (dto.getProject2() != null) {
+            dto.getProject2().setBlock(2);
+            list.add(dto.getProject2());
+        }
+        if (dto.getProject3() != null) {
+            dto.getProject3().setBlock(3);
+            list.add(dto.getProject3());
+        }
+        if (dto.getProject4() != null) {
+            dto.getProject4().setBlock(4);
+            list.add(dto.getProject4());
+        }
+        if (dto.getProject5() != null) {
+            dto.getProject5().setBlock(5);
+            list.add(dto.getProject5());
+        }
+        if (dto.getProject6() != null) {
+            dto.getProject6().setBlock(6);
+            list.add(dto.getProject6());
+        }
+        if (dto.getProject7() != null) {
+            dto.getProject7().setBlock(7);
+            list.add(dto.getProject7());
+        }
+        if (dto.getProject8() != null) {
+            dto.getProject8().setBlock(8);
+            list.add(dto.getProject8());
+        }
+
+        return list;
     }
 }

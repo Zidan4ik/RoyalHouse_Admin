@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Image {
     public static void saveFiles(String uploadDir, HashMap<String, MultipartFile> map) {
@@ -41,7 +40,7 @@ public class Image {
             e.printStackTrace();
         }
     }
-    public static void saveBanner(String uploadDir, MultipartFile multipartFile, String fileName) throws IOException {
+    public static void saveAfterDelete(String uploadDir, MultipartFile multipartFile, String fileName) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
 
         if(Files.exists(uploadPath)){

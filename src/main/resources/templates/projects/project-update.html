@@ -37,14 +37,14 @@
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse">
                                     <div class="navbar-nav me-auto">
-                                        <span style="font-size: 20px">Редагування Новобудівлі</span>
+                                        <span style="font-size: 20px" th:text="'Редагування Новобудівлі '+${project.getId()}"></span>
                                     </div>
                                     <div>
                                         <span style="font-weight: bold;">Головна</span>
                                         <span>|</span>
                                         <span style="font-weight: bold;">Новобудівлі</span>
                                         <span>|</span>
-                                        <span style="color: gray; pointer-events: none">Додавання нової новобудівлі</span>
+                                        <span style="color: gray; pointer-events: none"  th:text="'Редагування Новобудівлі '+ ${project.getId()}"></span>
                                     </div>
                                 </div>
                             </div>

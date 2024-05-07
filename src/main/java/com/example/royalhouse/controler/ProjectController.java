@@ -3,6 +3,7 @@ package com.example.royalhouse.controler;
 import com.example.royalhouse.entity.*;
 import com.example.royalhouse.entity.unifier.ProjectUnifier;
 import com.example.royalhouse.mapper.MapperProject;
+import com.example.royalhouse.model.BindingProjectDTO;
 import com.example.royalhouse.model.ProjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.*;
 
@@ -14,9 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.Object;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public class ProjectController {
                                      @RequestParam(required = false) Boolean isActive) {
         ModelAndView model = new ModelAndView("projects/projects-view");
         Pageable pageable = PageRequest.of(page, size, Sort.by("indexNum").ascending());
-        Page<Project> pageProjects = projectService.getAll(name, address, isActive, pageable);
+        Page<Project> pageProjects = projectService.getAllByFilter(name, address, isActive, pageable);
 
 
         model.addObject("pageProjects", pageProjects);
@@ -166,6 +166,33 @@ public class ProjectController {
             specificationTextProjectService.deleteById(text.getId());
         }
         projectService.deleteById(projectBD.get().getId());
+        return model;
+    }
+
+    @GetMapping("/binding")
+    public ModelAndView bindingProjectsGM(){
+        ModelAndView model = new ModelAndView("projects/binding-project");
+        BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
+        model.addObject("binding", dto);
+        return model;
+    }
+
+    @PostMapping("/binding")
+    public ModelAndView bindingProjectPM(@ModelAttribute(name = "binding") BindingProjectDTO binding){
+        ModelAndView model = new ModelAndView();
+        List<Project> projects = MapperProject.toEntityList(binding);
+        boolean flag = projectService.existCopyValues(projects);
+
+        if(flag){
+            BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
+            model.addObject("binding",dto);
+            model.addObject("error","В одному блоці може бути лише одна новобудівля");
+            model.setViewName("projects/binding-project");
+            return model;
+        }
+
+        projectService.saveBinding(projects);
+        model.setViewName("redirect:/requests");
         return model;
     }
 }
