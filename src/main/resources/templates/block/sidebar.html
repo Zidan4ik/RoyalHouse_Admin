@@ -21,11 +21,11 @@
                     <i class="menu-icon ti ti-home"></i>
                     <div>Об'єкти</div>
                     <div class="badge bg-label-warning rounded-pill ms-auto"
-                         th:text="${countObjects}" th:if="${countrObjects!=0}"></div>
+                         th:text="${countObjects}" th:if="${countObjects!=0}"></div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
+                <a href="/projects" class="menu-link">
                     <i class="menu-icon ti ti-building-skyscraper"></i>
                     <div>Новобудівлі</div>
                 </a>
@@ -82,28 +82,33 @@
             </li>
 
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
-                    <div>- Контакти</div>
+                <a href="/admin/contacts" class="menu-link">
+                    <i class="menu-icon ti ti-address-book"></i>
+                    <div>Контакти</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
-                    <div>- Привязка об'єктів</div>
+                <a href="/admin/binding-objects" class="menu-link">
+                    <i class="menu-icon ti ti-link"></i>
+                    <div>Прив'язка об'єктів</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
-                    <div>- Вторинний ринок</div>
+                <a href="/admin/banner/secondary-market/edit" class="menu-link">
+                    <i class="menu-icon ti ti-photo"></i>
+                    <div>Вторинний ринок</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
-                    <div>- Послуги</div>
+                <a href="/admin/banner/service/edit" class="menu-link">
+                    <i class="menu-icon ti ti-photo"></i>
+                    <div>Послуги</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="app-calendar.html" class="menu-link">
-                    <div>- Про компанію</div>
+                <a href="/admin/banner/company/edit" class="menu-link">
+                    <i class="menu-icon ti ti-photo"></i>
+                    <div>Про компанію</div>
                 </a>
             </li>
         </ul>

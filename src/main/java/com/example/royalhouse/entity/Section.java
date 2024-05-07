@@ -22,10 +22,7 @@ public class Section {
     @Column(length = 40)
     private String text;
     @Column(length = 215)
-    private String link;
-    @Column(length = 215)
     private String description;
     private String banner;
     private String title;
-
 }

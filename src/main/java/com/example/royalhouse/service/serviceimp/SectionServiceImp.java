@@ -1,6 +1,5 @@
 package com.example.royalhouse.service.serviceimp;
 
-import com.example.royalhouse.entity.Project;
 import com.example.royalhouse.entity.Section;
 import com.example.royalhouse.enums.SectionType;
 import com.example.royalhouse.repo.SectionRepository;
@@ -37,15 +36,11 @@ public class SectionServiceImp implements SectionService {
         try {
             if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.aboutCompany)) {
                 uploadDir = "./uploads/banner/about-company/" + section.getId();
-                Image.saveBanner(uploadDir, banner, bannerName);
+                Image.saveAfterDelete(uploadDir, banner, bannerName);
             }
             if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.service)) {
                 uploadDir = "./uploads/banner/service/" + section.getId();
-                Image.saveBanner(uploadDir, banner, bannerName);
-            }
-            if (!banner.getOriginalFilename().isEmpty() && section.getType().equals(SectionType.secondaryMarket)) {
-                uploadDir = "./uploads/banner/secondary-market/" + section.getId();
-                Image.saveBanner(uploadDir, banner, bannerName);
+                Image.saveAfterDelete(uploadDir, banner, bannerName);
             }
         } catch (IOException e) {
             e.printStackTrace();
