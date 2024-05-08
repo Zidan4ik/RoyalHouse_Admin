@@ -1,7 +1,7 @@
 package com.example.royalhouse.controler;
 
 import com.example.royalhouse.entity.Service_;
-import com.example.royalhouse.mapper.TransferService;
+import com.example.royalhouse.mapper.MapperService;
 import com.example.royalhouse.model.ServiceDTOAdd;
 import com.example.royalhouse.model.ServiceDTOView;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
@@ -36,7 +36,7 @@ public class ServiceController {
         ModelAndView model = new ModelAndView("service/services-view");
         Pageable pageable = PageRequest.of(page, size);
         Page<Service_> pageService = service.getAll(name, isReflection, pageable);
-        List<ServiceDTOView> services = TransferService.toDTOViewList(pageService.getContent());
+        List<ServiceDTOView> services = MapperService.toDTOViewList(pageService.getContent());
 
         model.addObject("services", services);
         model.addObject("pageService", pageService);
@@ -60,7 +60,7 @@ public class ServiceController {
                                      @RequestParam(name = "image2") MultipartFile image,
                                      @RequestParam(name = "banner2") MultipartFile banner) {
         ModelAndView model = new ModelAndView();
-        Service_ serviceEntity = TransferService.toEntityAdd(serviceDTOAdd);
+        Service_ serviceEntity = MapperService.toEntityAdd(serviceDTOAdd);
 
         if (bindingResult.hasErrors()) {
             model.setViewName("service/services-add");
@@ -82,7 +82,7 @@ public class ServiceController {
     @GetMapping("/{id}/update")
     public ModelAndView updateServiceGM(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("service/services-update");
-        ServiceDTOAdd serviceBD = TransferService.toDTOAdd(service.getById(id).get());
+        ServiceDTOAdd serviceBD = MapperService.toDTOAdd(service.getById(id).get());
 
         model.addObject("service", serviceBD);
         return model;
@@ -99,7 +99,7 @@ public class ServiceController {
             return model;
         }
 
-        service.update(TransferService.toEntityAdd(serviceDTOAdd),image,banner);
+        service.update(MapperService.toEntityAdd(serviceDTOAdd),image,banner);
         model.setViewName("redirect:/service");
         return model;
     }

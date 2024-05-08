@@ -3,7 +3,7 @@ package com.example.royalhouse.controler;
 
 import com.example.royalhouse.entity.Object;
 import com.example.royalhouse.enums.Building;
-import com.example.royalhouse.mapper.TransferObject;
+import com.example.royalhouse.mapper.MapperObject;
 import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
 import com.example.royalhouse.service.serviceimp.RequestServiceImp;
@@ -28,7 +28,7 @@ public class ObjectsController {
 
     private final ObjectServiceImp objectService;
     private final RequestServiceImp requestService;
-    private final TransferObject transferObject;
+    private final MapperObject mapperObject;
     @GetMapping("")
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
@@ -41,7 +41,7 @@ public class ObjectsController {
         Pageable paging = PageRequest.of(page, size);
         Page<Object> pageObjects = objectService.getFilteredObjects(id,typeOfBuilding,rooms,paging);
 
-        model.addObject("objectsDB", transferObject.toTransferDTOViewList(pageObjects.getContent()));
+        model.addObject("objectsDB", mapperObject.toTransferDTOViewList(pageObjects.getContent()));
         model.addObject("objects", pageObjects);
         model.addObject("currentPage", page);
 
@@ -61,7 +61,7 @@ public class ObjectsController {
     public String addObjectPM(@ModelAttribute("object") @Valid ObjectDTOAdd objectDTOAdd,
                               BindingResult bindingResult,
                               @RequestParam("extraImage") MultipartFile[] multipartFiles) {
-        Object objectEntity = transferObject.toTransferEntityAdd(objectDTOAdd);
+        Object objectEntity = mapperObject.toTransferEntityAdd(objectDTOAdd);
 
         if (bindingResult.hasErrors()) {
             return "objects/objects-add";
@@ -76,14 +76,14 @@ public class ObjectsController {
     @GetMapping("/{id}/view")
     public ModelAndView viewObjectGet(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("objects/object-view");
-        model.addObject("object", transferObject.toTransferDTOView(objectService.getById(id).get()));
+        model.addObject("object", mapperObject.toTransferDTOView(objectService.getById(id).get()));
         return model;
     }
 
     @GetMapping("/{id}/update")
     public ModelAndView updateObjectGM(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("objects/objects-update");
-        model.addObject("object", transferObject.toTransferDTOAdd(objectService.getById(id).get()));
+        model.addObject("object", mapperObject.toTransferDTOAdd(objectService.getById(id).get()));
         return model;
     }
 
@@ -97,7 +97,7 @@ public class ObjectsController {
             model.setViewName("objects/objects-update");
             return model;
         }
-        objectService.update(transferObject.toTransferEntityAdd(objectDTOAdd), multipartFiles);
+        objectService.update(mapperObject.toTransferEntityAdd(objectDTOAdd), multipartFiles);
         model.setViewName("redirect:/objects");
         return model;
     }

@@ -11,12 +11,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('#image').change(function (){
+            $('#image').change(function () {
                 showImageThumbnail(this);
             });
-            $('#banner').change(function (){
+            $('#banner').change(function () {
                 showBannerThumbnail(this);
             });
+
             function showImageThumbnail(fileInput) {
                 file = fileInput.files[0];
                 reader = new FileReader();
@@ -27,6 +28,7 @@
 
                 reader.readAsDataURL(file);
             };
+
             function showBannerThumbnail(fileInput) {
                 file = fileInput.files[0];
                 reader = new FileReader();
@@ -104,7 +106,7 @@
                                     <div class="col-2">
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="checkbox"
-                                                  th:field="*{reflection}"/>
+                                                   th:field="*{reflection}"/>
                                             <label class="form-check-label">Відображати</label>
                                         </div>
                                     </div>

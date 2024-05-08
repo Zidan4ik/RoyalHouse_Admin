@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TransferService {
+public class MapperService {
     public static ServiceDTOView toDTOView(Service_ service) {
         ServiceDTOView serviceDTOView = new ServiceDTOView();
         serviceDTOView.setId(service.getId());
@@ -44,7 +44,7 @@ public class TransferService {
     }
     public static List<ServiceDTOView> toDTOViewList(List<Service_> services){
         return services.stream()
-                .map(TransferService::toDTOView)
+                .map(MapperService::toDTOView)
                 .collect(Collectors.toList());
     }
 }

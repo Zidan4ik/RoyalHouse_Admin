@@ -30,6 +30,8 @@ public class ProjectController {
     private final InfographicProjectServiceServiceImp infographicProjectServiceService;
     private final TextProjectServiceImp textProjectService;
     private final SpecificationTextProjectServiceImp specificationTextProjectService;
+    private final ObjectServiceImp objectService;
+    private final RequestServiceImp requestService;
 
     @GetMapping("")
     public ModelAndView viewProjects(@RequestParam(defaultValue = "0") int page,
@@ -119,7 +121,7 @@ public class ProjectController {
                     textProjectService.getAllByProject(beforeProject.get()),
                     specificationTextProjectService.getAllByProject(beforeProject.get())
             );
-            if (projectDTO.getIndexNum()!=beforeProject.get().getIndexNum()) {
+            if (projectDTO.getIndexNum() != beforeProject.get().getIndexNum()) {
                 model.addObject("errorIndexNum", "Під цим індексом користувач вже існує");
                 model.addObject("project", MapperProject.toDTOAdd(unifierBD));
                 model.setViewName("projects/project-update");
@@ -170,7 +172,7 @@ public class ProjectController {
     }
 
     @GetMapping("/binding")
-    public ModelAndView bindingProjectsGM(){
+    public ModelAndView bindingProjectsGM() {
         ModelAndView model = new ModelAndView("projects/binding-project");
         BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
         model.addObject("binding", dto);
@@ -178,15 +180,15 @@ public class ProjectController {
     }
 
     @PostMapping("/binding")
-    public ModelAndView bindingProjectPM(@ModelAttribute(name = "binding") BindingProjectDTO binding){
+    public ModelAndView bindingProjectPM(@ModelAttribute(name = "binding") BindingProjectDTO binding) {
         ModelAndView model = new ModelAndView();
         List<Project> projects = MapperProject.toEntityList(binding);
         boolean flag = projectService.existCopyValues(projects);
 
-        if(flag){
+        if (flag) {
             BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
-            model.addObject("binding",dto);
-            model.addObject("error","В одному блоці може бути лише одна новобудівля");
+            model.addObject("binding", dto);
+            model.addObject("error", "В одному блоці може бути лише одна новобудівля");
             model.setViewName("projects/binding-project");
             return model;
         }
@@ -194,5 +196,15 @@ public class ProjectController {
         projectService.saveBinding(projects);
         model.setViewName("redirect:/requests");
         return model;
+    }
+
+    @ModelAttribute("countObjects")
+    public int showCountObjects() {
+        return objectService.getCountObjects();
+    }
+
+    @ModelAttribute("countRequests")
+    public int showCountRequest() {
+        return requestService.getRequestsByReportedFalse().size();
     }
 }

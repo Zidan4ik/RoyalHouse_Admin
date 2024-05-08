@@ -16,27 +16,13 @@ public class Object {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Building building;
-
-    @Column(nullable = true)
     private double area;
-
-    @Column(nullable = true)
     private double price;
-
-    @Column(nullable = true)
     private double priceSquareMeter;
-
-    @Column(nullable = true)
     private int rooms;
-
-    @Column(nullable = true)
     private int storey;
-
-    @Column(nullable = true)
     private int countStoreys;
-
     private LocalDateTime dateOfAddition;
 
     @Column(nullable = true)
@@ -48,14 +34,4 @@ public class Object {
     @ManyToOne
     private Project project;
 
-
-    public Object(Building building, double area, double price, double priceSquareMeter, int rooms, int storey, int countStoreys) {
-        this.building = building;
-        this.area = area;
-        this.price = price;
-        this.priceSquareMeter = priceSquareMeter;
-        this.rooms = rooms;
-        this.storey = storey;
-        this.countStoreys = countStoreys;
-    }
 }

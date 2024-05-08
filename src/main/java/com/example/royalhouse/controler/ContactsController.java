@@ -7,6 +7,8 @@ import com.example.royalhouse.model.ContactsDTOEdit;
 
 import com.example.royalhouse.service.serviceimp.ContactServiceImp;
 import com.example.royalhouse.service.serviceimp.EmailRequestServiceImp;
+import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
+import com.example.royalhouse.service.serviceimp.RequestServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class ContactsController {
     private final ContactServiceImp contactService;
     private final EmailRequestServiceImp emailRequestService;
+    private final ObjectServiceImp objectService;
+    private final RequestServiceImp requestService;
     @GetMapping("/contacts")
     public ModelAndView viewContacts() {
         ModelAndView model = new ModelAndView();
@@ -71,5 +75,14 @@ public class ContactsController {
         emailRequestService.saveAll(unifier.getEmails());
         model.setViewName("redirect:/requests");
         return model;
+    }
+    @ModelAttribute("countObjects")
+    public int showCountObjects() {
+        return objectService.getCountObjects();
+    }
+
+    @ModelAttribute("countRequests")
+    public int showCountRequest() {
+        return requestService.getRequestsByReportedFalse().size();
     }
 }
