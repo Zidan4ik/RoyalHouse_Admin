@@ -42,12 +42,13 @@ public class ServiceServiceImp implements ServiceService {
         }
         service.setDateOfAddition(LocalDateTime.now());
         serviceRepository.save(service);
-        uploadDir = "./uploads/service/" + service.getId();
 
         if (!image.getOriginalFilename().isEmpty()) {
+            uploadDir = "./uploads/service/image/" + service.getId();
             Image.saveFile(uploadDir, image, imageName);
         }
         if (!banner.getOriginalFilename().isEmpty()) {
+            uploadDir = "./uploads/service/banner/" + service.getId();
             Image.saveFile(uploadDir, banner, bannerName);
         }
     }

@@ -17,10 +17,13 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 40)
     private String fullName;
+    @Column(length = 40)
     private String phone;
+    @Column(length = 40)
     private String email;
-    @Column(nullable = true,length = 200)
+    @Column(nullable = true,length = 215)
     private String comment;
     private LocalDateTime date;
     private boolean isReported;

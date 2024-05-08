@@ -9,27 +9,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("input[name='extraImage']").each(function (index) {
-                $(this).change(function () {
-                    showExtraImageThumbnail(this, index);
-                });
-            });
-
-            function showExtraImageThumbnail(fileInput, index) {
-                file = fileInput.files[0];
-                reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#thumbnail' + index).attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
-            };
-        });
-    </script>
 
 </head>
 
@@ -156,7 +135,13 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Добавити</button>
+                                <div class="d-flex justify-content-end">
+                                    <a th:href="@{/objects}" type="submit"
+                                       class="btn btn-github m-2">Відміна</a>
+                                    <button type="submit" class="btn btn-success m-2">
+                                        Добавити
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -179,7 +164,27 @@
 <script src="/vuexy/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="/vuexy/assets/vendor/js/menu.js"></script>
 <script src="/vuexy/assets/js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $("input[name='extraImage']").each(function (index) {
+            $(this).change(function () {
+                showExtraImageThumbnail(this, index);
+            });
+        });
+
+        function showExtraImageThumbnail(fileInput, index) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#thumbnail' + index).attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+</script>
 </body>
 
 </html>

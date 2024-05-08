@@ -17,7 +17,9 @@ public class Service_ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 40)
     private String name;
+    @Column(length = 215)
     private String description;
     private LocalDateTime dateOfAddition;
     private boolean isReflection;

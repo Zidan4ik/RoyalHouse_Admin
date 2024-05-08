@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TransferObject {
+public class MapperObject {
     public Object toTransferEntityAdd(ObjectDTOAdd objectDTO) {
         Object object = new Object();
         object.setId(objectDTO.getId());
@@ -67,14 +67,14 @@ public class TransferObject {
         objectDTOView.setCountStoreys(object.getCountStoreys());
 
 
-        objectDTOView.setDateOfAddition(object.getDateOfAddition().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        objectDTOView.setDateOfAddition(object.getDateOfAddition().format(DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss")));
 
         return objectDTOView;
     }
 
     public List<ObjectDTOView> toTransferDTOViewList(List<Object> objectsEntity) {
         return objectsEntity.stream()
-                .map(TransferObject::toTransferDTOView)
+                .map(MapperObject::toTransferDTOView)
                 .collect(Collectors.toList());
     }
 }

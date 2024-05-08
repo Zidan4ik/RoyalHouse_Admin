@@ -109,12 +109,10 @@
                                                     <td class="comment" th:text="${project.getName()}"></td>
                                                     <td class="comment" th:text="${project.getAddress()}"></td>
                                                     <td>
-                                                        <a th:href="@{/projects/{id}/change-status (id=${project.getId()})}">
                                                             <span class="badge bg-warning"
                                                                   th:if="${project.isActive()==false}">Виключений</span>
                                                             <span class="badge bg-success"
                                                                   th:if="${project.isActive()==true}">Активний</span>
-                                                        </a>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex justify-content-center">

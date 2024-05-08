@@ -9,6 +9,8 @@ import com.example.royalhouse.model.AboutCompanyDTOAdd;
 import com.example.royalhouse.model.SecondaryMarketDTOEdit;
 import com.example.royalhouse.model.ServiceBannerDTOEdit;
 
+import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
+import com.example.royalhouse.service.serviceimp.RequestServiceImp;
 import com.example.royalhouse.service.serviceimp.SecondaryMarketServiceImp;
 import com.example.royalhouse.service.serviceimp.SectionServiceImp;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import java.util.Optional;
 public class SectionController {
     private final SectionServiceImp sectionServiceImp;
     private final SecondaryMarketServiceImp secondaryMarketService;
+    private final ObjectServiceImp objectService;
+    private final RequestServiceImp requestService;
 
     @GetMapping("/company/edit")
     public ModelAndView companyBannerGM() {
@@ -99,17 +103,25 @@ public class SectionController {
     public ModelAndView secondaryMarketBannerPM(@ModelAttribute(name = "list") SecondaryMarketDTOEdit list) {
         ModelAndView model = new ModelAndView("redirect:/requests");
         List<SecondaryMarketBanner> listBD = secondaryMarketService.getAll();
-        if(!listBD.isEmpty()){
+        if (!listBD.isEmpty()) {
             for (int i = 0; i < list.getInfo().size(); i++) {
                 list.getInfo().get(i).setId(listBD.get(i).getId());
             }
         }
 
-        for (int i=0;i<list.getInfo().size();i++){
+        for (int i = 0; i < list.getInfo().size(); i++) {
             secondaryMarketService.save(list.getInfo().get(i), list.getImagesMF()[i]);
         }
-
-
         return model;
+    }
+
+    @ModelAttribute("countObjects")
+    public int showCountObjects() {
+        return objectService.getCountObjects();
+    }
+
+    @ModelAttribute("countRequests")
+    public int showCountRequest() {
+        return requestService.getRequestsByReportedFalse().size();
     }
 }

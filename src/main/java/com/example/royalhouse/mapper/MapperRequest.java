@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TransferRequest {
+public class MapperRequest {
     public static RequestDTOView toDTOView(Request request) {
         RequestDTOView requestDTOView = new RequestDTOView();
         requestDTOView.setId(request.getId());
@@ -19,7 +19,7 @@ public class TransferRequest {
         requestDTOView.setComment(request.getComment());
 
         if (request.getDate() != null)
-            requestDTOView.setDate(request.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            requestDTOView.setDate(request.getDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm:ss")));
 
         requestDTOView.setReported(request.isReported());
         return requestDTOView;
@@ -27,7 +27,7 @@ public class TransferRequest {
 
     public static List<RequestDTOView> toListDTOView(List<Request> requests) {
         return requests.stream()
-                .map(TransferRequest::toDTOView)
+                .map(MapperRequest::toDTOView)
                 .collect(Collectors.toList());
     }
 }
