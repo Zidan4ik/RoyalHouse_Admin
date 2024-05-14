@@ -17,11 +17,17 @@ public class Object {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Building building;
+    @Column(nullable = true)
     private double area;
+    @Column(nullable = true)
     private double price;
+    @Column(nullable = true)
     private double priceSquareMeter;
+    @Column(nullable = true)
     private int rooms;
+    @Column(nullable = true)
     private int storey;
+    @Column(nullable = true)
     private int countStoreys;
     private LocalDateTime dateOfAddition;
 
