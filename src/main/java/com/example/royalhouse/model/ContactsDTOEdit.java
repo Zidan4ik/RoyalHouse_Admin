@@ -20,9 +20,12 @@ public class ContactsDTOEdit {
     private String instagram;
     private String facebook;
     private String address;
+    private String length;
+    private String width;
     private String password;
 
     private String repeatPassword;
     private String newPassword;
     private List<EmailRequest> emails;
+
 }
