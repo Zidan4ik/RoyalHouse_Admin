@@ -13,10 +13,10 @@ public class ServiceDTOAdd {
     private String image;
     private String banner;
     public String getLinkToImage() {
-        return "/uploads/service/" + id + "/" + image;
+        return "/uploads/service/image/" + id + "/" + image;
     }
 
     public String getLinkToBanner() {
-        return "/uploads/service/" + id + "/" + banner;
+        return "/uploads/service/banner/" + id + "/" + banner;
     }
 }
