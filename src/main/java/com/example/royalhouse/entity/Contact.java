@@ -26,7 +26,10 @@ public class Contact {
     private String instagram;
     @Column(length = 40)
     private String facebook;
+    @Lob
     @Column(length = 40)
     private String address;
     private String password;
+    private Double length;
+    private Double width;
 }

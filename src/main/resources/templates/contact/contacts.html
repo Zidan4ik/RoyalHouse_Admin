@@ -58,59 +58,84 @@
                                     <form th:method="POST" th:object="${contacts}"
                                           enctype="multipart/form-data">
                                         <div class="row">
-                                            <div class="row col-12 mb-3">
-                                                    <div class="col-3">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Телефон</label>
-                                                        <input th:field="*{phone}" type="text"
-                                                               class="form-control" placeholder="Введіть номер телефону"
-                                                               style="width: 200px;">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Viber</label>
-                                                        <input th:field="*{viber}" type="text"
-                                                               class="form-control" placeholder="Введіть Viber"
-                                                               style="width: 200px;">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Telegram</label>
-                                                        <input th:field="*{telegram}" type="text"
-                                                               class="form-control" placeholder="Введіть ім'я користувача"
-                                                               style="width: 200px;">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Email</label>
-                                                        <input th:field="*{email}" type="text"
-                                                               class="form-control" placeholder="Введіть Email"
-                                                               style="width: 200px;">
-                                                    </div>
-                                            </div>
-                                            <div class="row col-12 mb-3">
-                                                <div class="col-3">
-                                                    <label class="form-label" style="font-size: 16px;font-weight: bold;">Instagram</label>
-                                                    <input th:field="*{instagram}" type="text"
-                                                           class="form-control" placeholder="Введіть посилання"
-                                                           style="width: 200px;">
-                                                </div>
-                                                <div class="col-3">
-                                                    <label class="form-label" style="font-size: 16px;font-weight: bold;">Facebook</label>
-                                                    <input th:field="*{facebook}" type="text"
-                                                           class="form-control" placeholder="Введіть посилання"
-                                                           style="width: 200px;">
+                                            <div class="row row-cols-3 mb-3">
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Телефон</label>
+                                                    <input th:field="*{phone}" type="text"
+                                                           class="form-control" placeholder="Введіть номер телефону"
+                                                           style="width: 85%;">
                                                 </div>
                                                 <div class="col">
-                                                    <label class="form-label" style="font-size: 16px;font-weight: bold;">Адрес</label>
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Viber</label>
+                                                    <input th:field="*{viber}" type="text"
+                                                           class="form-control" placeholder="Введіть номер Viber"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Telegram</label>
+                                                    <input th:field="*{telegram}" type="text"
+                                                           class="form-control" placeholder="Введіть псевдонім   користувача"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Email</label>
+                                                    <input th:field="*{email}" type="text"
+                                                           class="form-control" placeholder="Введіть Email"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Instagram</label>
+                                                    <input th:field="*{instagram}" type="text"
+                                                           class="form-control" placeholder="Введіть псевдонім користувача"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Facebook</label>
+                                                    <input th:field="*{facebook}" type="text"
+                                                           class="form-control" placeholder="Введіть псевдонім користувача"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Адрес</label>
                                                     <input th:field="*{address}" type="text"
-                                                           class="form-control" placeholder="Введіть вулицю"
-                                                           style="width: 500px;">
+                                                           class="form-control"
+                                                           placeholder="Введіть адресу: країна,регіон,м/c,вулиця"
+                                                           style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Довжина</label>
+                                                    <input  th:field="*{length}"
+                                                            type="text"
+                                                            class="form-control"
+                                                            placeholder="Введіть координати"
+                                                            style="width: 85%;">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label"
+                                                           style="font-size: 16px;font-weight: bold;">Ширина</label>
+                                                    <input  th:field="*{width}"
+                                                            type="text"
+                                                            class="form-control"
+                                                            placeholder="Введіть координати"
+                                                            style="width: 85%;">
                                                 </div>
                                             </div>
-
                                             <div class="row">
                                                 <div class="col-5">
                                                     <h5>Пошти для отримання заявок</h5>
                                                     <div th:each="i:${#numbers.sequence(0,1)}">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Email</label>
-                                                        <input class="form-control" th:field="${contacts.emails[__${i}__].email}"
+                                                        <label class="form-label"
+                                                               style="font-size: 16px;font-weight: bold;">Email</label>
+                                                        <input class="form-control"
+                                                               th:field="${contacts.emails[__${i}__].email}"
                                                                type="text" placeholder="Введіть пошту"
                                                                style="width: 200px;">
                                                     </div>
@@ -118,26 +143,36 @@
                                                 <div class="col-7">
                                                     <h5>Зміна паролю</h5>
                                                     <div>
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Дійсний пароль</label>
+                                                        <label class="form-label"
+                                                               style="font-size: 16px;font-weight: bold;">Дійсний
+                                                            пароль</label>
                                                         <input type="password" class="form-control" placeholder=""
                                                                style="width: 200px;" name="password">
-                                                        <div class="alert alert-danger mt-2" role="alert" style="width: 300px"
-                                                             th:if="${errorCurrentPassword}" th:text="${errorCurrentPassword}">
+                                                        <div class="alert alert-danger mt-2" role="alert"
+                                                             style="width: 300px"
+                                                             th:if="${errorCurrentPassword}"
+                                                             th:text="${errorCurrentPassword}">
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <label class="form-label" style="font-size: 16px;font-weight: bold;">Новий пароль</label>
+                                                            <label class="form-label"
+                                                                   style="font-size: 16px;font-weight: bold;">Новий
+                                                                пароль</label>
                                                             <input type="password" class="form-control" placeholder=""
                                                                    style="width: 200px;" name="newPassword">
                                                         </div>
                                                         <div class="col-6">
-                                                            <label class="form-label" style="font-size: 16px;font-weight: bold;">Повторити пароль</label>
+                                                            <label class="form-label"
+                                                                   style="font-size: 16px;font-weight: bold;">Повторити
+                                                                пароль</label>
                                                             <input type="password" class="form-control" placeholder=""
                                                                    style="width: 200px;" name="repeatPassword">
                                                         </div>
-                                                        <div class="alert alert-danger mt-2" role="alert" style="width: 500px;margin-left: 15px"
-                                                             th:if="${errorSimilarities}" th:text="${errorSimilarities}">
+                                                        <div class="alert alert-danger mt-2" role="alert"
+                                                             style="width: 500px;margin-left: 15px"
+                                                             th:if="${errorSimilarities}"
+                                                             th:text="${errorSimilarities}">
                                                         </div>
                                                     </div>
                                                 </div>
