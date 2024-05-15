@@ -47,7 +47,7 @@ public class SectionController {
 
     @PostMapping("/company/edit")
     public ModelAndView companyBannerPM(@ModelAttribute(name = "section") AboutCompanyDTOAdd dto) {
-        ModelAndView model = new ModelAndView("redirect:/projects");
+        ModelAndView model = new ModelAndView("redirect:/admin/projects");
         Optional<Section> section = sectionServiceImp.getByType(dto.getType());
         dto.setType(SectionType.aboutCompany);
         if (!section.isEmpty()) {
@@ -76,7 +76,7 @@ public class SectionController {
 
     @PostMapping("/service/edit")
     public ModelAndView serviceBannerPM(@ModelAttribute(name = "section") ServiceBannerDTOEdit dto) {
-        ModelAndView model = new ModelAndView("redirect:/projects");
+        ModelAndView model = new ModelAndView("redirect:/admin/projects");
         dto.setType(SectionType.service);
         Optional<Section> section = sectionServiceImp.getByType(dto.getType());
         if (!section.isEmpty()) {
@@ -105,7 +105,7 @@ public class SectionController {
 
     @PostMapping("/secondary-market/edit")
     public ModelAndView secondaryMarketBannerPM(@ModelAttribute(name = "list") SecondaryMarketDTOEdit list) {
-        ModelAndView model = new ModelAndView("redirect:/requests");
+        ModelAndView model = new ModelAndView("redirect:/admin/requests");
         List<SecondaryMarketBanner> listBD = secondaryMarketService.getAll();
         if (!listBD.isEmpty()) {
             for (int i = 0; i < list.getInfo().size(); i++) {

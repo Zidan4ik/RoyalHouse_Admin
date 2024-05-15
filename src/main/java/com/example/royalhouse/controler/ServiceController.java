@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/service")
+@RequestMapping("/admin/service")
 @RequiredArgsConstructor
 public class ServiceController {
     private final ServiceServiceImp service;
@@ -68,13 +68,13 @@ public class ServiceController {
         }
 
         service.save(serviceEntity, image, banner);
-        model.setViewName("redirect:/service");
+        model.setViewName("redirect:/admin/service");
         return model;
     }
 
     @GetMapping("/{id}/delete")
     public ModelAndView removeService(@PathVariable(name = "id") long id) {
-        ModelAndView model = new ModelAndView("redirect:/service");
+        ModelAndView model = new ModelAndView("redirect:/admin/service");
         service.deleteById(id);
         return model;
     }
@@ -100,7 +100,7 @@ public class ServiceController {
         }
 
         service.update(MapperService.toEntityAdd(serviceDTOAdd),image,banner);
-        model.setViewName("redirect:/service");
+        model.setViewName("redirect:/admin/service");
         return model;
     }
 

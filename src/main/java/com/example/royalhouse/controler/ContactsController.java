@@ -28,7 +28,7 @@ public class ContactsController {
     private final ObjectServiceImp objectService;
     private final RequestServiceImp requestService;
 
-    @GetMapping("/contacts")
+    @GetMapping("/contacts/edit")
     public ModelAndView viewContacts() {
         ModelAndView model = new ModelAndView();
 
@@ -43,7 +43,7 @@ public class ContactsController {
         return model;
     }
 
-    @PostMapping("/contacts")
+    @PostMapping("/contacts/edit")
     public ModelAndView editContacts(@ModelAttribute(name = "contacts") ContactsDTOEdit dto) {
         ModelAndView model = new ModelAndView();
 
@@ -88,7 +88,7 @@ public class ContactsController {
         ContactsUnifier unifier = MapperContacts.toEntityEdit(dto);
         contactService.save(unifier.getContact());
         emailRequestService.saveAll(unifier.getEmails());
-        model.setViewName("redirect:/requests");
+        model.setViewName("redirect:/admin/requests");
         return model;
     }
 

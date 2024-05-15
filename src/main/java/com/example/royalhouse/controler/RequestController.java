@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/requests")
+@RequestMapping("/admin/requests")
 @RequiredArgsConstructor
 public class RequestController {
 
@@ -59,14 +59,14 @@ public class RequestController {
 
     @GetMapping("{id}/delete")
     public ModelAndView deleteRequest(@PathVariable(name = "id") long id) {
-        ModelAndView model = new ModelAndView("redirect:/requests");
+        ModelAndView model = new ModelAndView("redirect:/admin/requests");
         requestService.deleteById(id);
         return model;
     }
 
     @GetMapping("/{id}/change-status")
     public ModelAndView changeStatus(@PathVariable(name = "id")long id){
-        ModelAndView model = new ModelAndView("redirect:/requests");
+        ModelAndView model = new ModelAndView("redirect:/admin/requests");
         Optional<Request> requestDB = requestService.getById(id);
         if(!requestDB.get().isReported()){
             requestDB.get().setReported(true);

@@ -47,7 +47,7 @@
                             </div>
                         </nav>
                         <div style="margin-right: 25px;text-align: end">
-                            <a th:href="@{/objects/add}" class="btn btn-success btn-lg " role="button">Добавити</a>
+                            <a th:href="@{/admin/objects/add}" class="btn btn-success btn-lg " role="button">Добавити</a>
                         </div>
                         <!--/ Navbar -->
                         <div class="col-md">
@@ -73,7 +73,7 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <form id="objectForm" action="/objects" method="get"
+                                                <form id="objectForm" action="/admin/objects" method="get"
                                                       onsubmit="return validateIdInput()">
                                                     <th>
                                                         <input type="text" class="form-control"
@@ -140,7 +140,7 @@
 
                                             <tr th:unless="${objects.getContent().size()==0}"
                                                 th:each="object : ${objectsDB}"
-                                                th:data-href="@{/objects/{id}/view (id=${object.getId()})}">
+                                                th:data-href="@{/admin/objects/{id}/view (id=${object.getId()})}">
 
                                                 <td th:text="${object.getId()}"></td>
                                                 <td th:text="${object.getBuilding()}"></td>
@@ -154,13 +154,13 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <div class="btn-group">
-                                                            <a th:href="@{/objects/{id}/update (id=${object.getId()})}"
+                                                            <a th:href="@{/admin/objects/{id}/update (id=${object.getId()})}"
                                                                class="btn btn-label-dark trash-icon">
                                                                 <i class="ti ti-pencil"></i>
                                                             </a>
 
 
-                                                            <a th:href="@{/objects/{id}/delete (id=${object.getId()})}"
+                                                            <a th:href="@{/admin/objects/{id}/delete (id=${object.getId()})}"
                                                                class="btn btn-label-dark trash-icon" type="button">
                                                                 <i class="ti ti-trash"></i>
                                                             </a>
@@ -182,12 +182,12 @@
                             <ul class="pagination pagination-round justify-content-center">
                                 <li class="page-item first" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                                     <a class="page-link"
-                                       th:href="@{/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${0})}"><i
+                                       th:href="@{/admin/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${0})}"><i
                                             class="ti ti-chevrons-left ti-xs"></i></a>
                                 </li>
                                 <li class="page-item prev" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                                     <a class="page-link"
-                                       th:href="@{/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${currentPage - 1})}"><i
+                                       th:href="@{/admin/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${currentPage - 1})}"><i
                                             class="ti ti-chevron-left ti-xs"></i></a>
                                 </li>
 
@@ -198,7 +198,7 @@
                                 <li class="page-item"
                                     th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 0, currentPage + 2 < objects.totalPages ? currentPage + 2 : objects.totalPages - 1)}">
                                     <a class="page-link"
-                                       th:href="@{/objects(id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${i})}"
+                                       th:href="@{/admin/objects(id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${i})}"
                                        th:text="${i+1}"
                                        th:classappend="${currentPage == i ? 'active' : ''}"></a>
                                 </li>
@@ -211,14 +211,14 @@
                                 <li class="page-item next"
                                     th:classappend="${currentPage == objects.totalPages - 1 ? 'disabled' : ''}">
                                     <a class="page-link"
-                                       th:href="@{/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms},page=${currentPage + 1})}"><i
+                                       th:href="@{/admin/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms},page=${currentPage + 1})}"><i
                                             class="ti ti-chevron-right ti-xs"></i></a>
                                 </li>
 
                                 <li class="page-item last"
                                     th:classappend="${currentPage == objects.totalPages - 1 ? 'disabled' : ''}">
                                     <a class="page-link"
-                                       th:href="@{/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${objects.totalPages - 1}) }"><i
+                                       th:href="@{/admin/objects (id=${id}, building=${typeOfBuilding},rooms=${rooms}, page=${objects.totalPages - 1}) }"><i
                                             class="ti ti-chevrons-right ti-xs"></i></a>
                                 </li>
                             </ul>

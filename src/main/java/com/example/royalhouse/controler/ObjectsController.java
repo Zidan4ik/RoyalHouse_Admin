@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/objects")
+@RequestMapping("/admin/objects")
 @RequiredArgsConstructor
 public class ObjectsController {
 
@@ -57,7 +57,7 @@ public class ObjectsController {
         return model;
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public String addObjectPM(@ModelAttribute("object") @Valid ObjectDTOAdd objectDTOAdd,
                               BindingResult bindingResult,
                               @RequestParam("extraImage") MultipartFile[] multipartFiles) {
@@ -69,7 +69,7 @@ public class ObjectsController {
 
         objectService.save(objectEntity, multipartFiles);
 
-        return "redirect:/objects";
+        return "redirect:/admin/objects";
 
     }
 
@@ -98,13 +98,13 @@ public class ObjectsController {
             return model;
         }
         objectService.update(mapperObject.toTransferEntityAdd(objectDTOAdd), multipartFiles);
-        model.setViewName("redirect:/objects");
+        model.setViewName("redirect:/admin/objects");
         return model;
     }
 
     @GetMapping("/{id}/delete")
     public ModelAndView deleteObject(@PathVariable(name = "id") long id) {
-        ModelAndView model = new ModelAndView("redirect:/objects");
+        ModelAndView model = new ModelAndView("redirect:/admin/objects");
         objectService.deleteById(id);
         return model;
     }

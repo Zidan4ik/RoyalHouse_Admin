@@ -78,7 +78,7 @@
                         <div class="col-xl" style="display: flex;justify-content: center;align-items: center;">
                             <div class="card mb-4 mt-5" style="width: 1000px;">
                                 <div class="card-body" style="width: 1000px;height: auto;">
-                                    <form th:method="post" th:action="@{/objects/{id}/update (id=${object.getId()})}"
+                                    <form th:method="post" th:action="@{/admin/objects/{id}/update (id=${object.getId()})}"
                                           th:object="${object}"
                                           enctype="multipart/form-data">
                                         <div class="mb-3">
@@ -210,7 +210,7 @@
                                         </div>
 
                                         <div class="d-flex justify-content-end">
-                                            <a th:href="@{/objects}" type="submit"
+                                            <a th:href="@{/admin/objects}" type="submit"
                                                class="btn btn-github m-2">Відміна</a>
                                             <button type="submit" class="btn btn-success m-2">
                                                 Оновити

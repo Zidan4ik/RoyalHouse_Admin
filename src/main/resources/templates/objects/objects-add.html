@@ -38,7 +38,7 @@
                             <h5 class="mb-0">Object</h5>
                         </div>
                         <div class="card-body" style="width: 1000px;height: auto;">
-                            <form th:method="POST" th:action="@{/objects}" th:object="${object}"
+                            <form th:method="POST" th:action="@{/admin/objects/add}" th:object="${object}"
                                   enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label class="form-label">Типи об'єктів</label>
@@ -134,7 +134,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <a th:href="@{/objects}" type="submit"
+                                    <a th:href="@{/admin/objects}" type="submit"
                                        class="btn btn-github m-2">Відміна</a>
                                     <button type="submit" class="btn btn-success m-2">
                                         Добавити

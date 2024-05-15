@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 @Controller
-@RequestMapping("/projects")
+@RequestMapping("/admin/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectServiceImp projectService;
@@ -85,7 +85,7 @@ public class ProjectController {
         textProjectService.save(texts);
         specificationTextProjectService.save(specificationTexts);
         infographicProjectServiceService.save(infographics, projectDTO.getInfographicsMain(), projectDTO.getInfographicsInfrastructure(), projectDTO.getInfographicsApartment());
-        model.setViewName("redirect:/projects");
+        model.setViewName("redirect:/admin/projects");
         return model;
     }
 
@@ -141,13 +141,13 @@ public class ProjectController {
         specificationTextProjectService.save(specificationTexts);
         infographicProjectServiceService.save(infographics, projectDTO.getInfographicsMain(), projectDTO.getInfographicsInfrastructure(), projectDTO.getInfographicsApartment());
 
-        model.setViewName("redirect:/projects");
+        model.setViewName("redirect:/admin/projects");
         return model;
     }
 
     @GetMapping("/{id}/delete")
     public ModelAndView deleteProject(@PathVariable Long id) {
-        ModelAndView model = new ModelAndView("redirect:/projects");
+        ModelAndView model = new ModelAndView("redirect:/admin/projects");
         Optional<Project> projectBD = projectService.getById(id);
 
         List<ImagesProject> images = imageProjectService.getAllByProject(projectBD.get());
@@ -171,7 +171,7 @@ public class ProjectController {
         return model;
     }
 
-    @GetMapping("/binding")
+    @GetMapping("/binding/edit")
     public ModelAndView bindingProjectsGM() {
         ModelAndView model = new ModelAndView("projects/binding-project");
         BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
@@ -181,7 +181,7 @@ public class ProjectController {
         return model;
     }
 
-    @PostMapping("/binding")
+    @PostMapping("/binding/edit")
     public ModelAndView bindingProjectPM(@ModelAttribute(name = "binding") BindingProjectDTO binding) {
         ModelAndView model = new ModelAndView();
         List<Project> projects = MapperProject.toEntityList(binding);
@@ -195,7 +195,7 @@ public class ProjectController {
             return model;
         }
         projectService.saveBinding(projects);
-        model.setViewName("redirect:/requests");
+        model.setViewName("redirect:/admin/requests");
         return model;
     }
 

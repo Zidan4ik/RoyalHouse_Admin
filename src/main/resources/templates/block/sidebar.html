@@ -9,7 +9,7 @@
         </div>
             <ul class="menu-inner py-1 ps ps--active-y">
                 <li  th:class="'menu-item '+${isActiveRequests!=null?'active':''}">
-                    <a href="/requests" class="menu-link" data-bs-toggle="button">
+                    <a href="/admin/requests" class="menu-link" data-bs-toggle="button">
                         <i class="menu-icon ti ti-mail"></i>
                         <div>Заявки</div>
                         <span class="badge bg-label-warning rounded-pill ms-auto"
@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li  th:class="'menu-item '+${isActiveObjects!=null?'active':''}">
-                    <a href="/objects" class="menu-link">
+                    <a href="/admin/objects" class="menu-link">
                         <i class="menu-icon ti ti-home"></i>
                         <div>Об'єкти</div>
                         <div class="badge bg-label-primary rounded-pill ms-auto"
@@ -25,13 +25,13 @@
                     </a>
                 </li>
                 <li th:class="'menu-item '+${isActiveProjects!=null?'active':''}">
-                    <a href="/projects" class="menu-link">
+                    <a href="/admin/projects" class="menu-link">
                         <i class="menu-icon ti ti-building-skyscraper"></i>
                         <div>Новобудівлі</div>
                     </a>
                 </li>
                 <li  th:class="'menu-item '+${isActiveServices!=null?'active':''}">
-                    <a href="/service" class="menu-link">
+                    <a href="/admin/service" class="menu-link">
                         <i class="menu-icon ti ti-heart-handshake"></i>
                         <div>Послуги</div>
                     </a>
@@ -46,13 +46,13 @@
                     </a>
                     <ul class="menu-sub">
                         <li  th:class="'menu-item '+${isActiveContacts!=null?'active':''}">
-                            <a href="/admin/contacts" class="menu-link">
+                            <a href="/admin/contacts/edit" class="menu-link">
                                 <i class="menu-icon ti ti-address-book"></i>
                                 <div>Контакти</div>
                             </a>
                         </li>
                         <li th:class="'menu-item '+${isActiveBinding!=null?'active':''}">
-                            <a href="/projects/binding" class="menu-link">
+                            <a href="/admin/projects/binding/edit" class="menu-link">
                                 <i class="menu-icon ti ti-link"></i>
                                 <div>Прив'язка новобудівель</div>
                             </a>
