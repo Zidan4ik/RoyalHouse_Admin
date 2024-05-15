@@ -15,8 +15,9 @@ public class TextProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private TextType type;
+    @Lob
+    @Column(columnDefinition = "text")
     private String description;
     @ManyToOne
     private Project project;

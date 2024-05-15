@@ -16,14 +16,14 @@ public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 40)
     private String fullName;
     @Column(length = 40)
     private String phone;
     @Column(length = 40)
     private String email;
-    @Column(nullable = true,length = 215)
+    @Lob
+    @Column(nullable = true,columnDefinition = "text")
     private String comment;
     private LocalDateTime date;
     private boolean isReported;

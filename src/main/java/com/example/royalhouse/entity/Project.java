@@ -17,7 +17,8 @@ public class Project {
     private Long id;
     @Column(length = 40)
     private String name;
-    @Column(length = 40)
+    @Lob
+    @Column(length = 60)
     private String address;
     private boolean isActive;
     @Column(length = 215)

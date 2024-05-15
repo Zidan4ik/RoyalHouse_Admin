@@ -14,6 +14,8 @@ public class SpecificationTextProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Lob
+    @Column(columnDefinition = "text")
     private String miniText;
     @ManyToOne
     private Project project;

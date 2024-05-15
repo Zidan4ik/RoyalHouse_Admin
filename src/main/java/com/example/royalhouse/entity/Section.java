@@ -19,9 +19,10 @@ public class Section {
     private Long id;
     @Column(unique = true)
     private SectionType type;
-    @Column(length = 40)
+    @Column(length = 100)
     private String text;
-    @Column(length = 215)
+    @Lob
+    @Column(columnDefinition = "text")
     private String description;
     private String banner;
     private String title;
