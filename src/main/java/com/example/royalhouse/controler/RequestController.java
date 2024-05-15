@@ -85,4 +85,8 @@ public class RequestController {
     public int showCountRequest() {
         return requestService.getRequestsByReportedFalse().size();
     }
+    @ModelAttribute("isActiveRequests")
+    public boolean toActiveContacts(){
+        return true;
+    }
 }

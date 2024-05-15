@@ -118,4 +118,8 @@ public class ObjectsController {
     public int showCountRequest() {
         return requestService.getRequestsByReportedFalse().size();
     }
+    @ModelAttribute("isActiveObjects")
+    public boolean toActiveContacts(){
+        return true;
+    }
 }

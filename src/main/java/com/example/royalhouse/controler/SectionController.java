@@ -41,7 +41,7 @@ public class SectionController {
             AboutCompanyDTOAdd dtoAdd = MapperCompanyBanner.toDTOAdd(sectionAboutCompany.get());
             model.addObject("section", dtoAdd);
         }
-
+        model.addObject("isActiveBannerCompany", true);
         return model;
     }
 
@@ -69,6 +69,8 @@ public class SectionController {
             dtoEdit = MapperServiceBanner.toDTOEdit(sectionAboutCompany.get());
         }
         model.addObject("section", dtoEdit);
+        model.addObject("isActiveBannerServices", true);
+
         return model;
     }
 
@@ -96,6 +98,8 @@ public class SectionController {
         }
         dto.setInfo(infos);
         model.addObject("list", dto);
+
+        model.addObject("isActiveBannerMarket", true);
         return model;
     }
 

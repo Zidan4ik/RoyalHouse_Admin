@@ -113,4 +113,8 @@ public class ServiceController {
     public int showCountRequest() {
         return requestService.getRequestsByReportedFalse().size();
     }
+    @ModelAttribute("isActiveServices")
+    public boolean toActiveProjects(){
+        return true;
+    }
 }

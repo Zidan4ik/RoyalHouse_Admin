@@ -176,6 +176,8 @@ public class ProjectController {
         ModelAndView model = new ModelAndView("projects/binding-project");
         BindingProjectDTO dto = MapperProject.toDTOFromList(projectService.getAllBlock(), projectService.getAll());
         model.addObject("binding", dto);
+        model.addObject("isActiveProjects",null);
+        model.addObject("isActiveBinding",true);
         return model;
     }
 
@@ -192,7 +194,6 @@ public class ProjectController {
             model.setViewName("projects/binding-project");
             return model;
         }
-
         projectService.saveBinding(projects);
         model.setViewName("redirect:/requests");
         return model;
@@ -207,4 +208,9 @@ public class ProjectController {
     public int showCountRequest() {
         return requestService.getRequestsByReportedFalse().size();
     }
+    @ModelAttribute("isActiveProjects")
+    public boolean toActiveProjects(){
+        return true;
+    }
+
 }

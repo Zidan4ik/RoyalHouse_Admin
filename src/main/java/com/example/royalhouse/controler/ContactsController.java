@@ -101,4 +101,8 @@ public class ContactsController {
     public int showCountRequest() {
         return requestService.getRequestsByReportedFalse().size();
     }
+    @ModelAttribute("isActiveContacts")
+    public boolean toActiveContacts(){
+        return true;
+    }
 }

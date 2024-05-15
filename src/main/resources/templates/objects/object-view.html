@@ -5,27 +5,8 @@
     <link rel="stylesheet" href="/vuexy/assets/vendor/css/rtl/theme-default.css"/>
     <link rel="stylesheet" href="/vuexy/assets/vendor/fonts/tabler-icons.css">
     <link rel="stylesheet" href="/styles/objects.css">
-
-    <!-- Core CSS -->
     <script src="/vuexy/assets/vendor/js/helpers.js"></script>
-
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/vuexy/assets/js/config.js"></script>
-    <script src="/vuexy/assets/vendor/js/template-customizer.js"></script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var rows = document.querySelectorAll('tbody[data-href]');
-
-            rows.forEach(function (row) {
-                row.style.cursor = 'pointer';
-                row.addEventListener('click', function () {
-                    window.location.href = this.dataset.href;
-                });
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -142,6 +123,18 @@
 <script src="/vuexy/assets/vendor/js/menu.js"></script>
 <script src="/vuexy/assets/js/main.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var rows = document.querySelectorAll('tbody[data-href]');
+
+        rows.forEach(function (row) {
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', function () {
+                window.location.href = this.dataset.href;
+            });
+        });
+    });
+</script>
 </body>
 
 </html>

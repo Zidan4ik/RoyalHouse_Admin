@@ -8,40 +8,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('#image').change(function () {
-                showImageThumbnail(this);
-            });
-            $('#banner').change(function () {
-                showBannerThumbnail(this);
-            });
-
-            function showImageThumbnail(fileInput) {
-                file = fileInput.files[0];
-                reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#imageThumbnail').attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
-            };
-
-            function showBannerThumbnail(fileInput) {
-                file = fileInput.files[0];
-                reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#bannerThumbnail').attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
-            };
-        });
-    </script>
-
 </head>
 
 <body>
@@ -146,6 +112,39 @@
 <script src="/vuexy/assets/vendor/js/menu.js"></script>
 <script src="/vuexy/assets/js/main.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#image').change(function () {
+            showImageThumbnail(this);
+        });
+        $('#banner').change(function () {
+            showBannerThumbnail(this);
+        });
+
+        function showImageThumbnail(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imageThumbnail').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+        function showBannerThumbnail(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#bannerThumbnail').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+</script>
 </body>
 
 </html>

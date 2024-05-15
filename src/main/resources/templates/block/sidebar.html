@@ -3,114 +3,81 @@
            style="display: flex;flex-direction: column;height: 100%;">
         <div style="display: flex;justify-content: center;align-items: center;">
             <div class="avatar avatar-lg" style=" cursor: default;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyxfJwz_xR8VNthmEc38VdpZO3Reu3yJg4IKJyHAuY6Q&s" alt="Avatar" class="rounded-circle">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyxfJwz_xR8VNthmEc38VdpZO3Reu3yJg4IKJyHAuY6Q&s"
+                     alt="Avatar" class="rounded-circle">
             </div>
         </div>
-
-        <ul class="menu-inner py-1 ps ps--active-y">
-            <li class="menu-item">
-                <a href="/requests" class="menu-link">
-                    <i class="menu-icon ti ti-mail"></i>
-                    <div>Заявки</div>
-                    <div class="badge bg-label-primary rounded-pill ms-auto"
-                    th:text="${countRequests}" th:if="${countRequests!=0}"></div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/objects" class="menu-link">
-                    <i class="menu-icon ti ti-home"></i>
-                    <div>Об'єкти</div>
-                    <div class="badge bg-label-warning rounded-pill ms-auto"
-                         th:text="${countObjects}" th:if="${countObjects!=0}"></div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/projects" class="menu-link">
-                    <i class="menu-icon ti ti-building-skyscraper"></i>
-                    <div>Новобудівлі</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/service" class="menu-link">
-                    <i class="menu-icon ti ti-heart-handshake"></i>
-                    <div>Послуги</div>
-                </a>
-            </li>
-            <!-- Dashboards -->
-            <li class="menu-item active">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon ti ti-settings"></i>
-                    <div>Настройки</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="index.html" class="menu-link">
-                            <div>Основне</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-crm.html" class="menu-link">
-                            <div>Про проект</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-ecommerce.html" class="menu-link">
-                            <div>Місце розташування</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-ecommerce.html" class="menu-link">
-                            <div>Інфраструктура</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-ecommerce.html" class="menu-link">
-                            <div>Квартири</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-ecommerce.html" class="menu-link">
-                            <div>Панорама</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="dashboards-ecommerce.html" class="menu-link">
-                            <div>Специфікація</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu-item">
-                <a href="/admin/contacts" class="menu-link">
-                    <i class="menu-icon ti ti-address-book"></i>
-                    <div>Контакти</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/projects/binding" class="menu-link">
-                    <i class="menu-icon ti ti-link"></i>
-                    <div>Прив'язка новобудівель</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/admin/banner/secondary-market/edit" class="menu-link">
-                    <i class="menu-icon ti ti-photo"></i>
-                    <div>Вторинний ринок</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/admin/banner/service/edit" class="menu-link">
-                    <i class="menu-icon ti ti-photo"></i>
-                    <div>Послуги</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="/admin/banner/company/edit" class="menu-link">
-                    <i class="menu-icon ti ti-photo"></i>
-                    <div>Про компанію</div>
-                </a>
-            </li>
-        </ul>
+            <ul class="menu-inner py-1 ps ps--active-y">
+                <li  th:class="'menu-item '+${isActiveRequests!=null?'active':''}">
+                    <a href="/requests" class="menu-link" data-bs-toggle="button">
+                        <i class="menu-icon ti ti-mail"></i>
+                        <div>Заявки</div>
+                        <span class="badge bg-label-warning rounded-pill ms-auto"
+                             th:text="${countRequests}" th:if="${countRequests!=0}"></span>
+                    </a>
+                </li>
+                <li  th:class="'menu-item '+${isActiveObjects!=null?'active':''}">
+                    <a href="/objects" class="menu-link">
+                        <i class="menu-icon ti ti-home"></i>
+                        <div>Об'єкти</div>
+                        <div class="badge bg-label-primary rounded-pill ms-auto"
+                             th:text="${countObjects}" th:if="${countObjects!=0}"></div>
+                    </a>
+                </li>
+                <li th:class="'menu-item '+${isActiveProjects!=null?'active':''}">
+                    <a href="/projects" class="menu-link">
+                        <i class="menu-icon ti ti-building-skyscraper"></i>
+                        <div>Новобудівлі</div>
+                    </a>
+                </li>
+                <li  th:class="'menu-item '+${isActiveServices!=null?'active':''}">
+                    <a href="/service" class="menu-link">
+                        <i class="menu-icon ti ti-heart-handshake"></i>
+                        <div>Послуги</div>
+                    </a>
+                </li>
+                <!-- drop-menu -->
+                <li class="menu-item " th:classappend="${isActiveContacts!=null || isActiveBinding!=null
+                || isActiveBannerMarket!=null || isActiveBannerServices!=null ||
+                isActiveBannerCompany!=null ? 'active open' : ''}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon ti ti-settings"></i>
+                        <div>Настройки</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li  th:class="'menu-item '+${isActiveContacts!=null?'active':''}">
+                            <a href="/admin/contacts" class="menu-link">
+                                <i class="menu-icon ti ti-address-book"></i>
+                                <div>Контакти</div>
+                            </a>
+                        </li>
+                        <li th:class="'menu-item '+${isActiveBinding!=null?'active':''}">
+                            <a href="/projects/binding" class="menu-link">
+                                <i class="menu-icon ti ti-link"></i>
+                                <div>Прив'язка новобудівель</div>
+                            </a>
+                        </li>
+                        <li  th:class="'menu-item '+${isActiveBannerMarket!=null?'active':''}">
+                            <a href="/admin/banner/secondary-market/edit" class="menu-link">
+                                <i class="menu-icon ti ti-photo"></i>
+                                <div>Вторинний ринок</div>
+                            </a>
+                        </li>
+                        <li  th:class="'menu-item '+${isActiveBannerServices!=null?'active':''}">
+                            <a href="/admin/banner/service/edit" class="menu-link">
+                                <i class="menu-icon ti ti-photo"></i>
+                                <div>Послуги</div>
+                            </a>
+                        </li>
+                        <li  th:class="'menu-item '+${isActiveBannerCompany!=null?'active':''}">
+                            <a href="/admin/banner/company/edit" class="menu-link">
+                                <i class="menu-icon ti ti-photo"></i>
+                                <div>Про компанію</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- /drop-menu -->
+            </ul>
     </aside>
 </div>
