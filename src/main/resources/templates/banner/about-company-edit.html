@@ -52,70 +52,150 @@
                             </div>
                         </nav>
                         <!--/ Navbar -->
-
                         <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
                             <div class="card mb-4 mt-2" style="width: 100%; height: 100%;">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Редагування сторінки "Про компанію"</h5>
+                                <div class="card-header pt-2">
+                                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link active"
+                                                    data-bs-toggle="tab"
+                                                    data-bs-target="#navs-about1">
+                                                Основне
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link"
+                                                    data-bs-toggle="tab"
+                                                    data-bs-target="#navs-about2">
+                                                Про проект
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <div class="card-body" style="width: auto;height: auto;">
                                     <form th:method="POST" th:object="${section}"
                                           enctype="multipart/form-data">
-                                        <div class="row">
-                                            <label class="form-label" style="font-size: 18px">Банер</label>
-                                            <div class="col-4">
-                                                <img th:if="${section.banner!=null}"
-                                                     th:src="${section.linkToBanner()}"
-                                                     class="mb-2"
-                                                     style="width: 300px;height: 150px;" alt="error"
-                                                     id="bannerThumbnail">
-                                                <img th:unless="${section.banner!=null}"
-                                                     src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                                     class="border mb-2"
-                                                     style="width: 300px;height: 150px;" alt="error"
-                                                     id="bannerThumbnail">
-                                                <label class="form-label" style="font-size: 16px"><b>Рекомендований
-                                                    розмір:
-                                                    (1920x800) </b></label>
-                                                <input class="form-control" type="file" name="bannerMF"
-                                                       id="bannerId"
-                                                       style="width: auto;">
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="mb-3">
-                                                    <div class="col-12">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Текст на банері</label>
-                                                        <input th:field="*{text}" type="text"
-                                                               class="form-control" placeholder="Введіть текст"
-                                                               style="width: 350px;">
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label class="form-label" style="font-size: 16px;font-weight: bold;">Заголовок</label>
-                                                        <input th:field="*{title}" type="text"
-                                                               class="form-control" placeholder="Введіть заголовок"
-                                                               style="width: 700px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-10" style="width: 600px;margin-bottom: 80px;">
-                                                <label class="form-label" style="font-size: 18px;"
-                                                       text="Опис"><b></b></label>
-                                                <div style="height: 200px;">
-                                                    <div id="edit" style="height: auto"></div>
-                                                    <textarea rows="3" class="mb-3 d-none"
-                                                              th:field="*{description}"
-                                                              th:id="'quill-editor-area'"
-                                                              th:attr="data-initial-text=*{description}"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="d-flex justify-content-end">
-                                            <a th:href="@{/admin/requests}" type="submit"
-                                               class="btn btn-github m-2">Відміна</a>
-                                            <button type="submit" class="btn btn-success m-2">Добавити</button>
+                                        <div class="tab-content">
+                                            <!-- about1 -->
+                                            <div class="tab-pane fade show active" id="navs-about1" role="tabpanel">
+                                                <div class="row">
+                                                    <label class="form-label" style="font-size: 18px">Банер</label>
+                                                    <div class="col-4">
+                                                        <img th:if="${section.banner!=null}"
+                                                             th:src="${section.linkToBanner()}"
+                                                             class="mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="bannerThumbnail">
+                                                        <img th:unless="${section.banner!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="bannerThumbnail">
+                                                        <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                            розмір:
+                                                            (1920x800) </b></label>
+                                                        <input class="form-control" type="file" name="bannerMF"
+                                                               id="bannerId"
+                                                               style="width: auto;">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <div class="mb-3">
+                                                            <div class="col-12">
+                                                                <label class="form-label"
+                                                                       style="font-size: 16px;font-weight: bold;">Текст
+                                                                    на
+                                                                    банері</label>
+                                                                <input th:field="*{text}" type="text"
+                                                                       class="form-control" placeholder="Введіть текст"
+                                                                       style="width: 350px;">
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label class="form-label"
+                                                                       style="font-size: 16px;font-weight: bold;">Заголовок</label>
+                                                                <input th:field="*{title}" type="text"
+                                                                       class="form-control"
+                                                                       placeholder="Введіть заголовок"
+                                                                       style="width: 700px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10" style="width: 600px;margin-bottom: 80px;">
+                                                        <label class="form-label" style="font-size: 18px;"
+                                                               text="Опис"><b></b></label>
+                                                        <div style="height: 200px;">
+                                                            <div id="edit" style="height: auto"></div>
+                                                            <textarea rows="3" class="mb-3 d-none"
+                                                                      th:field="*{description}"
+                                                                      th:id="'quill-editor-area'"
+                                                                      th:attr="data-initial-text=*{description}"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-end">
+                                                    <a th:href="@{/admin/requests}" type="submit"
+                                                       class="btn btn-github m-2">Відміна</a>
+                                                    <button type="submit" class="btn btn-success m-2">Добавити</button>
+                                                </div>
+                                            </div>
+                                            <!--/ about1 -->
+
+                                            <!-- about2 -->
+                                            <div class="tab-pane fades" id="navs-about2" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="form-label" style="font-size: 18px">Слайдер
+                                                            1</label>
+                                                        <img th:if="${section.image1!=null}"
+                                                             th:src="${section.linkToImage1()}"
+                                                             class="mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="image1Thumbnail">
+                                                        <img th:unless="${section.image1!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="image1Thumbnail">
+                                                        <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                            розмір:
+                                                            (1920x800) </b></label>
+                                                        <input class="form-control" type="file" name="image1MF"
+                                                               id="image1Id"
+                                                               style="width: auto;">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label class="form-label" style="font-size: 18px">Слайдер
+                                                            2</label>
+                                                        <img th:if="${section.image2!=null}"
+                                                             th:src="${section.linkToImage2()}"
+                                                             class="mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="image2Thumbnail">
+                                                        <img th:unless="${section.image2!=null}"
+                                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                             class="border mb-2"
+                                                             style="width: 300px;height: 150px;" alt="error"
+                                                             id="image2Thumbnail">
+                                                        <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                            розмір:
+                                                            (1920x800) </b></label>
+                                                        <input class="form-control" type="file" name="image2MF"
+                                                               id="image2Id"
+                                                               style="width: auto;">
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-end">
+                                                    <a th:href="@{/admin/requests}" type="submit"
+                                                       class="btn btn-github m-2">Відміна</a>
+                                                    <button type="submit" class="btn btn-success m-2">Оновити</button>
+                                                </div>
+                                            </div>
+                                            <!--/ about2 -->
+
                                         </div>
                                     </form>
                                 </div>
@@ -137,6 +217,9 @@
 <script src="/vuexy/assets/js/main.js"></script>
 
 <script src="/vuexy/assets/vendor/libs/quill/quill.js"></script>
+<script src="/vuexy/dist/js/bootstrap.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -150,6 +233,40 @@
 
             reader.onload = function (e) {
                 $('#bannerThumbnail').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+
+    $(document).ready(function () {
+        $('#image1Id').change(function () {
+            showImage1Thumbnai(this);
+        });
+
+        function showImage1Thumbnai(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image1Thumbnail').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+
+    $(document).ready(function () {
+        $('#image2Id').change(function () {
+            showImage2Thumbnai(this);
+        });
+
+        function showImage2Thumbnai(fileInput) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image2Thumbnail').attr('src', e.target.result);
             };
 
             reader.readAsDataURL(file);

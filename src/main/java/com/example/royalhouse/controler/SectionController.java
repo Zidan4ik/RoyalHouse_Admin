@@ -53,7 +53,7 @@ public class SectionController {
         if (!section.isEmpty()) {
             dto.setId(section.get().getId());
         }
-        sectionServiceImp.save(MapperCompanyBanner.toEntityAdd(dto), dto.getBannerMF());
+        sectionServiceImp.save(MapperCompanyBanner.toEntityAdd(dto), dto.getBannerMF(),dto.getImage1MF(),dto.getImage2MF());
         return model;
     }
 
@@ -82,7 +82,7 @@ public class SectionController {
         if (!section.isEmpty()) {
             dto.setId(section.get().getId());
         }
-        sectionServiceImp.save(MapperServiceBanner.toEntityEdit(dto), dto.getBannerMF());
+        sectionServiceImp.save(MapperServiceBanner.toEntityEdit(dto), dto.getBannerMF(),null,null);
         return model;
     }
 

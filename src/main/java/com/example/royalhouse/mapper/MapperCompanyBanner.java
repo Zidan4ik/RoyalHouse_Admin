@@ -6,25 +6,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MapperCompanyBanner {
-    public static AboutCompanyDTOAdd toDTOAdd(Section section){
-        AboutCompanyDTOAdd sectionDTO = new AboutCompanyDTOAdd();
-        sectionDTO.setId(section.getId());
-        sectionDTO.setText(section.getText());
-        sectionDTO.setTitle(section.getTitle());
-        sectionDTO.setDescription(section.getDescription());
-        sectionDTO.setBanner(section.getBanner());
-        sectionDTO.setType(section.getType());
-        return sectionDTO;
+    public static AboutCompanyDTOAdd toDTOAdd(Section entity){
+        AboutCompanyDTOAdd dto = new AboutCompanyDTOAdd();
+        dto.setId(entity.getId());
+        dto.setText(entity.getText());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setBanner(entity.getBanner());
+        dto.setType(entity.getType());
+        dto.setImage1(entity.getImage1());
+        dto.setImage2(entity.getImage2());
+        return dto;
     }
 
-    public static Section toEntityAdd(AboutCompanyDTOAdd sectionDTO){
-        Section section = new Section();
-        section.setId(sectionDTO.getId());
-        section.setText(sectionDTO.getText());
-        section.setTitle(sectionDTO.getTitle());
-        section.setDescription(sectionDTO.getDescription());
-        section.setBanner(sectionDTO.getBanner());
-        section.setType(sectionDTO.getType());
-        return section;
+    public static Section toEntityAdd(AboutCompanyDTOAdd dto){
+        Section entity = new Section();
+        entity.setId(dto.getId());
+        entity.setText(dto.getText());
+        entity.setTitle(dto.getTitle());
+        entity.setDescription(dto.getDescription());
+        entity.setBanner(dto.getBanner());
+        entity.setType(dto.getType());
+        entity.setImage1(dto.getImage1());
+        entity.setImage2(dto.getImage2());
+        return entity;
     }
 }

@@ -16,9 +16,21 @@ public class AboutCompanyDTOAdd {
     private String title;
     private String description;
     private String banner;
+    private String image1;
+    private String image2;
     private MultipartFile bannerMF;
+    private MultipartFile image1MF;
+    private MultipartFile image2MF;
 
-    public String linkToBanner(){
-        return "/uploads/banner/about-company/"+id+"/"+banner;
+    public String linkToBanner() {
+        return "/uploads/banner/about-company/" + id + "/banner/" + banner;
+    }
+
+    public String linkToImage1() {
+        return "/uploads/banner/about-company/" + id + "/images/" + image1;
+    }
+
+    public String linkToImage2() {
+        return "/uploads/banner/about-company/" + id + "/images/" + image2;
     }
 }
