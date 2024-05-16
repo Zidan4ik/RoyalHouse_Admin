@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -59,12 +60,14 @@ public class ObjectServiceImp implements ObjectService {
     @Override
     public void deleteById(Long id) {
         objectRepository.deleteById(id);
+        Image.fullDelete("./uploads/objects/" + id);
     }
 
     @Override
     public void update(Object object, MultipartFile[] multipartFiles) {
         HashMap<String, MultipartFile> map = new HashMap<>();
         Object objectFromDB = objectRepository.findById(object.getId()).get();
+        List<String> namesDelete = new ArrayList<>();
         if (objectFromDB != null) {
 
             object.setImageFirst(objectFromDB.getImageFirst());
@@ -76,12 +79,18 @@ public class ObjectServiceImp implements ObjectService {
                 if (!file.getOriginalFilename().equals("")) {
                     String imageName = UUID.randomUUID() + "." + StringUtils.cleanPath(file.getOriginalFilename());
                     map.put(imageName, file);
-                    if (counter == 0 && objectFromDB.getImageFirst() == null)
+                    if (counter == 0) {
+                        namesDelete.add(object.getImageFirst());
                         object.setImageFirst(imageName);
-                    if (counter == 1 && objectFromDB.getImageSecond() == null)
+                    }
+                    if (counter == 1) {
+                        namesDelete.add(object.getImageSecond());
                         object.setImageSecond(imageName);
-                    if (counter == 2 && objectFromDB.getImageThird() == null)
+                    }
+                    if (counter == 2) {
+                        namesDelete.add(object.getImageThird());
                         object.setImageThird(imageName);
+                    }
                 }
                 counter++;
             }
@@ -89,7 +98,14 @@ public class ObjectServiceImp implements ObjectService {
         object.setDateOfAddition(LocalDateTime.now());
         objectRepository.save(object);
         String uploadDir = "./uploads/objects/" + object.getId();
-        Image.saveFiles(uploadDir, map);
+        List<String> namesFiles = map.keySet().stream().toList();
+        List<MultipartFile> files = map.values().stream().toList();
+        try {
+            Image.deleteFiles(uploadDir, namesDelete);
+            Image.savesAfterDelete(uploadDir, namesFiles, files);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     public int getCountObjects() {

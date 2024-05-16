@@ -12,41 +12,43 @@ import java.util.stream.Collectors;
 
 @Service
 public class MapperObject {
-    public Object toTransferEntityAdd(ObjectDTOAdd objectDTO) {
-        Object object = new Object();
-        object.setId(objectDTO.getId());
-        object.setBuilding(objectDTO.getBuilding());
-        object.setArea(objectDTO.getArea());
-        object.setPrice(objectDTO.getPrice());
-        object.setPriceSquareMeter(objectDTO.getPriceSquareMeter());
-        object.setRooms(objectDTO.getRooms());
-        object.setStorey(objectDTO.getStorey());
-        object.setCountStoreys(objectDTO.getCountStoreys());
-        object.setImageFirst(objectDTO.getImageFirst());
-        object.setImageSecond(objectDTO.getImageSecond());
-        object.setImageThird(objectDTO.getImageThird());
+    public static Object toEntityAdd(ObjectDTOAdd dto) {
+        Object entity = new Object();
+        entity.setId(dto.getId());
+        entity.setBuilding(dto.getBuilding());
+        entity.setArea(dto.getArea());
+        entity.setPrice(dto.getPrice());
+        entity.setPriceSquareMeter(dto.getPriceSquareMeter());
+        entity.setRooms(dto.getRooms());
+        entity.setStorey(dto.getStorey());
+        entity.setCountStoreys(dto.getCountStoreys());
+        entity.setImageFirst(dto.getImageFirst());
+        entity.setImageSecond(dto.getImageSecond());
+        entity.setImageThird(dto.getImageThird());
+        entity.setProject(dto.getProject());
 
-        return object;
+        return entity;
     }
 
-    public ObjectDTOAdd toTransferDTOAdd(Object object) {
-        ObjectDTOAdd objectDTOAdd = new ObjectDTOAdd();
-        objectDTOAdd.setId(object.getId());
-        objectDTOAdd.setBuilding(object.getBuilding());
-        objectDTOAdd.setArea(object.getArea());
-        objectDTOAdd.setPrice(object.getPrice());
-        objectDTOAdd.setPriceSquareMeter(object.getPriceSquareMeter());
-        objectDTOAdd.setRooms(object.getRooms());
-        objectDTOAdd.setStorey(object.getStorey());
-        objectDTOAdd.setCountStoreys(object.getCountStoreys());
-        objectDTOAdd.setImageFirst(object.getImageFirst());
-        objectDTOAdd.setImageSecond(object.getImageSecond());
-        objectDTOAdd.setImageThird(object.getImageThird());
+    public static ObjectDTOAdd toDTOAdd(Object entity) {
+        ObjectDTOAdd dto = new ObjectDTOAdd();
+        dto.setId(entity.getId());
+        dto.setBuilding(entity.getBuilding());
+        dto.setArea(entity.getArea());
+        dto.setPrice(entity.getPrice());
+        dto.setPriceSquareMeter(entity.getPriceSquareMeter());
+        dto.setRooms(entity.getRooms());
+        dto.setStorey(entity.getStorey());
+        dto.setCountStoreys(entity.getCountStoreys());
+        dto.setImageFirst(entity.getImageFirst());
+        dto.setImageSecond(entity.getImageSecond());
+        dto.setImageThird(entity.getImageThird());
+        dto.setProject(entity.getProject());
 
-        return objectDTOAdd;
+        return dto;
     }
 
-    public static ObjectDTOView toTransferDTOView(Object object) {
+    public static ObjectDTOView toDTOView(Object object) {
         ObjectDTOView objectDTOView = new ObjectDTOView();
 
         objectDTOView.setId(object.getId());
@@ -72,9 +74,9 @@ public class MapperObject {
         return objectDTOView;
     }
 
-    public List<ObjectDTOView> toTransferDTOViewList(List<Object> objectsEntity) {
+    public static List<ObjectDTOView> toDTOViewList(List<Object> objectsEntity) {
         return objectsEntity.stream()
-                .map(MapperObject::toTransferDTOView)
+                .map(MapperObject::toDTOView)
                 .collect(Collectors.toList());
     }
 }

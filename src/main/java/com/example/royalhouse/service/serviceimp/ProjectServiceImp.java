@@ -25,22 +25,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectServiceImp implements ProjectService {
     private final ProjectRepository projectRepository;
-
     @Override
     public void save(Project project, MultipartFile banner, MultipartFile panorama) {
         String uploadDir;
         String bannerName = null;
         String panoramaName = null;
+        List<String> bannerDelete = new ArrayList<>();
+        List<String> panoramaDelete = new ArrayList<>();
+        Optional<Project> projectById = null;
+
         if (project.getId() != null) {
-            Optional<Project> projectById = projectRepository.findById(project.getId());
+            projectById = projectRepository.findById(project.getId());
             project.setBanner(projectById.get().getBanner());
             project.setImagePanorama(projectById.get().getImagePanorama());
         }
         if (!banner.isEmpty()) {
+            if(project.getId()!=null){
+                bannerDelete.add(projectById.get().getBanner());
+            }
             bannerName = UUID.randomUUID() + "." + StringUtils.cleanPath(banner.getOriginalFilename());
             project.setBanner(bannerName);
         }
         if (!panorama.isEmpty()) {
+            if(project.getId()!=null){
+                panoramaDelete.add(projectById.get().getImagePanorama());
+            }
             panoramaName = UUID.randomUUID() + "." + StringUtils.cleanPath(panorama.getOriginalFilename());
             project.setImagePanorama(panoramaName);
         }
@@ -49,10 +58,16 @@ public class ProjectServiceImp implements ProjectService {
         try {
             if (!banner.getOriginalFilename().isEmpty()) {
                 uploadDir = "./uploads/project/banner/" + project.getId();
+                if(projectById!=null){
+                    Image.deleteFiles(uploadDir,bannerDelete);
+                }
                 Image.saveFile(uploadDir, banner, bannerName);
             }
             if (!panorama.getOriginalFilename().isEmpty()) {
                 uploadDir = "./uploads/project/panorama/" + project.getId();
+                if(projectById!=null){
+                    Image.deleteFiles(uploadDir,panoramaDelete);
+                }
                 Image.saveFile(uploadDir, panorama, panoramaName);
             }
         } catch (IOException e) {
@@ -78,6 +93,8 @@ public class ProjectServiceImp implements ProjectService {
     @Override
     public void deleteById(Long id) {
         projectRepository.deleteById(id);
+        Image.fullDelete("./uploads/project/banner/"+id);
+        Image.fullDelete("./uploads/project/panorama/"+id);
     }
 
     @Override

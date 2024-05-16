@@ -6,6 +6,7 @@ import com.example.royalhouse.enums.Building;
 import com.example.royalhouse.mapper.MapperObject;
 import com.example.royalhouse.model.ObjectDTOAdd;
 import com.example.royalhouse.service.serviceimp.ObjectServiceImp;
+import com.example.royalhouse.service.serviceimp.ProjectServiceImp;
 import com.example.royalhouse.service.serviceimp.RequestServiceImp;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ObjectsController {
 
     private final ObjectServiceImp objectService;
     private final RequestServiceImp requestService;
-    private final MapperObject mapperObject;
+    private final ProjectServiceImp projectServiceImp;
     @GetMapping("")
     public ModelAndView viewObjects(
             @RequestParam(defaultValue = "0") int page,
@@ -41,7 +42,7 @@ public class ObjectsController {
         Pageable paging = PageRequest.of(page, size);
         Page<Object> pageObjects = objectService.getFilteredObjects(id,typeOfBuilding,rooms,paging);
 
-        model.addObject("objectsDB", mapperObject.toTransferDTOViewList(pageObjects.getContent()));
+        model.addObject("objectsDB", MapperObject.toDTOViewList(pageObjects.getContent()));
         model.addObject("objects", pageObjects);
         model.addObject("currentPage", page);
 
@@ -54,36 +55,40 @@ public class ObjectsController {
     @GetMapping("/add")
     public ModelAndView addObjectGM(@ModelAttribute("object") ObjectDTOAdd objectDTOAdd) {
         ModelAndView model = new ModelAndView("objects/objects-add");
+        model.addObject("projects",projectServiceImp.getAll());
         return model;
     }
 
     @PostMapping("/add")
-    public String addObjectPM(@ModelAttribute("object") @Valid ObjectDTOAdd objectDTOAdd,
+    public ModelAndView addObjectPM(@ModelAttribute("object") @Valid ObjectDTOAdd objectDTOAdd,
                               BindingResult bindingResult,
                               @RequestParam("extraImage") MultipartFile[] multipartFiles) {
-        Object objectEntity = mapperObject.toTransferEntityAdd(objectDTOAdd);
-
+        ModelAndView model = new ModelAndView();
+        Object objectEntity = MapperObject.toEntityAdd(objectDTOAdd);
         if (bindingResult.hasErrors()) {
-            return "objects/objects-add";
+            model.addObject("projects",projectServiceImp.getAll());
+            model.setViewName("objects/objects-add");
+            return model;
         }
 
         objectService.save(objectEntity, multipartFiles);
-
-        return "redirect:/admin/objects";
+        model.setViewName("redirect:/admin/objects");
+        return model;
 
     }
 
     @GetMapping("/{id}/view")
     public ModelAndView viewObjectGet(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("objects/object-view");
-        model.addObject("object", mapperObject.toTransferDTOView(objectService.getById(id).get()));
+        model.addObject("object", MapperObject.toDTOView(objectService.getById(id).get()));
         return model;
     }
 
     @GetMapping("/{id}/update")
     public ModelAndView updateObjectGM(@PathVariable(name = "id") long id) {
         ModelAndView model = new ModelAndView("objects/objects-update");
-        model.addObject("object", mapperObject.toTransferDTOAdd(objectService.getById(id).get()));
+        model.addObject("object", MapperObject.toDTOAdd(objectService.getById(id).get()));
+        model.addObject("projects",projectServiceImp.getAll());
         return model;
     }
 
@@ -94,10 +99,11 @@ public class ObjectsController {
 
         ModelAndView model = new ModelAndView();
         if (bindingResult.hasErrors()) {
+            model.addObject("projects",projectServiceImp.getAll());
             model.setViewName("objects/objects-update");
             return model;
         }
-        objectService.update(mapperObject.toTransferEntityAdd(objectDTOAdd), multipartFiles);
+        objectService.update(MapperObject.toEntityAdd(objectDTOAdd), multipartFiles);
         model.setViewName("redirect:/admin/objects");
         return model;
     }

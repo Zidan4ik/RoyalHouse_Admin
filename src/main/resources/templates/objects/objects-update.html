@@ -8,28 +8,6 @@
     <script src="/vuexy/assets/js/config.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("input[name='extraImage']").each(function (index) {
-                $(this).change(function () {
-                    showExtraImageThumbnail(this, index);
-                });
-            });
-
-            function showExtraImageThumbnail(fileInput, index) {
-                file = fileInput.files[0];
-                reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#thumbnail' + index).attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
-            };
-        });
-    </script>
-
 </head>
 
 <body>
@@ -61,14 +39,16 @@
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse">
                                     <div class="navbar-nav me-auto">
-                                        <span style="font-size: 20px">Редагування об'єкта</span>
+                                        <span style="font-size: 20px"
+                                              th:text="${'Редагування об`єкта №'}+${object.id}"></span>
                                     </div>
                                     <div>
                                         <span style="font-weight: bold;">Головна</span>
                                         <span>|</span>
                                         <span style="font-weight: bold;">Об'єкти</span>
                                         <span>|</span>
-                                        <span style="color: gray; pointer-events: none">Редагування об'єкта</span>
+                                        <span style="color: gray; pointer-events: none"
+                                              th:text="${'Редагування об`єкта №'}+${object.id}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -76,38 +56,48 @@
                         <!--/ Navbar -->
 
                         <div class="col-xl" style="display: flex;justify-content: center;align-items: center;">
-                            <div class="card mb-4 mt-5" style="width: 1000px;">
+                            <div class="card mb-4 mt-5">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0" th:text="${'Редагування об`єкта №'}+${object.id}"></h5>
+                                </div>
                                 <div class="card-body" style="width: 1000px;height: auto;">
-                                    <form th:method="post" th:action="@{/admin/objects/{id}/update (id=${object.getId()})}"
+                                    <form th:method="post"
+                                          th:action="@{/admin/objects/{id}/update (id=${object.getId()})}"
                                           th:object="${object}"
                                           enctype="multipart/form-data">
-                                        <div class="mb-3">
-                                            <label class="form-label">Типи об'єктів</label>
-                                            <select class="form-select" th:field="*{building}">
-                                                <option th:value="null" th:text="'Тип будівлі'"></option>
-                                                <option th:value="${T(com.example.royalhouse.enums.Building).house}"
-                                                        th:text="'Будинок'"></option>
-                                                <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
-                                                        th:text="'Квартира'"></option>
-                                                <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
-                                                        th:text="'Земельна ділянка'"></option>
-                                                <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
-                                                        th:text="'Комерційний'"></option>
-                                            </select>
-                                            <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
-                                                 style="color: red"></div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
+                                        <div class="row row-cols-2 mb-4">
+                                            <div class="col mb-3">
+                                                <label class="form-label">Типи об'єктів</label>
+                                                <select class="form-select" th:field="*{building}">
+                                                    <option th:value="null" th:text="'Тип будівлі'"></option>
+                                                    <option th:value="${T(com.example.royalhouse.enums.Building).house}"
+                                                            th:text="'Будинок'"></option>
+                                                    <option th:value="${T(com.example.royalhouse.enums.Building).apartment}"
+                                                            th:text="'Квартира'"></option>
+                                                    <option th:value="${T(com.example.royalhouse.enums.Building).plot}"
+                                                            th:text="'Земельна ділянка'"></option>
+                                                    <option th:value="${T(com.example.royalhouse.enums.Building).commercial}"
+                                                            th:text="'Комерційний'"></option>
+                                                </select>
+                                                <div th:if="${#fields.hasErrors('building')}" th:errors="*{building}"
+                                                     style="color: red"></div>
+                                            </div>
+                                            <div class="col mb-3">
+                                                <label class="form-label">Новобудівля</label>
+                                                <select class="form-select" th:field="*{project}">
+                                                    <option th:value="null" th:text="'Тип новобудівлі'"></option>
+                                                    <option th:each="p:${projects}" th:value="${p.id}"
+                                                            th:text="${'id: '+p.id +' | ім`я: '+ p.name}"></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">Ціна($)</label>
                                                 <input th:field="*{price}" th:id="*{price}" type="text"
-                                                       class="form-control"
-                                                       placeholder="0">
+                                                       class="form-control" placeholder="0">
                                                 <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                                                      style="color: red"></div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">Ціна за м. кв.($)</label>
                                                 <input th:field="*{priceSquareMeter}" type="text"
                                                        class="form-control" placeholder="0">
@@ -115,9 +105,7 @@
                                                      th:errors="*{priceSquareMeter}"
                                                      style="color: red"></div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">Площа(м. кв.)</label>
                                                 <input th:field="*{area}" type="text" class="form-control"
                                                        placeholder="0">
@@ -125,7 +113,7 @@
                                                      style="color: red"></div>
 
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">К-сть кімнат</label>
                                                 <input th:field="*{rooms}" type="text" class="form-control"
                                                        placeholder="0">
@@ -133,9 +121,7 @@
                                                      style="color: red"></div>
 
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">Поверх</label>
                                                 <input th:field="*{storey}" type="text" class="form-control"
                                                        placeholder="0">
@@ -143,17 +129,15 @@
                                                      style="color: red"></div>
 
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <label class="form-label">Поверхність</label>
                                                 <input th:field="*{countStoreys}" type="text" class="form-control"
                                                        placeholder="0">
                                                 <div th:if="${#fields.hasErrors('countStoreys')}"
                                                      th:errors="*{countStoreys}"
                                                      style="color: red"></div>
-
                                             </div>
                                         </div>
-
                                         <div class="mb-5">
                                             <div>
                                                 <img
@@ -240,7 +224,27 @@
 <script src="/vuexy/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="/vuexy/assets/vendor/js/menu.js"></script>
 <script src="/vuexy/assets/js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $("input[name='extraImage']").each(function (index) {
+            $(this).change(function () {
+                showExtraImageThumbnail(this, index);
+            });
+        });
+
+        function showExtraImageThumbnail(fileInput, index) {
+            file = fileInput.files[0];
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#thumbnail' + index).attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        };
+    });
+</script>
 </body>
 
 </html>

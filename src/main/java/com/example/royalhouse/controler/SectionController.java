@@ -47,9 +47,9 @@ public class SectionController {
 
     @PostMapping("/company/edit")
     public ModelAndView companyBannerPM(@ModelAttribute(name = "section") AboutCompanyDTOAdd dto) {
-        ModelAndView model = new ModelAndView("redirect:/admin/projects");
-        Optional<Section> section = sectionServiceImp.getByType(dto.getType());
+        ModelAndView model = new ModelAndView("redirect:/admin/requests");
         dto.setType(SectionType.aboutCompany);
+        Optional<Section> section = sectionServiceImp.getByType(dto.getType());
         if (!section.isEmpty()) {
             dto.setId(section.get().getId());
         }
@@ -76,7 +76,7 @@ public class SectionController {
 
     @PostMapping("/service/edit")
     public ModelAndView serviceBannerPM(@ModelAttribute(name = "section") ServiceBannerDTOEdit dto) {
-        ModelAndView model = new ModelAndView("redirect:/admin/projects");
+        ModelAndView model = new ModelAndView("redirect:/admin/requests");
         dto.setType(SectionType.service);
         Optional<Section> section = sectionServiceImp.getByType(dto.getType());
         if (!section.isEmpty()) {

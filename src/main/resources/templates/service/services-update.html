@@ -31,75 +31,102 @@
             <div class="content-wrapper d-flex justify-content-center align-items-center"
                  style="background-color:#ffffff">
 
-                <div class="col-xl">
-                    <div class="card mb-4 mt-5">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Створення Послуги</h5>
-                        </div>
-                        <div class="card-body" style="width: 1000px;height: auto;">
-                            <form th:method="POST" th:object="${service}"
-                                  enctype="multipart/form-data">
-                                <div class="row mb-5">
-                                    <div class="col-4">
-                                        <img th:if="${service.getImage()!=null}"
-                                             th:src="${service.getLinkToImage()}"
-                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             id="imageThumbnail">
-                                        <img th:unless="${service.getImage()}!=null"
-                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             th:id="${service.getImage()!=null}?'':'imageThumbnail'">
-                                        <label class="form-label" style="font-size: 16px"><b>Рекомендований розмір:
-                                            (1920x800) </b></label>
-                                        <input class="form-control" type="file" name="image2" id="image"
-                                               style="width: auto;">
-                                    </div>
-                                    <div class="col-4">
-                                        <img th:if="${service.getBanner()}!=null"
-                                             th:src="${service.getLinkToBanner()}"
-                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             id="bannerThumbnail">
+                <div class="container-xxl d-flex align-items-stretch flex-grow-1 p-0">
+                    <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
 
-                                        <img th:unless="${service.getBanner()}!=null"
-                                             src="https://www.goethe.de/prj/dlp/assets/images/default.png"
-                                             class="border mb-2" style="width: 300px;height: 150px;" alt="error"
-                                             th:id="${service.getBanner()!=null}?'':'bannerThumbnail'">
-                                        <label class="form-label" style="font-size: 16px"><b>Рекомендований розмір:
-                                            (500x350)</b></label>
-                                        <input class="form-control" type="file" name="banner2" id="banner"
-                                               style="width: auto;">
+                        <!-- Navbar -->
+                        <nav class="navbar navbar-expand-xl bg-navbar-theme">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse">
+                                    <div class="navbar-nav me-auto">
+                                        <span style="font-size: 20px"  th:text="'Редагування послуги №'+${service.id}"></span>
+                                    </div>
+                                    <div>
+                                        <span style="font-weight: bold;">Редагування</span>
+                                        <span>|</span>
+                                        <span style="font-weight: bold;">Послуги</span>
+                                        <span>|</span>
+                                        <span style="color: gray; pointer-events: none" th:text="'Редагування послуги №'+${service.id}"></span>
                                     </div>
                                 </div>
+                            </div>
+                        </nav>
+                        <!--/ Navbar -->
 
+                        <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
+                            <div class="card mb-4 mt-5">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0" th:text="'Редагування послуги №'+${service.id}"></h5>
+                                </div>
+                                <div class="card-body" style="width: 1000px;height: auto;">
+                                    <form th:method="POST" th:object="${service}"
+                                          enctype="multipart/form-data">
+                                        <div class="row mb-5">
+                                            <div class="col-4">
+                                                <img th:if="${service.getImage()!=null}"
+                                                     th:src="${service.getLinkToImage()}"
+                                                     class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                                     id="imageThumbnail">
+                                                <img th:unless="${service.getImage()}!=null"
+                                                     src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                     class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                                     th:id="${service.getImage()!=null}?'':'imageThumbnail'">
+                                                <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                    розмір:
+                                                    (1920x800) </b></label>
+                                                <input class="form-control" type="file" name="image2" id="image"
+                                                       style="width: auto;">
+                                            </div>
+                                            <div class="col-4">
+                                                <img th:if="${service.getBanner()}!=null"
+                                                     th:src="${service.getLinkToBanner()}"
+                                                     class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                                     id="bannerThumbnail">
 
-                                <div class="row">
-                                    <div class="col-10">
-                                        <label class="form-label"></label>
-                                        <input th:field="*{name}" type="text" class="form-control" placeholder="Назва">
-                                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                             style="color: red"></div>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="form-check form-check-inline mt-3">
-                                            <input class="form-check-input" type="checkbox"
-                                                   th:field="*{reflection}"/>
-                                            <label class="form-check-label">Відображати</label>
+                                                <img th:unless="${service.getBanner()}!=null"
+                                                     src="https://www.goethe.de/prj/dlp/assets/images/default.png"
+                                                     class="border mb-2" style="width: 300px;height: 150px;" alt="error"
+                                                     th:id="${service.getBanner()!=null}?'':'bannerThumbnail'">
+                                                <label class="form-label" style="font-size: 16px"><b>Рекомендований
+                                                    розмір:
+                                                    (500x350)</b></label>
+                                                <input class="form-control" type="file" name="banner2" id="banner"
+                                                       style="width: auto;">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-2" style="position: relative;">
+
+
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <label class="form-label"></label>
+                                                <input th:field="*{name}" type="text" class="form-control"
+                                                       placeholder="Назва">
+                                                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                     style="color: red"></div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-check form-check-inline mt-3">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           th:field="*{reflection}"/>
+                                                    <label class="form-check-label">Відображати</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-2" style="position: relative;">
                                 <textarea th:field="*{description}"
                                           class="form-control"
                                           placeholder="Опис"
                                           style="height:250px;">
                                 </textarea>
-                                </div>
+                                        </div>
 
-                                <div class="d-flex justify-content-end">
-                                    <a th:href="@{/admin/service}" type="submit" class="btn btn-github m-2">Відміна</a>
-                                    <button type="submit" class="btn btn-success m-2">Оновити</button>
+                                        <div class="d-flex justify-content-end">
+                                            <a th:href="@{/admin/service}" type="submit" class="btn btn-github m-2">Відміна</a>
+                                            <button type="submit" class="btn btn-success m-2">Оновити</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

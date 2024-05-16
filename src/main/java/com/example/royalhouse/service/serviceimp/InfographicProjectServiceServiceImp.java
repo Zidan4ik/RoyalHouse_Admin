@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,6 +33,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
         int counter1 = 0;
         int counter2 = 0;
         int counter3 = 0;
+        List<String> infographicDeleteMain = new ArrayList<>();
+        List<String> infographicDeleteInfrastructure = new ArrayList<>();
+        List<String> infographicDeleteApartment = new ArrayList<>();
 
         for (int i = 0; i < infographicsProjects.size(); i++) {
             List<InfographicsProjects> infographicsProjectsBD = infographicProjectRepository.getAllByProject(infographicsProjects.get(i).getProject());
@@ -45,6 +50,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                 if (i.getType() == InfographicsType.main) {
                     InfographicsDTO infographicsDTO = infoMain.get(counter1);
                     if (!infoMain.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        if(i.getImage()!=null){
+                            infographicDeleteMain.add(i.getImage());
+                        }
                         String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
                         i.setImage(nameFile);
                     }
@@ -53,6 +61,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                 if (i.getType() == InfographicsType.infrastructure) {
                     InfographicsDTO infographicsDTO = infoInfrastructure.get(counter2);
                     if (!infoInfrastructure.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        if(i.getImage()!=null){
+                            infographicDeleteInfrastructure.add(i.getImage());
+                        }
                         String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
                         i.setImage(nameFile);
                     }
@@ -61,6 +72,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                 if (i.getType() == InfographicsType.apartment) {
                     InfographicsDTO infographicsDTO = infoApartment.get(counter3);
                     if (!infoApartment.isEmpty() && !infographicsDTO.getMultipartFile().isEmpty()) {
+                        if(i.getImage()!=null){
+                            infographicDeleteApartment.add(i.getImage());
+                        }
                         String nameFile = UUID.randomUUID() + "." + StringUtils.cleanPath(infographicsDTO.getMultipartFile().getOriginalFilename());
                         i.setImage(nameFile);
                     }
@@ -78,6 +92,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                     InfographicsDTO infographicsDTO = infoMain.get(counter1);
                     if (!infographicsDTO.getMultipartFile().isEmpty()) {
                         path = "./uploads/project/infographics/main/" + i.getId();
+                        if(!infographicDeleteMain.isEmpty()){
+                            Image.deleteFiles(path,infographicDeleteMain);
+                        }
                         Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
                     }
                     counter1++;
@@ -86,6 +103,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                     InfographicsDTO infographicsDTO = infoInfrastructure.get(counter2);
                     if (!infographicsDTO.getMultipartFile().isEmpty()) {
                         path = "./uploads/project/infographics/infrastructure/" + i.getId();
+                        if(!infographicDeleteInfrastructure.isEmpty()){
+                            Image.deleteFiles(path,infographicDeleteInfrastructure);
+                        }
                         Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
                     }
                     counter2++;
@@ -94,6 +114,9 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
                     InfographicsDTO infographicsDTO = infoApartment.get(counter3);
                     if (!infographicsDTO.getMultipartFile().isEmpty()) {
                         path = "./uploads/project/infographics/apartment/" + i.getId();
+                        if(!infographicDeleteApartment.isEmpty()){
+                            Image.deleteFiles(path,infographicDeleteApartment);
+                        }
                         Image.saveFile(path, infographicsDTO.getMultipartFile(), i.getImage());
                     }
                     counter3++;
@@ -106,7 +129,18 @@ public class InfographicProjectServiceServiceImp implements InfographicProjectSe
 
     @Override
     public void deleteById(Long id) {
+        Optional<InfographicsProjects> byId = infographicProjectRepository.findById(id);
         infographicProjectRepository.deleteById(id);
+
+        if(byId.get().getType().equals(InfographicsType.main)){
+            Image.fullDelete("./uploads/project/infographics/main/"+id);
+        }
+        if(byId.get().getType().equals(InfographicsType.infrastructure)){
+            Image.fullDelete("./uploads/project/infographics/infrastructure/"+id);
+        }
+        if(byId.get().getType().equals(InfographicsType.apartment)){
+            Image.fullDelete("./uploads/project/infographics/apartment/"+id);
+        }
     }
 
     public List<InfographicsProjects> getAllByProject(Project project) {

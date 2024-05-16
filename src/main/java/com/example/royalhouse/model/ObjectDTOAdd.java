@@ -1,5 +1,6 @@
 package com.example.royalhouse.model;
 
+import com.example.royalhouse.entity.Project;
 import com.example.royalhouse.enums.Building;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -34,6 +35,7 @@ public class ObjectDTOAdd {
     private String imageFirst;
     private String imageSecond;
     private String imageThird;
+    private Project project;
 
     public String getLinkToFirstImage() {
         return "/uploads/objects/"+id+"/" + imageFirst;

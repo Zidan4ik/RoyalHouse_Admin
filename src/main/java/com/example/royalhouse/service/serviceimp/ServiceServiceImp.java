@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,31 +66,38 @@ public class ServiceServiceImp implements ServiceService {
         String uploadDir;
         String imageName = null;
         String bannerName = null;
-
+        List<String> imageDelete = new ArrayList<>();
+        List<String> bannerDelete = new ArrayList<>();
         Optional<Service_> serviceBD = serviceRepository.findById(service.getId());
 
-        if(serviceBD.get()!=null){
+        if (serviceBD.get() != null) {
             service.setImage(serviceBD.get().getImage());
             service.setBanner(serviceBD.get().getBanner());
         }
 
         if (!image.isEmpty()) {
             imageName = UUID.randomUUID() + "." + StringUtils.cleanPath(image.getOriginalFilename());
+            imageDelete.add(service.getImage());
             service.setImage(imageName);
         }
 
         if (!banner.isEmpty()) {
             bannerName = UUID.randomUUID() + "." + StringUtils.cleanPath(banner.getOriginalFilename());
+            bannerDelete.add(service.getBanner());
             service.setBanner(bannerName);
         }
+
         service.setDateOfAddition(LocalDateTime.now());
         serviceRepository.save(service);
-        uploadDir = "./uploads/service/" + service.getId();
 
         if (!image.getOriginalFilename().isEmpty()) {
+            uploadDir = "./uploads/service/image/" + service.getId();
+            Image.deleteFiles(uploadDir, imageDelete);
             Image.saveFile(uploadDir, image, imageName);
         }
         if (!banner.getOriginalFilename().isEmpty()) {
+            uploadDir = "./uploads/service/banner/" + service.getId();
+            Image.deleteFiles(uploadDir, bannerDelete);
             Image.saveFile(uploadDir, banner, bannerName);
         }
 
@@ -104,5 +113,7 @@ public class ServiceServiceImp implements ServiceService {
     @Override
     public void deleteById(Long id) {
         serviceRepository.deleteById(id);
+        Image.fullDelete("./uploads/service/image/" + id);
+        Image.fullDelete("./uploads/service/banner/" + id);
     }
 }
